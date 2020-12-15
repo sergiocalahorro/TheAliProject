@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Usuario\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Usuario\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_TheAliProject.792380408.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Usuario\Documents\Developer\Unity\Personal\TheAliProject" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="_Scripts" t="Include">
+          <e p="CameraController.cs" t="Include" />
+          <e p="Constants.cs" t="Include" />
+          <e p="PlayerController.cs" t="Include" />
+        </e>
+        <e p="BayatGames" t="Include">
+          <e p="Free Platform Game Assets" t="Include">
+            <e p="Readme.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Free Asset - 2D Handcrafted Art" t="Include">
+          <e p="Readme.txt" t="Include" />
+          <e p="Scripts" t="Include">
+            <e p="CamerController.cs" t="Include" />
+          </e>
+          <e p="Shader" t="Include">
+            <e p="NormalMappedSprite-Animated.shader" t="Include" />
+            <e p="NormalMappedTileAnimated.shader" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+      <e p="TheAliProject.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
