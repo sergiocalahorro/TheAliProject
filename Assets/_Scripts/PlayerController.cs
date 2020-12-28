@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -32,10 +33,13 @@ public class PlayerController : MonoBehaviour
     {
         Move();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (_grounded && Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
         }
+        
+        // Blend between taking off and falling states when jumping
+        _animator.SetFloat(Constants.VERTICALSPEED_F, _rigidbody.velocity.y);
     }
 
     private void FixedUpdate()
@@ -49,19 +53,19 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         float direction = Input.GetAxis("Horizontal");
-        float move = _speed * direction;
+        float movementAmount = _speed * direction;
         
         // Flip character
-        if (move > 0f && !_facingRight)
+        if (movementAmount > 0f && !_facingRight)
         {
             Flip();
         }
-        else if (move < 0f && _facingRight)
+        else if (movementAmount < 0f && _facingRight)
         {
             Flip();
         }
         
-        transform.Translate(move * Time.deltaTime, 0f, 0f);
+        transform.Translate(movementAmount * Time.deltaTime, 0f, 0f);
         _animator.SetFloat(Constants.SPEED_F, Mathf.Abs(direction));
     }
 
@@ -82,10 +86,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        if (_grounded)
-        {
-            _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
-        }
+        _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        _animator.SetBool(Constants.ISJUMPING_B, true);
     }
 
     /// <summary>
@@ -93,6 +95,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void GroundCheck()
     {
+        bool wasGrounded = _grounded;
+        _grounded = false;
+        
         Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2) groundCheckOrigin.position,
                                                             _groundCheckRadius, 
                                                             _groundLayerMask);
@@ -100,6 +105,11 @@ public class PlayerController : MonoBehaviour
         if (colliders.Length > 0)
         {
             _grounded = true;
+            
+            if (!wasGrounded)
+            {
+                _animator.SetBool(Constants.ISJUMPING_B, false);
+            }
         }
         else if (colliders.Length == 0)
         {
