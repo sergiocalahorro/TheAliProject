@@ -52,14 +52,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Free Asset - 2D Handcrafted Art\Scripts\CamerController.cs" />
      <Compile Include="Assets\_Scripts\CameraController.cs" />
      <Compile Include="Assets\_Scripts\PlayerController.cs" />
      <Compile Include="Assets\_Scripts\Constants.cs" />
-     <None Include="Assets\BayatGames\Free Platform Game Assets\Readme.txt" />
-     <None Include="Assets\Free Asset - 2D Handcrafted Art\Shader\NormalMappedSprite-Animated.shader" />
-     <None Include="Assets\Free Asset - 2D Handcrafted Art\Readme.txt" />
-     <None Include="Assets\Free Asset - 2D Handcrafted Art\Shader\NormalMappedTileAnimated.shader" />
  <Reference Include="UnityEngine">
  <HintPath>D:/Unity Editor/2020.2.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
