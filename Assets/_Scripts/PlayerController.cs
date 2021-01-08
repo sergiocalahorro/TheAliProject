@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+//TODO: Add falling animation
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField, Range(1, 10)]

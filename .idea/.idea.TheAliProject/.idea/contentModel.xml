@@ -9,22 +9,8 @@
         <e p="_Scripts" t="Include">
           <e p="CameraController.cs" t="Include" />
           <e p="Constants.cs" t="Include" />
+          <e p="ParallaxBackground.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
-        </e>
-        <e p="BayatGames" t="Include">
-          <e p="Free Platform Game Assets" t="Include">
-            <e p="Readme.txt" t="Include" />
-          </e>
-        </e>
-        <e p="Free Asset - 2D Handcrafted Art" t="Include">
-          <e p="Readme.txt" t="Include" />
-          <e p="Scripts" t="Include">
-            <e p="CamerController.cs" t="Include" />
-          </e>
-          <e p="Shader" t="Include">
-            <e p="NormalMappedSprite-Animated.shader" t="Include" />
-            <e p="NormalMappedTileAnimated.shader" t="Include" />
-          </e>
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
