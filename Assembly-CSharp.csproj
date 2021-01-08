@@ -54,8 +54,8 @@
   <ItemGroup>
      <Compile Include="Assets\_Scripts\CameraController.cs" />
      <Compile Include="Assets\_Scripts\PlayerController.cs" />
-     <Compile Include="Assets\_Scripts\Constants.cs" />
      <Compile Include="Assets\_Scripts\ParallaxBackground.cs" />
+     <Compile Include="Assets\_Scripts\Constants.cs" />
  <Reference Include="UnityEngine">
  <HintPath>D:/Unity Editor/2020.2.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
