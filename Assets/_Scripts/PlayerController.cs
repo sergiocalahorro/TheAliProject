@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-//TODO: Add falling animation
-
 public class PlayerController : MonoBehaviour
 {
     [SerializeField, Range(1, 10)]
@@ -13,8 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(1, 20)]
     private float _jumpForce = 12f;
     private float _groundCheckRadius = 0.2f;
-    private bool _facingRight = true;
     private bool _grounded = true;
+    private bool _facingRight = true;
     private Rigidbody2D _rigidbody;
     private Animator _animator;
     private LayerMask _groundLayerMask;
@@ -107,7 +105,6 @@ public class PlayerController : MonoBehaviour
         if (colliders.Length > 0)
         {
             _grounded = true;
-            
             if (!wasGrounded)
             {
                 _animator.SetBool(Constants.ISJUMPING_B, false);

@@ -9,6 +9,7 @@
         <e p="_Scripts" t="Include">
           <e p="CameraController.cs" t="Include" />
           <e p="Constants.cs" t="Include" />
+          <e p="GroundCheck.cs" t="Include" />
           <e p="ParallaxBackground.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
         </e>
