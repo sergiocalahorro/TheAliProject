@@ -2,40 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class ParallaxBackground : MonoBehaviour
 {
-    [SerializeField] private Vector2 _parallaxMultiplier;
-    private Transform _cameraTransform;
-    private Vector3 _lastCameraPosition;
-    private Vector2 _textureUnitSize;
-
+    private List<ParallaxLayer> _parallaxLayers = new List<ParallaxLayer>();
+    private ParallaxCamera _parallaxCamera;
+    
     // Start is called before the first frame update
     private void Start()
     {
-        _cameraTransform = Camera.main.transform;
-        _lastCameraPosition = _cameraTransform.position;
-        Sprite sprite = GetComponent<SpriteRenderer>().sprite;
-        Texture2D texture = sprite.texture;
-        _textureUnitSize.x = texture.width / sprite.pixelsPerUnit;
-        _textureUnitSize.y = texture.height / sprite.pixelsPerUnit;
-    }
-
-    private void LateUpdate()
-    {
-        // Move backgrounds according to camera movement
-        Vector3 deltaMovement = _cameraTransform.position - _lastCameraPosition;
-        transform.position += new Vector3(deltaMovement.x * _parallaxMultiplier.x,
-                                          deltaMovement.y * _parallaxMultiplier.y);
-        _lastCameraPosition = _cameraTransform.position;
-
-        // Infinite repeating in horizontal Axis
-        if (Mathf.Abs(_cameraTransform.position.x - transform.position.x) >=
-            _textureUnitSize.x)
+        if (_parallaxCamera == null)
         {
-            float offsetPositionX = (_cameraTransform.position.x - transform.position.x) %
-                                    _textureUnitSize.x;
-            transform.position = new Vector3(_cameraTransform.position.x + offsetPositionX,
-                transform.position.y);
+            _parallaxCamera = Camera.main.GetComponent<ParallaxCamera>();
+        }
+
+        if (_parallaxCamera != null)
+        {
+            _parallaxCamera.delegateCameraMove += Move;
+        }
+
+        SetLayers();
+    }
+  
+    /// <summary>
+    /// Set layers from the background to which parallax effect will be applied
+    /// </summary>
+    private void SetLayers()
+    {
+        _parallaxLayers.Clear();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            ParallaxLayer layer = transform.GetChild(i).GetComponent<ParallaxLayer>();
+  
+            if (layer != null)
+            {
+                _parallaxLayers.Add(layer);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Move all background layers
+    /// </summary>
+    /// <param name="delta"> Camera's movement amount </param>
+    private void Move(float delta)
+    {
+        foreach (ParallaxLayer layer in _parallaxLayers)
+        {
+            layer.Move(delta);
         }
     }
 }
