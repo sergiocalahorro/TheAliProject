@@ -54,9 +54,9 @@
   <ItemGroup>
      <Compile Include="Assets\_Scripts\PlayerController.cs" />
      <Compile Include="Assets\_Scripts\ParallaxBackground.cs" />
+     <Compile Include="Assets\_Scripts\ParallaxLayer.cs" />
      <Compile Include="Assets\_Scripts\Constants.cs" />
      <Compile Include="Assets\_Scripts\ParallaxCamera.cs" />
-     <Compile Include="Assets\_Scripts\ParallaxLayer.cs" />
  <Reference Include="UnityEngine">
  <HintPath>D:/Unity Editor/2020.2.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -678,6 +678,12 @@
  <Reference Include="Unity.2D.IK.Runtime">
  <HintPath>C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject/Library/ScriptAssemblies/Unity.2D.IK.Runtime.dll</HintPath>
  </Reference>
+ <Reference Include="Cinemachine">
+ <HintPath>C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+ </Reference>
+ <Reference Include="com.unity.cinemachine.editor">
+ <HintPath>C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.2D.Animation.Triangle.Runtime">
  <HintPath>C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
  </Reference>
@@ -704,12 +710,6 @@
  </Reference>
  <Reference Include="Unity.2D.SpriteShape.Runtime">
  <HintPath>C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="com.unity.cinemachine.editor">
- <HintPath>C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
- </Reference>
- <Reference Include="Cinemachine">
- <HintPath>C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
