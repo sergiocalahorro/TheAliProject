@@ -15,11 +15,11 @@ C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-65254
+62346
 Successfully changed project path to: C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject
 C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 32.58 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 33.29 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.2.1f1 (270dd8c3da1c)
 [Subsystems] Discovering subsystems at path D:/Unity Editor/2020.2.1f1/Editor/Data/Resources/UnitySubsystems
@@ -35,165 +35,152 @@ Initialize mono
 Mono path[0] = 'D:/Unity Editor/2020.2.1f1/Editor/Data/Managed'
 Mono path[1] = 'D:/Unity Editor/2020.2.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'D:/Unity Editor/2020.2.1f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56876
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56052
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: D:/Unity Editor/2020.2.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001065 seconds.
+Registered in 0.001073 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 32.71 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 31.52 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.073 seconds
+- Completed reload, in  1.078 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.000971 seconds.
+Registered in 0.000896 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 33.47 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 32.34 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.840 seconds
+- Completed reload, in  0.839 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 0.37 ms, found 1 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 0.34 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 1892 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 88.1 MB.
 System memory in use after: 88.2 MB.
 
 Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 2344.
-Total: 2.013200 ms (FindLiveObjects: 0.204800 ms CreateObjectMapping: 0.073200 ms MarkObjects: 1.691800 ms  DeleteObjects: 0.042300 ms)
+Total: 1.936700 ms (FindLiveObjects: 0.239900 ms CreateObjectMapping: 0.080500 ms MarkObjects: 1.569100 ms  DeleteObjects: 0.046400 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Art/Backgrounds/bakground366.png
-  artifactKey: Guid(5cc38944e49ec534a8c57e724c2215bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Backgrounds/bakground366.png using Guid(5cc38944e49ec534a8c57e724c2215bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed526def09f70f01c0e69b11d17ce7c0') in 0.144687 seconds
-  Import took 0.147502 seconds .
+  path: Assets/Art/Sprites/Player
+  artifactKey: Guid(318f102da4202dc42bf02a7abef78b2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Player using Guid(318f102da4202dc42bf02a7abef78b2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '44db73f627e91ec7845434175337bded') in 0.007837 seconds
+  Import took 0.010486 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.247303 seconds.
-  path: Assets/Art/Backgrounds/bakground366.png
-  artifactKey: Guid(5cc38944e49ec534a8c57e724c2215bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Backgrounds/bakground366.png using Guid(5cc38944e49ec534a8c57e724c2215bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed526def09f70f01c0e69b11d17ce7c0') in 0.017574 seconds
-  Import took 0.021055 seconds .
+  Time since last request: 1.632776 seconds.
+  path: Assets/Art/Sprites/Enemies
+  artifactKey: Guid(f5497079bd00dd242a9ade5c1b018dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies using Guid(f5497079bd00dd242a9ade5c1b018dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4a6d77020ea10d33eb17b40066c24a73') in 0.006256 seconds
+  Import took 0.008955 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 9.648052 seconds.
-  path: Assets/Art/Backgrounds/Houses.png
-  artifactKey: Guid(5cc38944e49ec534a8c57e724c2215bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Backgrounds/Houses.png using Guid(5cc38944e49ec534a8c57e724c2215bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34dbc632e8bc5c132cc82cfd225b13e7') in 0.016084 seconds
-  Import took 0.018978 seconds .
+  Time since last request: 15.253923 seconds.
+  path: Assets/Art/Sprites/Enemies/ankol1.png
+  artifactKey: Guid(9fa790df3b4c17748a5905231b465804) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/ankol1.png using Guid(9fa790df3b4c17748a5905231b465804) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fef6f82ca695a280932ec853900083e2') in 0.121280 seconds
+  Import took 0.124521 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.032560 seconds.
-  path: Assets/Art/Backgrounds/Houses.png
-  artifactKey: Guid(5cc38944e49ec534a8c57e724c2215bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Backgrounds/Houses.png using Guid(5cc38944e49ec534a8c57e724c2215bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34dbc632e8bc5c132cc82cfd225b13e7') in 0.013925 seconds
-  Import took 0.016791 seconds .
+  Time since last request: 0.000317 seconds.
+  path: Assets/Art/Sprites/Enemies/ankol2.png
+  artifactKey: Guid(460b3fefc332b42419ddfea4ae1fc548) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/ankol2.png using Guid(460b3fefc332b42419ddfea4ae1fc548) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2b6832a120c5660d9870b8c372284832') in 0.016512 seconds
+  Import took 0.019184 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000295 seconds.
+  path: Assets/Art/Sprites/Enemies/gril2.png
+  artifactKey: Guid(71fc89b34e955f54796b3320e4ad1601) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/gril2.png using Guid(71fc89b34e955f54796b3320e4ad1601) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f6c8f30d28af68fcc137abbf0525c50b') in 0.015589 seconds
+  Import took 0.018491 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000297 seconds.
+  path: Assets/Art/Sprites/Enemies/gril1.png
+  artifactKey: Guid(e02413f547e26ab45b1d1e5899d13158) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/gril1.png using Guid(e02413f547e26ab45b1d1e5899d13158) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9c244c7ff9407418cc77ffa78bd3c974') in 0.015339 seconds
+  Import took 0.018137 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.001079 seconds.
+Registered in 0.000930 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.52 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.36 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.865 seconds
+- Completed reload, in  0.751 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.35 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.33 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 1880 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 90.8 MB.
 System memory in use after: 90.9 MB.
 
 Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2352.
-Total: 2.111300 ms (FindLiveObjects: 0.189600 ms CreateObjectMapping: 0.067500 ms MarkObjects: 1.823000 ms  DeleteObjects: 0.029900 ms)
+Total: 1.859900 ms (FindLiveObjects: 0.246100 ms CreateObjectMapping: 0.069600 ms MarkObjects: 1.528900 ms  DeleteObjects: 0.014300 ms)
 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001086 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.40 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.994 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.54 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1880 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 91.0 MB.
-System memory in use after: 91.1 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2354.
-Total: 2.985200 ms (FindLiveObjects: 0.355000 ms CreateObjectMapping: 0.157300 ms MarkObjects: 2.455800 ms  DeleteObjects: 0.015600 ms)
+Received Import Request.
+  Time since last request: 497.290371 seconds.
+  path: Assets/Art/Sprites/Enemies/Ankol1.png
+  artifactKey: Guid(9fa790df3b4c17748a5905231b465804) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/Ankol1.png using Guid(9fa790df3b4c17748a5905231b465804) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a48c08a4554c6fe1f826e934e84219d1') in 0.052658 seconds
+  Import took 0.055533 seconds .
 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.000975 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.33 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.762 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.33 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1880 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 91.1 MB.
-System memory in use after: 91.2 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2356.
-Total: 1.872400 ms (FindLiveObjects: 0.191400 ms CreateObjectMapping: 0.076600 ms MarkObjects: 1.590000 ms  DeleteObjects: 0.013700 ms)
+Received Import Request.
+  Time since last request: 5.859098 seconds.
+  path: Assets/Art/Sprites/Enemies/Ankol2.png
+  artifactKey: Guid(460b3fefc332b42419ddfea4ae1fc548) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/Ankol2.png using Guid(460b3fefc332b42419ddfea4ae1fc548) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c3819f168e3aacb18775e5483a80ac24') in 0.018470 seconds
+  Import took 0.021607 seconds .
 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001389 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.45 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.896 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.32 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1880 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 91.2 MB.
-System memory in use after: 91.3 MB.
+Received Import Request.
+  Time since last request: 0.001201 seconds.
+  path: Assets/Art/Sprites/Enemies/Ankol2.png
+  artifactKey: Guid(460b3fefc332b42419ddfea4ae1fc548) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/Ankol2.png using Guid(460b3fefc332b42419ddfea4ae1fc548) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c3819f168e3aacb18775e5483a80ac24') in 0.016113 seconds
+  Import took 0.019612 seconds .
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2358.
-Total: 1.891600 ms (FindLiveObjects: 0.201200 ms CreateObjectMapping: 0.064000 ms MarkObjects: 1.612200 ms  DeleteObjects: 0.013500 ms)
+========================================================================
+Received Import Request.
+  Time since last request: 4.125079 seconds.
+  path: Assets/Art/Sprites/Enemies/Gril1.png
+  artifactKey: Guid(e02413f547e26ab45b1d1e5899d13158) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/Gril1.png using Guid(e02413f547e26ab45b1d1e5899d13158) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '95a24ee598f0413c5aee87ccf39de2bb') in 0.017888 seconds
+  Import took 0.020933 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.544861 seconds.
+  path: Assets/Art/Sprites/Enemies/Gril2.png
+  artifactKey: Guid(71fc89b34e955f54796b3320e4ad1601) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/Gril2.png using Guid(71fc89b34e955f54796b3320e4ad1601) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ece2d2d521eee318bc201ef6ec917dc0') in 0.017174 seconds
+  Import took 0.020300 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
