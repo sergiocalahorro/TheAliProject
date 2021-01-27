@@ -15,11 +15,11 @@ C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-56124
+56171
 Successfully changed project path to: C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject
 C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 34.22 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 50.74 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.2.2f1 (068178b99f32)
 [Subsystems] Discovering subsystems at path D:/Unity Editor/2020.2.2f1/Editor/Data/Resources/UnitySubsystems
@@ -31,141 +31,162 @@ Direct3D:
     Vendor:   
     VRAM:     8079 MB
     Driver:   27.21.14.6140
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Initialize mono
 Mono path[0] = 'D:/Unity Editor/2020.2.2f1/Editor/Data/Managed'
 Mono path[1] = 'D:/Unity Editor/2020.2.2f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'D:/Unity Editor/2020.2.2f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56068
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56400
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: D:/Unity Editor/2020.2.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001339 seconds.
+Registered in 0.001311 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 33.16 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 48.58 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.139 seconds
+- Completed reload, in  1.157 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.000949 seconds.
+Registered in 0.001511 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 35.13 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 51.10 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.852 seconds
+- Completed reload, in  0.938 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
-Refreshing native plugins compatible for Editor in 0.35 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.56 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1892 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 88.1 MB.
-System memory in use after: 88.2 MB.
+Unloading 3001 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 128.1 MB.
+System memory in use after: 128.3 MB.
 
-Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 2344.
-Total: 2.067600 ms (FindLiveObjects: 0.217300 ms CreateObjectMapping: 0.071600 ms MarkObjects: 1.718400 ms  DeleteObjects: 0.059400 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/Art/Sprites/defeatedANKOL.png
-  artifactKey: Guid(dddca01354e4abc42871934c94886615) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/defeatedANKOL.png using Guid(dddca01354e4abc42871934c94886615) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b2b100fdee2cf971a01f7857606b23b') in 0.132466 seconds
-  Import took 0.135320 seconds .
+Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 3453.
+Total: 3.018400 ms (FindLiveObjects: 0.474600 ms CreateObjectMapping: 0.293000 ms MarkObjects: 2.162900 ms  DeleteObjects: 0.086200 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000302 seconds.
-  path: Assets/Art/Sprites/faiabol1.png
-  artifactKey: Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/faiabol1.png using Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80465172ebd8d6b34a5cd4d536f89b2e') in 0.022498 seconds
-  Import took 0.025247 seconds .
+  path: Assets/Rendering
+  artifactKey: Guid(7ceef0769fd71864c976fc69230d3b0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Rendering using Guid(7ceef0769fd71864c976fc69230d3b0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f896a0f61bef137e72ef6d203d90a5d6') in 0.011445 seconds
+  Import took 0.016369 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000317 seconds.
-  path: Assets/Art/Sprites/rotten ankols.png
-  artifactKey: Guid(a32de634b32caaf409f7fa47e6dcafc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/rotten ankols.png using Guid(a32de634b32caaf409f7fa47e6dcafc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1be557e1437c43404bd75328937f4808') in 0.028907 seconds
-  Import took 0.031692 seconds .
+  Time since last request: 16.859532 seconds.
+  path: Assets/Rendering/UniversalRenderPipelineAsset.asset
+  artifactKey: Guid(77c88fbf3ec31c74e97059c559a01a44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Rendering/UniversalRenderPipelineAsset.asset using Guid(77c88fbf3ec31c74e97059c559a01a44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90d577224a9311ade1c2a4a554920b1d') in 0.071128 seconds
+  Import took 0.076169 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000299 seconds.
-  path: Assets/Art/Sprites/faiabol1.png
-  artifactKey: Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/faiabol1.png using Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80465172ebd8d6b34a5cd4d536f89b2e') in 0.008321 seconds
-  Import took 0.011150 seconds .
+  Time since last request: 0.000197 seconds.
+  path: Assets/Rendering/UniversalRenderPipelineAsset_Renderer.asset
+  artifactKey: Guid(92038fb354c34c44b8942dcde3843447) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Rendering/UniversalRenderPipelineAsset_Renderer.asset using Guid(92038fb354c34c44b8942dcde3843447) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b358b91f1c5b8098331233cc994bc3c1') in 0.020028 seconds
+  Import took 0.024814 seconds .
+
+========================================================================
+Received Prepare
+Switching render pipeline 00000000000000000000000000000000 -> 77c88fbf3ec31c74e97059c559a01a44
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 1.79 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 53 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 70.3 MB.
+System memory in use after: 70.5 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 3501.
+Total: 2.663700 ms (FindLiveObjects: 0.313000 ms CreateObjectMapping: 0.146700 ms MarkObjects: 2.182400 ms  DeleteObjects: 0.020400 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000303 seconds.
-  path: Assets/Art/Sprites/GRIL3.png
-  artifactKey: Guid(1f67beb9113425a4b90324903d13437e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/GRIL3.png using Guid(1f67beb9113425a4b90324903d13437e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1b5dda42bded212dbdd96d340efb7f5') in 0.017157 seconds
-  Import took 0.020013 seconds .
+  Time since last request: 36.843866 seconds.
+  path: Assets/Rendering/UniversalRenderPipelineAsset.asset
+  artifactKey: Guid(77c88fbf3ec31c74e97059c559a01a44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Rendering/UniversalRenderPipelineAsset.asset using Guid(77c88fbf3ec31c74e97059c559a01a44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e0a91bf4e6fd0abfb79971b6a9075278') in 0.005472 seconds
+  Import took 0.009822 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000289 seconds.
-  path: Assets/Art/Sprites/faiabol2.png
-  artifactKey: Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/faiabol2.png using Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4723c8cb9d12cd346c820475dd5dbb77') in 0.015793 seconds
-  Import took 0.018450 seconds .
+  Time since last request: 0.000259 seconds.
+  path: Assets/Rendering/UniversalRenderPipelineAsset_Renderer.asset
+  artifactKey: Guid(92038fb354c34c44b8942dcde3843447) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Rendering/UniversalRenderPipelineAsset_Renderer.asset using Guid(92038fb354c34c44b8942dcde3843447) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9d64ca4f3155df88052ecbe73c66dad9') in 0.003455 seconds
+  Import took 0.007361 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.002943 seconds.
-  path: Assets/Art/Sprites/faiabol2.png
-  artifactKey: Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/faiabol2.png using Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4723c8cb9d12cd346c820475dd5dbb77') in 0.008545 seconds
-  Import took 0.011555 seconds .
+  Time since last request: 0.588239 seconds.
+  path: Assets/Rendering/UniversalRenderPipelineAsset_Renderer.asset
+  artifactKey: Guid(92038fb354c34c44b8942dcde3843447) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Rendering/UniversalRenderPipelineAsset_Renderer.asset using Guid(92038fb354c34c44b8942dcde3843447) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '15467550cff0fb56ce47f9a97ae7c0eb') in 0.003921 seconds
+  Import took 0.009439 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 17.811918 seconds.
-  path: Assets/Art/Sprites/Enemies/Gril_Shot.png
-  artifactKey: Guid(1f67beb9113425a4b90324903d13437e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/Enemies/Gril_Shot.png using Guid(1f67beb9113425a4b90324903d13437e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c6859d89cd8e2a0562700501a75037d') in 0.015501 seconds
-  Import took 0.018867 seconds .
+  Time since last request: 55.985567 seconds.
+  path: Assets/Rendering/New 2D Renderer Data.asset
+  artifactKey: Guid(e02963bbde12e294b9f683b606558c7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Rendering/New 2D Renderer Data.asset using Guid(e02963bbde12e294b9f683b606558c7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00b00a8277717acec4f48dc25c0c7da9') in 0.010783 seconds
+  Import took 0.016234 seconds .
 
 ========================================================================
-Received Import Request.
-  Time since last request: 22.914042 seconds.
-  path: Assets/Art/Sprites/Enemies/Gril_Fireball1.png
-  artifactKey: Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/Enemies/Gril_Fireball1.png using Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2adb51cb1b41e97f6692cfda7b015052') in 0.012115 seconds
-  Import took 0.015119 seconds .
+Received Prepare
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 1.71 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 68.9 MB.
+System memory in use after: 69.2 MB.
 
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 3503.
+Total: 3.167600 ms (FindLiveObjects: 0.272600 ms CreateObjectMapping: 0.124800 ms MarkObjects: 2.752300 ms  DeleteObjects: 0.016900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:srp/default-shader: 0000e00a000e0de00000e000e02d0000 -> 0000e00a000e0de00000e000e0000000
 ========================================================================
 Received Import Request.
-  Time since last request: 5.901047 seconds.
-  path: Assets/Art/Sprites/Enemies/Gril_Fireball2.png
-  artifactKey: Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/Enemies/Gril_Fireball2.png using Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b226a6ff3c8614eee423c85cb621f17') in 0.013238 seconds
-  Import took 0.016566 seconds .
+  Time since last request: 61.128605 seconds.
+  path: Assets/Rendering/UniversalRenderPipelineAsset.asset
+  artifactKey: Guid(77c88fbf3ec31c74e97059c559a01a44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Rendering/UniversalRenderPipelineAsset.asset using Guid(77c88fbf3ec31c74e97059c559a01a44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fbfb950a7cd3b0c8402b6f67a9a78c5c') in 0.008170 seconds
+  Import took 0.012895 seconds .
 
 ========================================================================
-Received Import Request.
-  Time since last request: 8.411741 seconds.
-  path: Assets/Art/Sprites/Enemies/Ankol_Dead.png
-  artifactKey: Guid(dddca01354e4abc42871934c94886615) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/Enemies/Ankol_Dead.png using Guid(dddca01354e4abc42871934c94886615) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6541f027f50556c8e448a4db90d05ab9') in 0.016001 seconds
-  Import took 0.019025 seconds .
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001988 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.78 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.941 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.63 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2938 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 128.0 MB.
+System memory in use after: 128.2 MB.
 
-========================================================================
-Received Import Request.
-  Time since last request: 9.428200 seconds.
-  path: Assets/Art/Sprites/Enemies/RottenAnkols.png
-  artifactKey: Guid(a32de634b32caaf409f7fa47e6dcafc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/Sprites/Enemies/RottenAnkols.png using Guid(a32de634b32caaf409f7fa47e6dcafc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '76a886981bf1ef582a432f5c6194c168') in 0.020370 seconds
-  Import took 0.023226 seconds .
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 3509.
+Total: 3.282500 ms (FindLiveObjects: 0.300200 ms CreateObjectMapping: 0.129700 ms MarkObjects: 2.832900 ms  DeleteObjects: 0.018400 ms)
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
