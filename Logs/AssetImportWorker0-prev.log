@@ -1,0 +1,171 @@
+Using pre-set license
+Built from '2020.2/release' branch; Version is '2020.2.2f1 (068178b99f32) revision 426360'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19042.746; Version 2009; 64bit' Language: 'es' Physical Memory: 16302 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+D:\Unity Editor\2020.2.2f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+56124
+Successfully changed project path to: C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject
+C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 34.22 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.2f1 (068178b99f32)
+[Subsystems] Discovering subsystems at path D:/Unity Editor/2020.2.2f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1080 (ID=0x1be0)
+    Vendor:   
+    VRAM:     8079 MB
+    Driver:   27.21.14.6140
+Initialize mono
+Mono path[0] = 'D:/Unity Editor/2020.2.2f1/Editor/Data/Managed'
+Mono path[1] = 'D:/Unity Editor/2020.2.2f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'D:/Unity Editor/2020.2.2f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56068
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Unity Editor/2020.2.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001339 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 33.16 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.139 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.000949 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 35.13 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.852 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 0.35 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1892 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 88.1 MB.
+System memory in use after: 88.2 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 2344.
+Total: 2.067600 ms (FindLiveObjects: 0.217300 ms CreateObjectMapping: 0.071600 ms MarkObjects: 1.718400 ms  DeleteObjects: 0.059400 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Art/Sprites/defeatedANKOL.png
+  artifactKey: Guid(dddca01354e4abc42871934c94886615) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/defeatedANKOL.png using Guid(dddca01354e4abc42871934c94886615) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b2b100fdee2cf971a01f7857606b23b') in 0.132466 seconds
+  Import took 0.135320 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000302 seconds.
+  path: Assets/Art/Sprites/faiabol1.png
+  artifactKey: Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/faiabol1.png using Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80465172ebd8d6b34a5cd4d536f89b2e') in 0.022498 seconds
+  Import took 0.025247 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000317 seconds.
+  path: Assets/Art/Sprites/rotten ankols.png
+  artifactKey: Guid(a32de634b32caaf409f7fa47e6dcafc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/rotten ankols.png using Guid(a32de634b32caaf409f7fa47e6dcafc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1be557e1437c43404bd75328937f4808') in 0.028907 seconds
+  Import took 0.031692 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000299 seconds.
+  path: Assets/Art/Sprites/faiabol1.png
+  artifactKey: Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/faiabol1.png using Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80465172ebd8d6b34a5cd4d536f89b2e') in 0.008321 seconds
+  Import took 0.011150 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000303 seconds.
+  path: Assets/Art/Sprites/GRIL3.png
+  artifactKey: Guid(1f67beb9113425a4b90324903d13437e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/GRIL3.png using Guid(1f67beb9113425a4b90324903d13437e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1b5dda42bded212dbdd96d340efb7f5') in 0.017157 seconds
+  Import took 0.020013 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000289 seconds.
+  path: Assets/Art/Sprites/faiabol2.png
+  artifactKey: Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/faiabol2.png using Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4723c8cb9d12cd346c820475dd5dbb77') in 0.015793 seconds
+  Import took 0.018450 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002943 seconds.
+  path: Assets/Art/Sprites/faiabol2.png
+  artifactKey: Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/faiabol2.png using Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4723c8cb9d12cd346c820475dd5dbb77') in 0.008545 seconds
+  Import took 0.011555 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 17.811918 seconds.
+  path: Assets/Art/Sprites/Enemies/Gril_Shot.png
+  artifactKey: Guid(1f67beb9113425a4b90324903d13437e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/Gril_Shot.png using Guid(1f67beb9113425a4b90324903d13437e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c6859d89cd8e2a0562700501a75037d') in 0.015501 seconds
+  Import took 0.018867 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 22.914042 seconds.
+  path: Assets/Art/Sprites/Enemies/Gril_Fireball1.png
+  artifactKey: Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/Gril_Fireball1.png using Guid(8edbb006ed9972545a88134361f93038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2adb51cb1b41e97f6692cfda7b015052') in 0.012115 seconds
+  Import took 0.015119 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.901047 seconds.
+  path: Assets/Art/Sprites/Enemies/Gril_Fireball2.png
+  artifactKey: Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/Gril_Fireball2.png using Guid(57818849a93faad4691c82c9c30063fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b226a6ff3c8614eee423c85cb621f17') in 0.013238 seconds
+  Import took 0.016566 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 8.411741 seconds.
+  path: Assets/Art/Sprites/Enemies/Ankol_Dead.png
+  artifactKey: Guid(dddca01354e4abc42871934c94886615) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/Ankol_Dead.png using Guid(dddca01354e4abc42871934c94886615) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6541f027f50556c8e448a4db90d05ab9') in 0.016001 seconds
+  Import took 0.019025 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.428200 seconds.
+  path: Assets/Art/Sprites/Enemies/RottenAnkols.png
+  artifactKey: Guid(a32de634b32caaf409f7fa47e6dcafc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Sprites/Enemies/RottenAnkols.png using Guid(a32de634b32caaf409f7fa47e6dcafc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '76a886981bf1ef582a432f5c6194c168') in 0.020370 seconds
+  Import took 0.023226 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
