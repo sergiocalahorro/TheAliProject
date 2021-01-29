@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _jumpForce: 12
+  _jumpForce: 15
   groundCheckOrigin: {fileID: 6663998467440649546}
 --- !u!114 &1561984002
 MonoBehaviour:
@@ -231,7 +231,7 @@ MonoBehaviour:
   - {x: -0.3364437, y: -0.82230985, z: 0}
   m_ShapePathHash: -1621996073
   m_Mesh: {fileID: 0}
-  m_InstanceId: -38136
+  m_InstanceId: -1324
 --- !u!1 &6663998467440649547
 GameObject:
   m_ObjectHideFlags: 0

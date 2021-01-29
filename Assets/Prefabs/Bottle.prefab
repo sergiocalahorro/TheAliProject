@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6816094812693186475}
   - component: {fileID: 6816094812693186474}
-  - component: {fileID: 6816094812693186477}
+  - component: {fileID: 1022421606}
+  - component: {fileID: 1022421605}
   m_Layer: 8
   m_Name: Bottle
   m_TagString: Platform
@@ -83,8 +84,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &6816094812693186477
-CapsuleCollider2D:
+--- !u!50 &1022421606
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6816094812693186476}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &1022421605
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -96,6 +118,40 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.90332234, y: -0.052389976}
-  m_Size: {x: 11.956652, y: 2.9068587}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 16.87, y: 9.49}
+    newSize: {x: 16.87, y: 9.49}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -3.3123388, y: -1.5602686}
+      - {x: -4.3118196, y: -1.2828715}
+      - {x: -5.079049, y: -0.8018856}
+      - {x: -5.803664, y: -0.5350232}
+      - {x: -6.260195, y: -0.51303077}
+      - {x: -6.6017137, y: -0.58944964}
+      - {x: -7.1110477, y: -0.5448704}
+      - {x: -7.2634993, y: -0.3105297}
+      - {x: -7.712285, y: -0.33290434}
+      - {x: -7.7058287, y: 0.21812296}
+      - {x: -7.262514, y: 0.2914033}
+      - {x: -6.8916507, y: 0.5226886}
+      - {x: -6.9161134, y: 0.44678402}
+      - {x: -6.100767, y: 0.37075102}
+      - {x: -5.144404, y: 0.5385678}
+      - {x: -4.287648, y: 1.137349}
+      - {x: -3.5398617, y: 1.3891811}
+      - {x: 6.448114, y: 1.3881264}
+      - {x: 6.6259384, y: 0.95413804}
+      - {x: 6.76121, y: 0.8750324}
+      - {x: 6.675161, y: 0.64093447}
+      - {x: 6.7428646, y: -0.8285067}
+      - {x: 6.817122, y: -0.9184146}
+      - {x: 6.3999166, y: -1.5600828}
+      - {x: 6.3999166, y: -1.5600828}
