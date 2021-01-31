@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(1, 10)]
     private float _speed = 5f;
     [SerializeField, Range(1, 20)]
-    private float _jumpForce = 12f;
+    private float _jumpForce = 15f;
     private float _groundCheckRadius = 0.2f;
     private bool _grounded = true;
     private bool _facingRight = true;
@@ -33,11 +33,17 @@ public class PlayerController : MonoBehaviour
     {
         Move();
 
-        if (_grounded && Input.GetKeyDown(KeyCode.Space))
+
+        if (_grounded && Input.GetButtonDown("Jump"))
         {
             Jump();
         }
-        
+
+        if (_rigidbody.velocity.y > 0 && Input.GetButtonUp("Jump"))
+        {
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _rigidbody.velocity.y * 0.5f);
+        }
+
         // Blend between taking off and falling states when jumping
         _animator.SetFloat(Constants.VERTICALSPEED_F, _rigidbody.velocity.y);
     }
