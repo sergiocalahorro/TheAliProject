@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6663998466547306989}
   - component: {fileID: 6663998466547306990}
   - component: {fileID: 6663998466547306986}
-  - component: {fileID: 6663998466547306987}
   - component: {fileID: 6663998466547306985}
+  - component: {fileID: 936534928}
   m_Layer: 0
   m_Name: Ali
   m_TagString: Player
@@ -120,39 +120,13 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &6663998466547306987
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6663998466547306991}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.029679567, y: -0.060839653}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 2.56}
-    newSize: {x: 2.56, y: 2.56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.8030018, y: 1.7746234}
-  m_EdgeRadius: 0
 --- !u!114 &6663998466547306985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,9 +139,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baea02045c9186b418c92b510621a8a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _movementSpeed: 5
   _jumpForce: 15
-  groundCheckOrigin: {fileID: 6663998467440649546}
+  groundCheck: {fileID: 6663998467440649546}
+  _slopeCheckDistance: 0.5
+  _isOnSlope: 0
+  _zeroFriction: {fileID: 6200000, guid: 2991aae751abf6d438ae1cda547bf009, type: 2}
+  _fullFriction: {fileID: 6200000, guid: 2d386c8ce7fa1f74a94ab71528f3ef99, type: 2}
+--- !u!70 &936534928
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6663998466547306991}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.05, y: 0.05}
+  m_Size: {x: 0.8, y: 2.1}
+  m_Direction: 0
 --- !u!1 &6663998467440649547
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,9 +172,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6663998467440649546}
   m_Layer: 0
-  m_Name: GroundCheckOrigin
+  m_Name: Ground Check
   m_TagString: Untagged
-  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
