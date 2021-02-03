@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private float _slopeSideAngle;
     private float _lastSlopeDownAngle;
     private float _maxSlopeAngle = 90f;
-    public bool _isOnSlope;
+    private bool _isOnSlope;
     private bool _canWalkOnSlope;
     private Vector2 _slopeNormalPerpendicular;
 
@@ -89,6 +89,17 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
+    }
+
+    /// <summary>
+    /// Update animator's parameters
+    /// </summary>
+    private void AnimatorUpdate()
+    {
+        _animator.SetFloat(Constants.SPEED_F, Mathf.Abs(_horizontalInput));
+        _animator.SetFloat(Constants.VERTICALSPEED_F, _rigidbody.velocity.y);
+        _animator.SetBool(Constants.ISJUMPING_B, _isJumping);
+        _animator.SetBool(Constants.ISGROUNDED_B, _isGrounded);
     }
 
     /// <summary>
@@ -240,16 +251,5 @@ public class PlayerController : MonoBehaviour
 
             _lastSlopeDownAngle = _slopeDownAngle;
         }
-    }
-
-    /// <summary>
-    /// Update animator's parameters
-    /// </summary>
-    private void AnimatorUpdate()
-    {
-        _animator.SetFloat(Constants.SPEED_F, Mathf.Abs(_horizontalInput));
-        _animator.SetFloat(Constants.VERTICALSPEED_F, _rigidbody.velocity.y);
-        _animator.SetBool(Constants.ISJUMPING_B, _isJumping);
-        _animator.SetBool(Constants.ISGROUNDED_B, _isGrounded);
     }
 }
