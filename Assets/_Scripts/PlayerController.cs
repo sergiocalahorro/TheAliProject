@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void CheckInput()
     {
-        _horizontalInput = Input.GetAxisRaw("Horizontal");
+        _horizontalInput = Input.GetAxis("Horizontal");
 
         // Flip character
         if (_horizontalInput > 0f && !_facingRight)
