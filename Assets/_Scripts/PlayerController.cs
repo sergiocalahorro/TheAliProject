@@ -182,11 +182,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void HalfJump()
-    {
-        
-    }
-
     /// <summary>
     /// Check if player is grounded
     /// </summary>
