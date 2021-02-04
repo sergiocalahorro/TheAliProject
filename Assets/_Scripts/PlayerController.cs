@@ -10,16 +10,20 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
 
     // Player movement
-    [SerializeField, Range(1, 10)]
+    [SerializeField]
     private float _movementSpeed;
     private float _horizontalInput;
     private bool _facingRight;
-    [SerializeField, Range(1, 20)]
+    [SerializeField]
     private float _jumpForce;
     private bool _canJump;
     private bool _isJumping;
-    [SerializeField, Range (0.1f, 0.7f)]
+    [SerializeField]
     private float _variableJumpHeightFactor;
+    [SerializeField]
+    private float _movementForceInAir;
+    [SerializeField]
+    private float _airDragMultiplier;
 
     // Ground check
     private LayerMask _groundLayerMask;
@@ -136,8 +140,23 @@ public class PlayerController : MonoBehaviour
         else if (!_isGrounded)
         {
             // If in air
-            _rigidbody.velocity = new Vector2(_movementSpeed * _horizontalInput,
-                                              _rigidbody.velocity.y);
+            if (_horizontalInput != 0f)
+            {
+                // Add a force when moving in mid-air
+                Vector2 airForce = new Vector2(_movementForceInAir * _horizontalInput, 0f);
+                _rigidbody.AddForce(airForce);
+
+                if (Mathf.Abs(_rigidbody.velocity.x) > _movementSpeed)
+                {
+                    _rigidbody.velocity = new Vector2(_movementSpeed * _horizontalInput,
+                                                      _rigidbody.velocity.y);
+                }
+            }
+            else
+            {
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x * _airDragMultiplier,
+                                                  _rigidbody.velocity.y);
+            }
         }
     }
 
