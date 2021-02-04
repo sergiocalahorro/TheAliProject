@@ -13,30 +13,34 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(1, 10)]
     private float _movementSpeed;
     private float _horizontalInput;
-    private bool _facingRight = true;
+    private bool _facingRight;
     [SerializeField, Range(1, 20)]
     private float _jumpForce;
     private bool _canJump;
     private bool _isJumping;
+    [SerializeField, Range (0.1f, 0.7f)]
+    private float _variableJumpHeightFactor;
 
     // Ground check
     private LayerMask _groundLayerMask;
-    private float _groundCheckRadius = 0.2f;
+    [SerializeField]
+    private float _groundCheckRadius;
     private bool _isGrounded;
     public Transform groundCheck;
 
     // Slope check
     [SerializeField]
-    private float _slopeCheckDistance = 0.5f;
+    private float _slopeCheckDistance;
     private float _slopeDownAngle;
     private float _slopeSideAngle;
     private float _lastSlopeDownAngle;
-    private float _maxSlopeAngle = 90f;
+    [SerializeField]
+    private float _maxSlopeAngle;
     private bool _isOnSlope;
     private bool _canWalkOnSlope;
     private Vector2 _slopeNormalPerpendicular;
 
-    // Physics
+    // Materials
     [SerializeField]
     private PhysicsMaterial2D _zeroFriction;
     [SerializeField]
@@ -50,6 +54,8 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
 
         _groundLayerMask = LayerMask.GetMask("Ground");
+
+        _facingRight = true;
     }
 
     // Update is called once per frame
@@ -72,7 +78,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void CheckInput()
     {
-        _horizontalInput = Input.GetAxis("Horizontal");
+        _horizontalInput = Input.GetAxisRaw("Horizontal");
 
         // Flip character
         if (_horizontalInput > 0f && !_facingRight)
@@ -88,6 +94,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             Jump();
+        }
+
+        // Stop jump at a variable height
+        if (Input.GetButtonUp("Jump"))
+        {
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 
+                                              _rigidbody.velocity.y * _variableJumpHeightFactor);
         }
     }
 
@@ -133,8 +146,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Flip()
     {
-        _spriteRenderer.flipX = _facingRight;
         _facingRight = !_facingRight;
+        _spriteRenderer.flipX = _facingRight;
     }
 
     /// <summary>
@@ -146,9 +159,13 @@ public class PlayerController : MonoBehaviour
         {
             _canJump = false;
             _isJumping = true;
-            _rigidbody.velocity = Vector2.zero;
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         }
+    }
+
+    private void HalfJump()
+    {
+        
     }
 
     /// <summary>

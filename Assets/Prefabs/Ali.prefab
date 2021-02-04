@@ -120,12 +120,12 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!114 &6663998466547306985
 MonoBehaviour:
@@ -140,10 +140,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementSpeed: 5
-  _jumpForce: 15
+  _jumpForce: 17
+  _variableJumpHeightFactor: 0.5
+  _groundCheckRadius: 0.2
   groundCheck: {fileID: 6663998467440649546}
   _slopeCheckDistance: 0.5
-  _isOnSlope: 0
+  _maxSlopeAngle: 90
   _zeroFriction: {fileID: 6200000, guid: 2991aae751abf6d438ae1cda547bf009, type: 2}
   _fullFriction: {fileID: 6200000, guid: 2d386c8ce7fa1f74a94ab71528f3ef99, type: 2}
 --- !u!70 &936534928
