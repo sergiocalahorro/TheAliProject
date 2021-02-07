@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: b6af75953ba407e45882790ce740f50d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - bits indian calligra
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d2bd5a12a380891478298bb3638144d6, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

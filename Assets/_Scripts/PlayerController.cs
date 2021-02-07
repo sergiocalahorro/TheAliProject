@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
-
+    private AudioSource _audioSource;
+    
     // Player movement
     [SerializeField]
     private float _movementSpeed;
@@ -50,12 +51,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private PhysicsMaterial2D _fullFriction;
 
+    // Audio
+    public AudioClip footstepsAudioClip;
+    public AudioClip jumpAudioClip;
+
     // Start is called before the first frame update
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
 
         _groundLayerMask = LayerMask.GetMask("Ground");
 
@@ -158,6 +164,17 @@ public class PlayerController : MonoBehaviour
                                                   _rigidbody.velocity.y);
             }
         }
+
+        // Play footsteps sound
+        if (_isGrounded && _horizontalInput != 0f)
+        {
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.clip = footstepsAudioClip;
+                _audioSource.volume = 0.1f;
+                _audioSource.Play();
+            }
+        }
     }
 
     /// <summary>
@@ -179,6 +196,10 @@ public class PlayerController : MonoBehaviour
             _canJump = false;
             _isJumping = true;
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+
+            // Play sound
+            _audioSource.volume = 0.3f;
+            _audioSource.PlayOneShot(jumpAudioClip);
         }
     }
 
