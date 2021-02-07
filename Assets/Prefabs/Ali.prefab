@@ -152,7 +152,8 @@ MonoBehaviour:
   _zeroFriction: {fileID: 6200000, guid: 2991aae751abf6d438ae1cda547bf009, type: 2}
   _fullFriction: {fileID: 6200000, guid: 2d386c8ce7fa1f74a94ab71528f3ef99, type: 2}
   footstepsAudioClip: {fileID: 8300000, guid: 4709044294b3b5f4b96f9088bc161744, type: 3}
-  jumpAudioClip: {fileID: 8300000, guid: cbb60cc71163f054bbb60c63d0464e1d, type: 3}
+  jumpAudioClip: {fileID: 8300000, guid: 69832443fbda78541ae3560ac43233b4, type: 3}
+  takeDamageAudioClip: {fileID: 8300000, guid: 047a12ef01c07b142a392a24b274ec17, type: 3}
 --- !u!70 &936534928
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -181,7 +182,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

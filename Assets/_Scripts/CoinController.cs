@@ -6,13 +6,6 @@ public class CoinController : MonoBehaviour
 {
     [SerializeField]
     private float _rotatingSpeed;
-    private GameManager _gameManager;
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        _gameManager = FindObjectOfType<GameManager>();
-    }
 
     // Update is called once per frame
     private void Update()
@@ -27,7 +20,7 @@ public class CoinController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
-            _gameManager.CoinPickUp();
+            GameManager.Instance.CoinPickUp();
         }
     }
 

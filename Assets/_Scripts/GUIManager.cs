@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GUIManager : MonoBehaviour
+public class GUIManager : Singleton<GUIManager>
 {
     public TextMeshProUGUI coinsText;
 

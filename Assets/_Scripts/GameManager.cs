@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
+    // Components
     private AudioSource _audioSource;
-    private GUIManager _guiManager;
+
     private int _coinCount;
 
     public AudioClip coinAudioClip;
+
+    // Prevent non-Singleton constructor use
+    protected GameManager() { }
 
     // Start is called before the first frame update
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
-        _guiManager = GetComponent<GUIManager>();
     }
 
     // Update is called once per frame
@@ -34,6 +37,6 @@ public class GameManager : MonoBehaviour
         _audioSource.PlayOneShot(coinAudioClip);
 
         // Update UI
-        _guiManager.UpdateCoinsText(_coinCount);
+        GUIManager.Instance.UpdateCoinsText(_coinCount);
     }
 }

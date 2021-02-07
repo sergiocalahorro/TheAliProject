@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 237313568112171022}
   - component: {fileID: 237313568112171009}
   - component: {fileID: 237313568112171008}
+  - component: {fileID: 1649199506768962025}
   m_Layer: 8
   m_Name: RottenAnkols
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 489681265
   m_SortingLayer: 1
-  m_SortingOrder: 20
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a32de634b32caaf409f7fa47e6dcafc4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -96,7 +97,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.32893562, y: 0.71662426}
+  m_Offset: {x: -0.32893562, y: 0.6584017}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -107,5 +108,17 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.53516, y: 0.6648197}
+  m_Size: {x: 3.53516, y: 0.54837465}
   m_EdgeRadius: 0
+--- !u!114 &1649199506768962025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237313568112171011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2e87941add0164fa23d1547a31a5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

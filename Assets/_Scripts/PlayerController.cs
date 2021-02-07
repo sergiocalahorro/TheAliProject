@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//TODO: VARIABLE JUMP HEIGHT
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
     // Audio
     public AudioClip footstepsAudioClip;
     public AudioClip jumpAudioClip;
+    public AudioClip takeDamageAudioClip;
 
     // Start is called before the first frame update
     private void Start()
@@ -198,9 +200,21 @@ public class PlayerController : MonoBehaviour
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
             // Play sound
-            _audioSource.volume = 0.3f;
+            _audioSource.volume = 0.4f;
             _audioSource.PlayOneShot(jumpAudioClip);
         }
+    }
+
+    /// <summary>
+    /// Player takes damage
+    /// </summary>
+    public void TakeDamage()
+    {
+        //_spriteRenderer.color = new Color(1f, 0f, 0f);
+
+        // Play sound
+        _audioSource.volume = 0.4f;
+        _audioSource.PlayOneShot(takeDamageAudioClip);
     }
 
     /// <summary>

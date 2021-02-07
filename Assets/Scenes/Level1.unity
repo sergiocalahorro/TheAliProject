@@ -505,7 +505,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -1349,7 +1349,7 @@ GameObject:
   - component: {fileID: 315581175}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: GameController
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1380,7 +1380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaaf18f4d50013344b30ed1abcf81e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinAudioClip: {fileID: 8300000, guid: 65c91ae41439fe54c9e26f52fcb1e30e, type: 3}
+  coinAudioClip: {fileID: 8300000, guid: bcc1052f6a3497f41952896605a9b276, type: 3}
 --- !u!114 &315581174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2063,9 +2063,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: aef8bdf831b50e64581f95a910be38b6, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9fb990b90d2a0c7449d05b66dddc7e6a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.05
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -6582,10 +6582,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1720911139}
     m_Modifications:
-    - target: {fileID: 237313568112171009, guid: 075041aaff581c24c892bd259a1d065c, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 237313568112171011, guid: 075041aaff581c24c892bd259a1d065c, type: 3}
       propertyPath: m_Name
       value: RottenAnkols
@@ -6765,10 +6761,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 968334353, guid: 99232e27747c85642951c94c9517d7a9, type: 3}
-      propertyPath: m_Volume
-      value: 0.1
-      objectReference: {fileID: 0}
+    - target: {fileID: 6663998466547306985, guid: 99232e27747c85642951c94c9517d7a9, type: 3}
+      propertyPath: jumpAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9c6e5b7868f70ef49a1ab8417b2a7609, type: 3}
     - target: {fileID: 6663998466547306988, guid: 99232e27747c85642951c94c9517d7a9, type: 3}
       propertyPath: m_RootOrder
       value: 6
