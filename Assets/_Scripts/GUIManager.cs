@@ -4,9 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GUIManager : Singleton<GUIManager>
+public class GUIManager : MonoBehaviour
 {
     public TextMeshProUGUI coinsText;
+
+    // Awake is called when the script instance is being loaded
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     // Start is called before the first frame update
     private void Start()

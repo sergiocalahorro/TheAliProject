@@ -6,18 +6,17 @@ public class GameManager : Singleton<GameManager>
 {
     // Components
     private AudioSource _audioSource;
+    private GUIManager _guiManager;
 
     private int _coinCount;
 
     public AudioClip coinAudioClip;
 
-    // Prevent non-Singleton constructor use
-    protected GameManager() { }
-
     // Start is called before the first frame update
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        _guiManager = GetComponent<GUIManager>();
     }
 
     // Update is called once per frame
@@ -37,6 +36,6 @@ public class GameManager : Singleton<GameManager>
         _audioSource.PlayOneShot(coinAudioClip);
 
         // Update UI
-        GUIManager.Instance.UpdateCoinsText(_coinCount);
+        _guiManager.UpdateCoinsText(_coinCount);
     }
 }

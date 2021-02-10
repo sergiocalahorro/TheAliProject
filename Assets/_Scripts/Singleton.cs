@@ -1,11 +1,9 @@
 using UnityEngine;
 
+// Inherit to create single, global-accessible instance of a class, available at all times
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    // Check if it's about to be destroyed
-    private static bool _shuttingDown = false;
-    private static object _lock = new object();
-    private static T _instance;
+    private static T _instance = null;
 
     /// <summary>
     /// Access to Singleton instance
@@ -14,47 +12,42 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
-            if (_shuttingDown)
+            if (_instance == null)
             {
-                Debug.LogWarning("[Singleton] Instance '" + typeof(T) +
-                                 "' already destroyed. Returning null.");
-                return null;
-            }
+                // Search for existing instance
+                _instance = FindObjectOfType<T>();
 
-            lock (_lock)
-            {
+                // Create new instance if one doesn't already exist
                 if (_instance == null)
                 {
-                    // Search for existing instance
-                    _instance = (T)FindObjectOfType(typeof(T));
-
-                    // Create new instance if one doesn't already exist
-                    if (_instance == null)
-                    {
-                        // Need to create a new GameObject to attach the Singleton to
-                        GameObject singletonObject = new GameObject();
-                        _instance = singletonObject.AddComponent<T>();
-                        singletonObject.name = typeof(T).ToString() + " (Singleton)";
-
-                        // Make instance persistent
-                        DontDestroyOnLoad(singletonObject);
-                    }
+                    // Need to create a new GameObject to attach the Singleton to
+                    GameObject singletonObject = new GameObject();
+                    singletonObject.name = typeof(T).ToString();
+                    _instance = singletonObject.AddComponent<T>(); 
                 }
-
-                return _instance;
             }
+
+            return _instance;
         }
     }
 
-    // Function called before the application is quit
-    private void OnApplicationQuit()
+    // Awake is called when the script instance is being loaded
+    public virtual void Awake()
     {
-        _shuttingDown = true;
-    }
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-    // Function called when the MonoBehaviour will be destroyed
-    private void OnDestroy()
-    {
-        _shuttingDown = true;
+        _instance = GetComponent<T>();
+
+        // Make instance persistent
+        DontDestroyOnLoad(gameObject);
+
+        if (_instance == null)
+        {
+            return;
+        }
     }
 }

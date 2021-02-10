@@ -11,17 +11,19 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private AudioSource _audioSource;
     
-    // Player movement
+    // Player's movement
     [SerializeField]
     private float _movementSpeed;
     private float _horizontalInput;
     private bool _facingRight;
+
+    // Player's jump
     [SerializeField]
     private float _jumpForce;
     private bool _canJump;
     private bool _isJumping;
     [SerializeField]
-    private float _variableJumpHeightFactor;
+    private float _jumpHeightFactor;
     [SerializeField]
     private float _movementForceInAir;
     [SerializeField]
@@ -56,6 +58,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip footstepsAudioClip;
     public AudioClip jumpAudioClip;
     public AudioClip takeDamageAudioClip;
+
+    // Effects
+    public GameObject dirt;
 
     // Start is called before the first frame update
     private void Start()
@@ -92,16 +97,6 @@ public class PlayerController : MonoBehaviour
     {
         _horizontalInput = Input.GetAxis("Horizontal");
 
-        // Flip character
-        if (_horizontalInput > 0f && !_facingRight)
-        {
-            Flip();
-        }
-        else if (_horizontalInput < 0f && _facingRight)
-        {
-            Flip();
-        }
-
         // Jump
         if (Input.GetButtonDown("Jump"))
         {
@@ -111,8 +106,7 @@ public class PlayerController : MonoBehaviour
         // Stop jump at a variable height
         if (Input.GetButtonUp("Jump"))
         {
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 
-                                              _rigidbody.velocity.y * _variableJumpHeightFactor);
+            VariableJump();
         }
     }
 
@@ -132,6 +126,16 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Move()
     {
+        // Flip character depending on his movement direction
+        if (_horizontalInput > 0f && !_facingRight)
+        {
+            Flip();
+        }
+        else if (_horizontalInput < 0f && _facingRight)
+        {
+            Flip();
+        }
+
         if (_isGrounded && !_isOnSlope && !_isJumping)
         {
             // If not on a slope
@@ -167,15 +171,30 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Play footsteps sound
         if (_isGrounded && _horizontalInput != 0f)
         {
+            // Play footsteps sound
             if (!_audioSource.isPlaying)
             {
                 _audioSource.clip = footstepsAudioClip;
                 _audioSource.volume = 0.1f;
+                _audioSource.pitch = 1.4f;
                 _audioSource.Play();
             }
+
+            // Play dirt particles effect effect when walking
+            Quaternion dirtRotation = Quaternion.identity;
+
+            if (_facingRight)
+            {
+                dirtRotation.y = 270f;
+            }
+            else if (!_facingRight)
+            {
+                dirtRotation.y = 90f;
+            }
+
+            Instantiate(dirt, groundCheck.position, dirtRotation);
         }
     }
 
@@ -200,8 +219,22 @@ public class PlayerController : MonoBehaviour
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
             // Play sound
-            _audioSource.volume = 0.4f;
+            _audioSource.volume = 0.3f;
+            _audioSource.pitch = 1f;
             _audioSource.PlayOneShot(jumpAudioClip);
+        }
+    }
+
+    /// <summary>
+    /// Player's jump with variable height
+    /// </summary>
+    private void VariableJump()
+    {
+        // The factor is applied only when the player is not falling
+        if (_rigidbody.velocity.y >= 0f && _isJumping)
+        {
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x,
+                                              _rigidbody.velocity.y * _jumpHeightFactor);
         }
     }
 
@@ -210,10 +243,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void TakeDamage()
     {
-        //_spriteRenderer.color = new Color(1f, 0f, 0f);
-
         // Play sound
         _audioSource.volume = 0.4f;
+        _audioSource.pitch = 1f;
         _audioSource.PlayOneShot(takeDamageAudioClip);
     }
 
@@ -233,7 +265,7 @@ public class PlayerController : MonoBehaviour
         if (_isGrounded && !_isJumping && _slopeDownAngle <= _maxSlopeAngle)
         {
             _canJump = true;
-        }
+        }   
     }
 
     /// <summary>

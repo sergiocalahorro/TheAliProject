@@ -142,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 6
   _jumpForce: 18
-  _variableJumpHeightFactor: 0.4
+  _jumpHeightFactor: 0
   _movementForceInAir: 50
   _airDragMultiplier: 0.95
   _groundCheckRadius: 0.2
@@ -151,9 +151,10 @@ MonoBehaviour:
   _maxSlopeAngle: 90
   _zeroFriction: {fileID: 6200000, guid: 2991aae751abf6d438ae1cda547bf009, type: 2}
   _fullFriction: {fileID: 6200000, guid: 2d386c8ce7fa1f74a94ab71528f3ef99, type: 2}
-  footstepsAudioClip: {fileID: 8300000, guid: 4709044294b3b5f4b96f9088bc161744, type: 3}
-  jumpAudioClip: {fileID: 8300000, guid: 69832443fbda78541ae3560ac43233b4, type: 3}
-  takeDamageAudioClip: {fileID: 8300000, guid: 047a12ef01c07b142a392a24b274ec17, type: 3}
+  footstepsAudioClip: {fileID: 8300000, guid: bf2cd170121d44f4db5d94b94ef8025b, type: 3}
+  jumpAudioClip: {fileID: 8300000, guid: 898d61426fb6db9468aef9f0839b88c3, type: 3}
+  takeDamageAudioClip: {fileID: 8300000, guid: 64e4760db98853c458c9987cb860db8f, type: 3}
+  dirt: {fileID: 3330943512316169385, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
 --- !u!70 &936534928
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
