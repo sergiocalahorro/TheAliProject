@@ -155,6 +155,7 @@ MonoBehaviour:
   jumpAudioClip: {fileID: 8300000, guid: 898d61426fb6db9468aef9f0839b88c3, type: 3}
   takeDamageAudioClip: {fileID: 8300000, guid: 64e4760db98853c458c9987cb860db8f, type: 3}
   dirt: {fileID: 3330943512316169385, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
+  dust: {fileID: 6306659397799875259, guid: b5132be16851dfc4cbc27a8b5e097eeb, type: 3}
 --- !u!70 &936534928
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -10,6 +10,15 @@ public class DestroyAfterDelay : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        Destroy(gameObject, _delay);
+        ParticleSystem particleSystem = GetComponent<ParticleSystem>();
+
+        if (particleSystem != null)
+        {
+            Destroy(gameObject, particleSystem.main.duration);
+        }
+        else
+        {
+            Destroy(gameObject, _delay);
+        }
     }
 }

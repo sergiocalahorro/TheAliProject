@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviour
     private float _movementForceInAir;
     [SerializeField]
     private float _airDragMultiplier;
-
+    private float _timeInAir;
+    
     // Ground check
     private LayerMask _groundLayerMask;
     [SerializeField]
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
     // Effects
     public GameObject dirt;
+    public GameObject dust;
 
     // Start is called before the first frame update
     private void Start()
@@ -87,6 +89,8 @@ public class PlayerController : MonoBehaviour
     {
         GroundCheck();
         SlopeCheck();
+        CheckLanding();
+        CheckTimeInAir();
         Move();
     }
 
@@ -348,6 +352,35 @@ public class PlayerController : MonoBehaviour
             }
 
             _lastSlopeDownAngle = _slopeDownAngle;
+        }
+    }
+
+    /// <summary>
+    /// Calculate the time the player spent in air
+    /// </summary>
+    private void CheckTimeInAir()
+    {
+        if (_isGrounded)
+        {
+            _timeInAir = 0f;
+        }
+        else
+        {
+            _timeInAir += Time.deltaTime;
+        }
+    }
+
+    /// <summary>
+    /// Check if the player is grounded after being in air
+    /// </summary>
+    private void CheckLanding()
+    {
+        if (_timeInAir > Constants.MIN_TIME_IN_AIR)
+        {
+            if (_isGrounded)
+            {
+                Instantiate(dust, groundCheck.position, dust.transform.rotation);
+            }
         }
     }
 }

@@ -41,7 +41,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6306659397799875259}
   serializedVersion: 7
-  lengthInSec: 1
+  lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -285,7 +285,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4837,7 +4837,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 489681265
   m_SortingLayer: 1
-  m_SortingOrder: 40
+  m_SortingOrder: 60
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -4875,4 +4875,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d557f61884a18c4fbae045670c8dc81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _delay: 1
+  _delay: 0
