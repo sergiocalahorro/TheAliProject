@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _airDragMultiplier;
     private float _timeInAir;
+    [SerializeField]
+    private float _minTimeInAir;
     
     // Ground check
     private LayerMask _groundLayerMask;
@@ -375,7 +377,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void CheckLanding()
     {
-        if (_timeInAir > Constants.MIN_TIME_IN_AIR)
+        if (_timeInAir > _minTimeInAir)
         {
             if (_isGrounded)
             {

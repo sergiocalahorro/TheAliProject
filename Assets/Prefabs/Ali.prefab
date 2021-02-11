@@ -142,9 +142,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 6
   _jumpForce: 18
-  _jumpHeightFactor: 0
+  _jumpHeightFactor: 0.25
   _movementForceInAir: 50
   _airDragMultiplier: 0.95
+  _minTimeInAir: 0.1
   _groundCheckRadius: 0.2
   groundCheck: {fileID: 6663998467440649546}
   _slopeCheckDistance: 0.5

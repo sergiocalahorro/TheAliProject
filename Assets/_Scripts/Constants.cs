@@ -5,6 +5,4 @@
     public const string VERTICALSPEED_F = "VerticalSpeed";
     public const string ISGROUNDED_B = "IsGrounded";
     public const string ISJUMPING_B = "IsJumping";
-
-    public const float MIN_TIME_IN_AIR = 0.1f;
 }
