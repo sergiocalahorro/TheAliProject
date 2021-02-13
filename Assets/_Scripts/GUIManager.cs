@@ -32,6 +32,6 @@ public class GUIManager : MonoBehaviour
     /// <param name="coinCount"> Number of coins collected by the player </param>
     public void UpdateCoinsText(int coinCount)
     {
-        coinsText.text = "X " + coinCount.ToString();
+        coinsText.text = coinCount.ToString();
     }
 }

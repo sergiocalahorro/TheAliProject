@@ -60,3 +60,11 @@ The following packages were updated:
   com.unity.2d.psdimporter from version 3.1.6 to 4.0.2
   com.unity.2d.spriteshape from version 4.1.4 to 5.1.0
   com.unity.ide.rider from version 1.2.1 to 2.0.7
+
+=== Sat Feb 13 12:49:06 2021
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.render-pipelines.universal from version 10.2.2 to 10.3.1

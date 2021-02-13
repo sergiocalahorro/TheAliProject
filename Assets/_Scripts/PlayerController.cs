@@ -4,23 +4,16 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
-{
-    // Components
-    private Rigidbody2D _rigidbody;
-    private SpriteRenderer _spriteRenderer;
-    private Animator _animator;
-    private AudioSource _audioSource;
-    
-    // Player's movement
+{ 
+    // Movement
     [SerializeField]
     private float _movementSpeed;
     private float _horizontalInput;
     private bool _facingRight;
 
-    // Player's jump
+    // Jump
     [SerializeField]
     private float _jumpForce;
-    private bool _canJump;
     private bool _isJumping;
     [SerializeField]
     private float _jumpHeightFactor;
@@ -31,13 +24,17 @@ public class PlayerController : MonoBehaviour
     private float _timeInAir;
     [SerializeField]
     private float _minTimeInAir;
-    
+
+    // Double jump
+    private bool _canDoubleJump;
+    private bool _isDoubleJumping;
+
     // Ground check
     private LayerMask _groundLayerMask;
     [SerializeField]
     private float _groundCheckRadius;
     private bool _isGrounded;
-    public Transform groundCheck;
+    public Transform groundCheckTransform;
 
     // Slope check
     [SerializeField]
@@ -51,6 +48,12 @@ public class PlayerController : MonoBehaviour
     private bool _canWalkOnSlope;
     private Vector2 _slopeNormalPerpendicular;
 
+    // Components
+    private Rigidbody2D _rigidbody;
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
+    private AudioSource _audioSource;
+
     // Materials
     [SerializeField]
     private PhysicsMaterial2D _zeroFriction;
@@ -60,11 +63,13 @@ public class PlayerController : MonoBehaviour
     // Audio
     public AudioClip footstepsAudioClip;
     public AudioClip jumpAudioClip;
+    public AudioClip fartAudioClip;
     public AudioClip takeDamageAudioClip;
 
     // Effects
     public GameObject dirt;
     public GameObject dust;
+    public ParticleSystem fartParticleSystem;
 
     // Start is called before the first frame update
     private void Start()
@@ -83,7 +88,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckInput();
-        AnimatorUpdate();
+        AnimatorUpdateParameters();
     }
 
     // FixedUpdate is called every fixed framerate frame
@@ -104,9 +109,13 @@ public class PlayerController : MonoBehaviour
         _horizontalInput = Input.GetAxis("Horizontal");
 
         // Jump
-        if (Input.GetButtonDown("Jump"))
+        if (_isGrounded && Input.GetButtonDown("Jump"))
         {
             Jump();
+        }
+        else if (_canDoubleJump && Input.GetButtonDown("Jump"))
+        {
+            DoubleJump();
         }
 
         // Stop jump at a variable height
@@ -119,12 +128,13 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Update animator's parameters
     /// </summary>
-    private void AnimatorUpdate()
+    private void AnimatorUpdateParameters()
     {
         _animator.SetFloat(Constants.SPEED_F, Mathf.Abs(_horizontalInput));
         _animator.SetFloat(Constants.VERTICALSPEED_F, _rigidbody.velocity.y);
-        _animator.SetBool(Constants.ISJUMPING_B, _isJumping);
         _animator.SetBool(Constants.ISGROUNDED_B, _isGrounded);
+        _animator.SetBool(Constants.ISJUMPING_B, _isJumping);
+        _animator.SetBool(Constants.ISDOUBLEJUMPING_B, _isDoubleJumping);
     }
 
     /// <summary>
@@ -200,7 +210,7 @@ public class PlayerController : MonoBehaviour
                 dirtRotation.y = 90f;
             }
 
-            Instantiate(dirt, groundCheck.position, dirtRotation);
+            Instantiate(dirt, groundCheckTransform.position, dirtRotation);
         }
     }
 
@@ -218,17 +228,45 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        if (_canJump)
-        {
-            _canJump = false;
-            _isJumping = true;
-            _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
+        _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
-            // Play sound
-            _audioSource.volume = 0.3f;
-            _audioSource.pitch = 1f;
-            _audioSource.PlayOneShot(jumpAudioClip);
+        _isJumping = true;
+
+        // Play sound
+        _audioSource.volume = 0.3f;
+        _audioSource.pitch = 1f;
+        _audioSource.PlayOneShot(jumpAudioClip);
+    }
+
+    /// <summary>
+    /// Player's double jump
+    /// </summary>
+    private void DoubleJump()
+    {
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
+        _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+
+        _isDoubleJumping = true;
+        _canDoubleJump = false;
+
+        // Play sound
+        _audioSource.pitch = 1.7f;
+        _audioSource.PlayOneShot(fartAudioClip);
+
+        // Play particles
+        ParticleSystem.MainModule main = fartParticleSystem.main;
+
+        if (_facingRight)
+        {
+            main.flipRotation = 0f;
         }
+        else if (!_facingRight)
+        {
+            main.flipRotation = 1f;
+        }
+
+        fartParticleSystem.Play();
     }
 
     /// <summary>
@@ -260,18 +298,21 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void GroundCheck()
     {
-        _isGrounded = Physics2D.OverlapCircle(groundCheck.position, _groundCheckRadius,
+        _isGrounded = Physics2D.OverlapCircle(groundCheckTransform.position, _groundCheckRadius,
                                               _groundLayerMask);
 
+        // Player is on ground
         if (_isGrounded && _rigidbody.velocity.y <= 0f)
         {
             _isJumping = false;
+            _isDoubleJumping = false;
         }
 
+        // Player can jump
         if (_isGrounded && !_isJumping && _slopeDownAngle <= _maxSlopeAngle)
         {
-            _canJump = true;
-        }   
+            _canDoubleJump = true;
+        }
     }
 
     /// <summary>
@@ -279,7 +320,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void SlopeCheck()
     {
-        Vector2 checkPosition = groundCheck.position;
+        Vector2 checkPosition = groundCheckTransform.position;
 
         SlopeCheckVertical(checkPosition);
         SlopeCheckHorizontal(checkPosition);
@@ -381,7 +422,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_isGrounded)
             {
-                Instantiate(dust, groundCheck.position, dust.transform.rotation);
+                Instantiate(dust, groundCheckTransform.position, dust.transform.rotation);
             }
         }
     }

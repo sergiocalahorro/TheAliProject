@@ -12,9 +12,12 @@ public class CheckPoint : MonoBehaviour
     [SerializeField]
     private float _lightMaxIntensity;
     [SerializeField]
+    private float _mainLightMaxIntensity;
+    [SerializeField]
     private float _lightSmoothingFactor;
     
     public Light2D[] lights;
+    public Light2D mainLight;
     public GameObject lightContainer;
 
     // Audio
@@ -68,5 +71,8 @@ public class CheckPoint : MonoBehaviour
             lights[i].intensity = Mathf.Lerp(lights[i].intensity, _lightMaxIntensity, 
                                              Time.fixedDeltaTime * _lightSmoothingFactor);
         }
+
+        mainLight.intensity = Mathf.Lerp(mainLight.intensity, _mainLightMaxIntensity,
+                                         Time.fixedDeltaTime * _lightSmoothingFactor);
     }
 }

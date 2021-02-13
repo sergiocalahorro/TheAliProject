@@ -263,7 +263,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 0.9960785, g: 0.6862745, b: 0.07058824, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 0
   m_LightVolumeOpacity: 1
   m_ApplyToSortingLayers: 71f12f1d
   m_LightCookieSprite: {fileID: 0}
@@ -387,13 +387,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lightMaxIntensity: 5
-  _lightSmoothingFactor: 5
+  _mainLightMaxIntensity: 0.5
+  _lightSmoothingFactor: 2
   lights:
   - {fileID: 996447341}
   - {fileID: 1545739621}
   - {fileID: 691819690}
+  mainLight: {fileID: 1969154511}
   lightContainer: {fileID: 8922405472161198530}
-  checkPointClip: {fileID: 8300000, guid: a6c02b6375dd3364d8adc76290e3cce4, type: 3}
+  checkPointClip: {fileID: 8300000, guid: 7100e2c856c91a645b41ce4d5d8f7cd0, type: 3}
 --- !u!61 &1915590964
 BoxCollider2D:
   m_ObjectHideFlags: 0
