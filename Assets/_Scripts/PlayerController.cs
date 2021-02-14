@@ -4,17 +4,23 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
-{ 
+{
+    // Attributes
+    public int _numberOfLives = 3;
+
     // Movement
+    [Header("Movement")]
     [SerializeField]
     private float _movementSpeed;
     private float _horizontalInput;
     private bool _facingRight;
 
     // Jump
+    [Header("Jump")]
     [SerializeField]
     private float _jumpForce;
     private bool _isJumping;
+    private bool _canJump;
     [SerializeField]
     private float _jumpHeightFactor;
     [SerializeField]
@@ -25,18 +31,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _minTimeInAir;
 
+    // Special abilities
+    private bool _unlockedDoubleJump;
+
     // Double jump
     private bool _canDoubleJump;
     private bool _isDoubleJumping;
 
     // Ground check
-    private LayerMask _groundLayerMask;
+    [Header("Ground check")]
+    public Transform groundCheckTransform;
     [SerializeField]
     private float _groundCheckRadius;
     private bool _isGrounded;
-    public Transform groundCheckTransform;
+    private LayerMask _groundLayerMask;
 
     // Slope check
+    [Header("Slope check")]
     [SerializeField]
     private float _slopeCheckDistance;
     private float _slopeDownAngle;
@@ -48,28 +59,31 @@ public class PlayerController : MonoBehaviour
     private bool _canWalkOnSlope;
     private Vector2 _slopeNormalPerpendicular;
 
-    // Components
-    private Rigidbody2D _rigidbody;
-    private SpriteRenderer _spriteRenderer;
-    private Animator _animator;
-    private AudioSource _audioSource;
-
     // Materials
+    [Header("Materials")]
     [SerializeField]
     private PhysicsMaterial2D _zeroFriction;
     [SerializeField]
     private PhysicsMaterial2D _fullFriction;
 
     // Audio
+    [Header("Audio")]
     public AudioClip footstepsAudioClip;
     public AudioClip jumpAudioClip;
     public AudioClip fartAudioClip;
     public AudioClip takeDamageAudioClip;
 
     // Effects
-    public GameObject dirt;
-    public GameObject dust;
+    [Header("Particle Systems")]
+    public ParticleSystem dirtParticleSystem;
     public ParticleSystem fartParticleSystem;
+    public GameObject dust;
+
+    // Components
+    private Rigidbody2D _rigidbody;
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
+    private AudioSource _audioSource;
 
     // Start is called before the first frame update
     private void Start()
@@ -106,6 +120,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void CheckInput()
     {
+        // Movement
         _horizontalInput = Input.GetAxis("Horizontal");
 
         // Jump
@@ -113,7 +128,7 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
-        else if (_canDoubleJump && Input.GetButtonDown("Jump"))
+        else if (_unlockedDoubleJump && Input.GetButtonDown("Jump"))
         {
             DoubleJump();
         }
@@ -187,9 +202,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        // Player is moving
         if (_isGrounded && _horizontalInput != 0f)
         {
-            // Play footsteps sound
+            // Play sound
             if (!_audioSource.isPlaying)
             {
                 _audioSource.clip = footstepsAudioClip;
@@ -198,19 +214,8 @@ public class PlayerController : MonoBehaviour
                 _audioSource.Play();
             }
 
-            // Play dirt particles effect effect when walking
-            Quaternion dirtRotation = Quaternion.identity;
-
-            if (_facingRight)
-            {
-                dirtRotation.y = 270f;
-            }
-            else if (!_facingRight)
-            {
-                dirtRotation.y = 90f;
-            }
-
-            Instantiate(dirt, groundCheckTransform.position, dirtRotation);
+            // Play particles
+            dirtParticleSystem.Play();
         }
     }
 
@@ -228,15 +233,20 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
-        _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        if (_canJump)
+        {
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
+            _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
-        _isJumping = true;
+            _canJump = false;
+            _isJumping = true;
+            _canDoubleJump = true;
 
-        // Play sound
-        _audioSource.volume = 0.3f;
-        _audioSource.pitch = 1f;
-        _audioSource.PlayOneShot(jumpAudioClip);
+            // Play sound
+            _audioSource.volume = 0.3f;
+            _audioSource.pitch = 1f;
+            _audioSource.PlayOneShot(jumpAudioClip);
+        }
     }
 
     /// <summary>
@@ -244,29 +254,33 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void DoubleJump()
     {
-        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
-        _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
-
-        _isDoubleJumping = true;
-        _canDoubleJump = false;
-
-        // Play sound
-        _audioSource.pitch = 1.7f;
-        _audioSource.PlayOneShot(fartAudioClip);
-
-        // Play particles
-        ParticleSystem.MainModule main = fartParticleSystem.main;
-
-        if (_facingRight)
+        if (_canDoubleJump)
         {
-            main.flipRotation = 0f;
-        }
-        else if (!_facingRight)
-        {
-            main.flipRotation = 1f;
-        }
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
+            _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
-        fartParticleSystem.Play();
+            _isDoubleJumping = true;
+            _canDoubleJump = false;
+
+            // Play sound
+            _audioSource.volume = 0.3f;
+            _audioSource.pitch = 1.7f;
+            _audioSource.PlayOneShot(fartAudioClip);
+
+            // Play particles
+            ParticleSystem.MainModule main = fartParticleSystem.main;
+
+            if (_facingRight)
+            {
+                main.flipRotation = 0f;
+            }
+            else if (!_facingRight)
+            {
+                main.flipRotation = 1f;
+            }
+
+            fartParticleSystem.Play();
+        }
     }
 
     /// <summary>
@@ -274,8 +288,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void VariableJump()
     {
-        // The factor is applied only when the player is not falling
-        if (_rigidbody.velocity.y >= 0f && _isJumping)
+        // The factor is applied only when the player is jumping
+        if (_isJumping && _rigidbody.velocity.y >= 0f)
         {
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x,
                                               _rigidbody.velocity.y * _jumpHeightFactor);
@@ -287,6 +301,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void TakeDamage()
     {
+        // Decrease number of lives
+        _numberOfLives--;
+
+        // Send number of lives to the GameManager
+        GameManager.Instance.CheckNumberOfLives(_numberOfLives);
+
         // Play sound
         _audioSource.volume = 0.4f;
         _audioSource.pitch = 1f;
@@ -307,11 +327,14 @@ public class PlayerController : MonoBehaviour
             _isJumping = false;
             _isDoubleJumping = false;
         }
+        {
+            dirtParticleSystem.Stop();
+        }
 
         // Player can jump
         if (_isGrounded && !_isJumping && _slopeDownAngle <= _maxSlopeAngle)
         {
-            _canDoubleJump = true;
+            _canJump = true;
         }
     }
 

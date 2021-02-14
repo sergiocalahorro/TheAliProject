@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6306659397799875238}
   - component: {fileID: 6306659397799875237}
   - component: {fileID: 6306659397799875236}
-  - component: {fileID: 6306659397799875239}
+  - component: {fileID: -7452141596238419279}
   m_Layer: 0
   m_Name: Dust Particle System
   m_TagString: Untagged
@@ -4863,7 +4863,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &6306659397799875239
+--- !u!114 &-7452141596238419279
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

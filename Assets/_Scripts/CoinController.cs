@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class CoinController : MonoBehaviour
 {
-    [SerializeField]
-    private float _rotatingSpeed;
-
-    // Update is called once per frame
-    private void Update()
-    {
-        Rotate();
-    }
-
     // OnTriggerEnter2D is called when the Collider2D other enters the trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -22,13 +13,5 @@ public class CoinController : MonoBehaviour
             Destroy(gameObject);
             GameManager.Instance.CoinPickUp();
         }
-    }
-
-    /// <summary>
-    /// Rotate coin on the Y axis
-    /// </summary>
-    private void Rotate()
-    {
-        transform.Rotate(0f, _rotatingSpeed * Time.deltaTime, 0f);
     }
 }

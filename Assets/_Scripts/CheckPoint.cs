@@ -9,18 +9,19 @@ public class CheckPoint : MonoBehaviour
     private bool _checkPointReached;
 
     // Lights
+    [Header("Lights")]
     [SerializeField]
     private float _lightMaxIntensity;
     [SerializeField]
     private float _mainLightMaxIntensity;
     [SerializeField]
     private float _lightSmoothingFactor;
-    
     public Light2D[] lights;
     public Light2D mainLight;
     public GameObject lightContainer;
 
     // Audio
+    [Header("Audio")]
     private AudioSource _audioSource;
     public AudioClip checkPointClip;
 
@@ -66,13 +67,13 @@ public class CheckPoint : MonoBehaviour
     /// </summary>
     private void ChangeLightIntensity()
     {
+        mainLight.intensity = Mathf.Lerp(mainLight.intensity, _mainLightMaxIntensity,
+                                         Time.fixedDeltaTime * _lightSmoothingFactor);
+
         for (int i = 0; i < lights.Length; i++)
         {
             lights[i].intensity = Mathf.Lerp(lights[i].intensity, _lightMaxIntensity, 
                                              Time.fixedDeltaTime * _lightSmoothingFactor);
         }
-
-        mainLight.intensity = Mathf.Lerp(mainLight.intensity, _mainLightMaxIntensity,
-                                         Time.fixedDeltaTime * _lightSmoothingFactor);
     }
 }
