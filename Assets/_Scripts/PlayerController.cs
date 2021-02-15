@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _movementSpeed;
     private float _horizontalInput;
+    private float _facingDirection;
     private bool _facingRight;
 
     // Jump
@@ -30,13 +31,6 @@ public class PlayerController : MonoBehaviour
     private float _timeInAir;
     [SerializeField]
     private float _minTimeInAir;
-
-    // Special abilities
-    private bool _unlockedDoubleJump;
-
-    // Double jump
-    private bool _canDoubleJump;
-    private bool _isDoubleJumping;
 
     // Ground check
     [Header("Ground check")]
@@ -58,6 +52,33 @@ public class PlayerController : MonoBehaviour
     private bool _isOnSlope;
     private bool _canWalkOnSlope;
     private Vector2 _slopeNormalPerpendicular;
+
+    // Special abilities
+    private bool _unlockedDoubleJump;
+    private bool _unlockedWallSliding;
+
+    // Double jump
+    private bool _canDoubleJump;
+    private bool _isDoubleJumping;
+
+    // Wall sliding
+    [Header("Wall sliding")]
+    public Transform wallCheckTransform;
+    [SerializeField]
+    private float _wallCheckDistance;
+    [SerializeField]
+    private float _wallSlideSpeed;
+    private bool _isTouchingWall;
+    private bool _isWallSliding;
+
+    // Wall jump
+    [Header("Wall jump")]
+    private Vector2 _wallHopDirection;
+    private Vector2 _wallJumpDirection;
+    [SerializeField]
+    private float _wallHopForce;
+    [SerializeField]
+    private float _wallJumpForce;
 
     // Materials
     [Header("Materials")]
@@ -88,30 +109,54 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        // Components
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
 
+        // Ground layer
         _groundLayerMask = LayerMask.GetMask("Ground");
 
+        // Player is facing right
         _facingRight = true;
+        _facingDirection = 1f;
+
+        // Wall jump
+        _wallHopDirection = new Vector2(1f, 0.5f);
+        _wallHopDirection.Normalize();
+        _wallJumpDirection = new Vector2(1f, 2f);
+        _wallJumpDirection.Normalize();
     }
 
     // Update is called once per frame
     private void Update()
     {
+        // Listen to player's input
         CheckInput();
-        AnimatorUpdateParameters();
+
+        // Feed animator controller's parameters with updated values
+        UpdateAnimatorParameters();
     }
 
     // FixedUpdate is called every fixed framerate frame
     private void FixedUpdate()
     {
+        // Check if player is on ground, on a slope or touching a wall for wall sliding/jumping
         GroundCheck();
         SlopeCheck();
+
+        if (_unlockedWallSliding)
+        {
+            WallCheck();
+            WallSlidingCheck();
+        }
+
+        // Check when player has landed after a jump and the time spent on air
         CheckLanding();
         CheckTimeInAir();
+
+        // Move player
         Move();
     }
 
@@ -124,7 +169,7 @@ public class PlayerController : MonoBehaviour
         _horizontalInput = Input.GetAxis("Horizontal");
 
         // Jump
-        if (_isGrounded && Input.GetButtonDown("Jump"))
+        if ((_isGrounded || _isTouchingWall) && Input.GetButtonDown("Jump"))
         {
             Jump();
         }
@@ -143,17 +188,18 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Update animator's parameters
     /// </summary>
-    private void AnimatorUpdateParameters()
+    private void UpdateAnimatorParameters()
     {
         _animator.SetFloat(Constants.SPEED_F, Mathf.Abs(_horizontalInput));
         _animator.SetFloat(Constants.VERTICALSPEED_F, _rigidbody.velocity.y);
         _animator.SetBool(Constants.ISGROUNDED_B, _isGrounded);
         _animator.SetBool(Constants.ISJUMPING_B, _isJumping);
         _animator.SetBool(Constants.ISDOUBLEJUMPING_B, _isDoubleJumping);
+        _animator.SetBool(Constants.ISWALLSLIDING_B, _isWallSliding);
     }
 
     /// <summary>
-    /// Player's movement
+    /// Apply player's movement
     /// </summary>
     private void Move()
     {
@@ -169,43 +215,39 @@ public class PlayerController : MonoBehaviour
 
         if (_isGrounded && !_isOnSlope && !_isJumping)
         {
-            // If not on a slope
-            _rigidbody.velocity = new Vector2(_movementSpeed * _horizontalInput, 0f);
+            // Normal movement
+            _rigidbody.velocity = new Vector2(_movementSpeed * _horizontalInput, 
+                                              _rigidbody.velocity.y);
         }
         else if (_isGrounded && _isOnSlope && _canWalkOnSlope && !_isJumping)
         {
-            // If on a slope
+            // Movement if on a slope
             _rigidbody.velocity = new Vector2(_movementSpeed * _slopeNormalPerpendicular.x *
                                               -_horizontalInput,
                                               _movementSpeed * _slopeNormalPerpendicular.y *
                                               -_horizontalInput);
         }
-        else if (!_isGrounded)
+        else if (!_isGrounded && !_isWallSliding && _horizontalInput != 0f)
         {
-            // If in air
-            if (_horizontalInput != 0f)
-            {
-                // Add a force when moving in mid-air
-                Vector2 airForce = new Vector2(_movementForceInAir * _horizontalInput, 0f);
-                _rigidbody.AddForce(airForce);
+            // Add a force when moving in mid-air
+            _rigidbody.AddForce(new Vector2(_movementForceInAir * _horizontalInput, 0f));
 
-                if (Mathf.Abs(_rigidbody.velocity.x) > _movementSpeed)
-                {
-                    _rigidbody.velocity = new Vector2(_movementSpeed * _horizontalInput,
-                                                      _rigidbody.velocity.y);
-                }
-            }
-            else
+            if (Mathf.Abs(_rigidbody.velocity.x) > _movementSpeed)
             {
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x * _airDragMultiplier,
+                _rigidbody.velocity = new Vector2(_movementSpeed * _horizontalInput,
                                                   _rigidbody.velocity.y);
             }
         }
+        else if (!_isGrounded && !_isWallSliding && _horizontalInput == 0f)
+        {
+            // Add a drag when not moving in mid-air
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x * _airDragMultiplier,
+                                              _rigidbody.velocity.y);
+        }
 
-        // Player is moving
+        // Play sound and particles when player is moving
         if (_isGrounded && _horizontalInput != 0f)
         {
-            // Play sound
             if (!_audioSource.isPlaying)
             {
                 _audioSource.clip = footstepsAudioClip;
@@ -214,8 +256,16 @@ public class PlayerController : MonoBehaviour
                 _audioSource.Play();
             }
 
-            // Play particles
             dirtParticleSystem.Play();
+        }
+
+        // Wall sliding
+        if (_isWallSliding)
+        {
+            if (_rigidbody.velocity.y < -_wallSlideSpeed)
+            {
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, -_wallSlideSpeed);
+            }
         }
     }
 
@@ -224,8 +274,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Flip()
     {
-        _facingRight = !_facingRight;
-        _spriteRenderer.flipX = _facingRight;
+        if (!_isWallSliding)
+        {
+            _facingDirection *= -1f;
+            _facingRight = !_facingRight;
+            _spriteRenderer.flipX = _facingRight;
+        }
     }
 
     /// <summary>
@@ -235,6 +289,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_canJump)
         {
+            // Normal jump
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
@@ -247,6 +302,32 @@ public class PlayerController : MonoBehaviour
             _audioSource.pitch = 1f;
             _audioSource.PlayOneShot(jumpAudioClip);
         }
+        else if (_canJump && _isWallSliding && _horizontalInput == 0)
+        {
+            // Wall hop
+            Vector2 forceToAdd = new Vector2(_wallHopForce * _wallHopDirection.x *
+                                             -_facingDirection,
+                                             _wallHopForce * _wallHopDirection.y);
+            _rigidbody.AddForce(forceToAdd, ForceMode2D.Impulse);
+
+            _isWallSliding = false;
+            _canJump = false;
+            _isJumping = true;
+            _canDoubleJump = true;
+        }
+        else if (_canJump && (_isWallSliding || _isTouchingWall) && _horizontalInput != 0)
+        {
+            // Wall jump
+            Vector2 forceToAdd = new Vector2(_wallJumpForce * _wallJumpDirection.x *
+                                             _horizontalInput,
+                                             _wallJumpForce * _wallJumpDirection.y);
+            _rigidbody.AddForce(forceToAdd, ForceMode2D.Impulse);
+
+            _isWallSliding = false;
+            _canJump = false;
+            _isJumping = true;
+            _canDoubleJump = true;
+        }
     }
 
     /// <summary>
@@ -254,11 +335,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void DoubleJump()
     {
-        if (_canDoubleJump)
+        if (_isJumping && _canDoubleJump)
         {
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
+            _isJumping = false;
             _isDoubleJumping = true;
             _canDoubleJump = false;
 
@@ -289,7 +371,7 @@ public class PlayerController : MonoBehaviour
     private void VariableJump()
     {
         // The factor is applied only when the player is jumping
-        if (_isJumping && _rigidbody.velocity.y >= 0f)
+        if ((_isJumping || _isDoubleJumping) && _rigidbody.velocity.y >= 0f)
         {
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x,
                                               _rigidbody.velocity.y * _jumpHeightFactor);
@@ -418,6 +500,35 @@ public class PlayerController : MonoBehaviour
             }
 
             _lastSlopeDownAngle = _slopeDownAngle;
+        }
+    }
+
+    /// <summary>
+    /// Check if player is touching a wall
+    /// </summary>
+    private void WallCheck()
+    {
+        _isTouchingWall = Physics2D.Raycast(wallCheckTransform.position, 
+                                            transform.right * _facingDirection,
+                                            _wallCheckDistance, _groundLayerMask);
+    }
+
+    /// <summary>
+    /// Check if player is wall sliding
+    /// </summary>
+    private void WallSlidingCheck()
+    {
+        if (_isTouchingWall && !_isGrounded && _rigidbody.velocity.y < 0f)
+        {
+            _isWallSliding = true;
+            _isJumping = false;
+            _isDoubleJumping = false;
+            _canJump = true;
+            _canDoubleJump = false;
+        }
+        else
+        {
+            _isWallSliding = false;
         }
     }
 

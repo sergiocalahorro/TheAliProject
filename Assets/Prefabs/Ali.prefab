@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1893547211
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1893547212}
+  m_Layer: 0
+  m_Name: Wall Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1893547212
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893547211}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6663998466547306988}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6663998466547306991
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,6 +64,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6663998467440649546}
+  - {fileID: 1893547212}
   - {fileID: 8233323620329590905}
   - {fileID: 864275524315313820}
   m_Father: {fileID: 0}
@@ -142,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baea02045c9186b418c92b510621a8a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _numberOfLives: 3
   _movementSpeed: 6
   _jumpForce: 18
   _jumpHeightFactor: 0.25
@@ -152,6 +184,11 @@ MonoBehaviour:
   _groundCheckRadius: 0.2
   _slopeCheckDistance: 0.5
   _maxSlopeAngle: 90
+  wallCheckTransform: {fileID: 1893547212}
+  _wallCheckDistance: 0.5
+  _wallSlideSpeed: 3
+  _wallHopForce: 10
+  _wallJumpForce: 20
   _zeroFriction: {fileID: 6200000, guid: 2991aae751abf6d438ae1cda547bf009, type: 2}
   _fullFriction: {fileID: 6200000, guid: 2d386c8ce7fa1f74a94ab71528f3ef99, type: 2}
   footstepsAudioClip: {fileID: 8300000, guid: bf2cd170121d44f4db5d94b94ef8025b, type: 3}
@@ -312,7 +349,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3330943512316169380, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3330943512316169380, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -383,7 +420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6306659397799875238, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6306659397799875238, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
       propertyPath: m_LocalPosition.x

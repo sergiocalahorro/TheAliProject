@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\_Scripts\DestroyAfterDelay.cs" />
-    <Compile Include="Assets\_Scripts\CheckPoint.cs" />
+    <Compile Include="Assets\_Scripts\CheckPointController.cs" />
     <Compile Include="Assets\_Scripts\PlayerController.cs" />
     <Compile Include="Assets\_Scripts\CoinController.cs" />
     <Compile Include="Assets\_Scripts\GameManager.cs" />

@@ -21,12 +21,6 @@ public class GUIManager : MonoBehaviour
     private float _timer;
     public CanvasGroup gameOverCanvasGroup;
 
-    // Awake is called when the script instance is being loaded
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
     // Start is called before the first frame update
     private void Start()
     {
