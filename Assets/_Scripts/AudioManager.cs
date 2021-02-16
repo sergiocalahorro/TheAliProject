@@ -14,8 +14,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] audioClipsBackground;
     public AudioClip audioClipGameOver;
 
-    // Start is called before the first frame update
-    private void Start()
+    // Awake is called when the script instance is being loaded
+    private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
     }
