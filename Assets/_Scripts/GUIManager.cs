@@ -20,6 +20,7 @@ public class GUIManager : MonoBehaviour
     private float _fadeDuration;
     private float _timer;
     public CanvasGroup gameOverCanvasGroup;
+    public GameObject panelGameOverButtons;
 
     // Start is called before the first frame update
     private void Start()
@@ -43,10 +44,24 @@ public class GUIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Display the number of lives the player has
+    /// Display all the lives' images
+    /// </summary>
+    public void DisplayLivesImages()
+    {
+        for (int i = 0; i < livesImages.Count; i++)
+        {
+            Image lifeImage = livesImages[i].GetComponent<Image>();
+            Color lifeImageColor = lifeImage.color;
+            lifeImageColor.a = 1f;
+            lifeImage.color = lifeImageColor;
+        }
+    }
+
+    /// <summary>
+    /// Display the number of lives the player currently has
     /// </summary>
     /// <param name="numberOfLives"> </param>
-    public void DisplayLivesImages(int numberOfLives)
+    public void UpdateLivesImages(int numberOfLives)
     {
         if (numberOfLives >= 0)
         {
@@ -62,19 +77,24 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     public void DisplayGameOverScreen()
     {
-        // Show Game Over screen
+        // Game over screen's fade in
         _timer += Time.deltaTime;
         gameOverCanvasGroup.alpha = Mathf.Clamp(_timer / _fadeDuration, 0f, 1f);
 
         // Display buttons
         if (_timer > _fadeDuration)
         {
-            DisplayMenu();
+            panelGameOverButtons.SetActive(true);
         }
     }
 
-    public void DisplayMenu()
+    /// <summary>
+    /// Hide Game Over screen
+    /// </summary>
+    public void HideGameOverScreen()
     {
-
+        _timer = 0f;
+        gameOverCanvasGroup.alpha = 0f;
+        panelGameOverButtons.SetActive(false);
     }
 }

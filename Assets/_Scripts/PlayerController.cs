@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Attributes
-    public int _numberOfLives = 3;
+    private int _numberOfLives;
 
     // Movement
     [Header("Movement")]
@@ -118,9 +118,11 @@ public class PlayerController : MonoBehaviour
         // Ground layer
         _groundLayerMask = LayerMask.GetMask("Ground");
 
-        // Player is facing right
-        _facingRight = true;
-        _facingDirection = 1f;
+        // Get initial position
+        Vector3 startPosition = new Vector3(-14f, -5.2f, 0f);
+
+        // Spawn player at a given position
+        Spawn(startPosition);
 
         // Wall jump
         _wallHopDirection = new Vector2(1f, 0.5f);
@@ -158,6 +160,23 @@ public class PlayerController : MonoBehaviour
 
         // Move player
         Move();
+    }
+
+    /// <summary>
+    /// Spawn player at a given position
+    /// </summary>
+    public void Spawn(Vector3 respawnPosition)
+    {
+        // Player spawns at given position
+        transform.position = respawnPosition;
+
+        // Player has 3 lives
+        _numberOfLives = 3;
+
+        // Player is facing right
+        _facingRight = true;
+        _facingDirection = 1f;
+        _spriteRenderer.flipX = _facingRight;
     }
 
     /// <summary>

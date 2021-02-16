@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GameManager : Singleton<GameManager>
 {
     // Game control
+    private PlayerController _player;
     private int _coinCount;
     private bool _isGameOver;
 
@@ -19,9 +21,12 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     private void Start()
     {
+        // Components
         _audioSource = GetComponent<AudioSource>();
         _guiManager = GetComponent<GUIManager>();
 
+        // Control
+        _player = FindObjectOfType<PlayerController>();
         _isGameOver = false;
     }
 
@@ -62,7 +67,7 @@ public class GameManager : Singleton<GameManager>
         }
         
         // Update UI
-        _guiManager.DisplayLivesImages(numberOfLives);
+        _guiManager.UpdateLivesImages(numberOfLives);
     }
 
     /// <summary>
@@ -72,5 +77,29 @@ public class GameManager : Singleton<GameManager>
     {
         // Update UI
         _guiManager.DisplayGameOverScreen();
+    }
+
+    /// <summary>
+    /// Restart game from last check point reached
+    /// </summary>
+    public void RestartFromCheckPoint()
+    {
+        // Game control
+        _isGameOver = false;
+
+        // Spawn player
+        _player.Spawn(CheckPointController.LastPosition);
+
+        // Update UI
+        _guiManager.HideGameOverScreen();
+        _guiManager.DisplayLivesImages();
+    }
+
+    /// <summary>
+    /// Exit the game
+    /// </summary>
+    public void Exit()
+    {
+        Application.Quit();
     }
 }

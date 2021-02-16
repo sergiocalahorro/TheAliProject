@@ -5,6 +5,9 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class CheckPointController : MonoBehaviour
 {
+    // Position
+    public static Vector3 LastPosition;
+
     // Control
     private bool _checkPointReached;
 
@@ -16,9 +19,9 @@ public class CheckPointController : MonoBehaviour
     private float _mainLightMaxIntensity;
     [SerializeField]
     private float _lightSmoothingFactor;
+    private bool _lightsTurnedOn;
     public Light2D[] lights;
     public Light2D mainLight;
-    public GameObject lightContainer;
 
     // Audio
     [Header("Audio")]
@@ -28,7 +31,11 @@ public class CheckPointController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        // Components
         _audioSource = GetComponent<AudioSource>();
+
+        // Last check point's reached position
+        LastPosition = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -40,7 +47,8 @@ public class CheckPointController : MonoBehaviour
     // FixedUpdate is called every fixed framerate
     private void FixedUpdate()
     {
-        if (_checkPointReached && lights[0].intensity != _lightMaxIntensity)
+        // Increase lights' intensity while they haven't reached max intensity
+        if (_checkPointReached && !_lightsTurnedOn)
         {
             ChangeLightIntensity();
         }
@@ -51,12 +59,13 @@ public class CheckPointController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            // Turn on the lights when player enters the trigger
+            // Turn on the lights and store position when player enters the trigger
             if (!_checkPointReached)
             {
-                lightContainer.SetActive(true);
                 _checkPointReached = true;
+                LastPosition = transform.position;
 
+                // Play sound
                 _audioSource.PlayOneShot(checkPointClip);
             }
         }
@@ -67,13 +76,19 @@ public class CheckPointController : MonoBehaviour
     /// </summary>
     private void ChangeLightIntensity()
     {
-        mainLight.intensity = Mathf.Lerp(mainLight.intensity, _mainLightMaxIntensity,
-                                         Time.fixedDeltaTime * _lightSmoothingFactor);
-
         for (int i = 0; i < lights.Length; i++)
         {
             lights[i].intensity = Mathf.Lerp(lights[i].intensity, _lightMaxIntensity, 
                                              Time.fixedDeltaTime * _lightSmoothingFactor);
+        }
+
+        mainLight.intensity = Mathf.Lerp(mainLight.intensity, _mainLightMaxIntensity,
+                                         Time.fixedDeltaTime * _lightSmoothingFactor);
+
+        // Lights are turned on
+        if (Mathf.Abs(mainLight.intensity - _mainLightMaxIntensity) <= Utilities.EPSILON)
+        {
+            _lightsTurnedOn = true;
         }
     }
 }
