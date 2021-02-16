@@ -10,6 +10,7 @@ public class CheckPointController : MonoBehaviour
 
     // Control
     private bool _checkPointReached;
+    public static List<GameObject> Coins;
 
     // Lights
     [Header("Lights")]
@@ -24,9 +25,7 @@ public class CheckPointController : MonoBehaviour
     public Light2D mainLight;
 
     // Audio
-    [Header("Audio")]
     private AudioSource _audioSource;
-    public AudioClip checkPointClip;
 
     // Start is called before the first frame update
     private void Start()
@@ -34,8 +33,9 @@ public class CheckPointController : MonoBehaviour
         // Components
         _audioSource = GetComponent<AudioSource>();
 
-        // Last check point's reached position
+        // Last check point's position and collected coins
         LastPosition = Vector3.zero;
+        Coins = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -65,8 +65,15 @@ public class CheckPointController : MonoBehaviour
                 _checkPointReached = true;
                 LastPosition = transform.position;
 
+                // Update the collected coins
+                List<GameObject> totalCoins = GameManager.Instance.coins;
+                for (int i = 0; i < totalCoins.Count; i++)
+                {
+                    Coins.Add(totalCoins[i]);
+                }
+
                 // Play sound
-                _audioSource.PlayOneShot(checkPointClip);
+                _audioSource.Play();
             }
         }
     }

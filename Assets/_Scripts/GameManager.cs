@@ -7,26 +7,24 @@ public class GameManager : Singleton<GameManager>
 {
     // Game control
     private PlayerController _player;
-    private int _coinCount;
+    public List<GameObject> coins;
     private bool _isGameOver;
 
-    // Audio
-    [Header("Audio")]
-    public AudioClip coinAudioClip;
-
     // Components
-    private AudioSource _audioSource;
+    private AudioManager _audioManager;
     private GUIManager _guiManager;
 
     // Start is called before the first frame update
     private void Start()
     {
         // Components
-        _audioSource = GetComponent<AudioSource>();
+        _audioManager = GetComponent<AudioManager>();
         _guiManager = GetComponent<GUIManager>();
+        _audioManager.PlayBackgroundMusic();        
 
         // Control
         _player = FindObjectOfType<PlayerController>();
+        coins = new List<GameObject>();
         _isGameOver = false;
     }
 
@@ -42,16 +40,13 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// Add coin
     /// </summary>
-    public void CoinPickUp()
+    public void CoinPickUp(GameObject coin)
     {
         // Add coin
-        _coinCount++;
-
-        // Play sound
-        _audioSource.PlayOneShot(coinAudioClip);
+        coins.Add(coin);
 
         // Update UI
-        _guiManager.DisplayCoinsText(_coinCount);
+        _guiManager.DisplayCoins(coins.Count);
     }
 
     /// <summary>
@@ -77,6 +72,9 @@ public class GameManager : Singleton<GameManager>
     {
         // Update UI
         _guiManager.DisplayGameOverScreen();
+
+        // Play music
+        _audioManager.PlayGameOverMusic();
     }
 
     /// <summary>
@@ -86,13 +84,25 @@ public class GameManager : Singleton<GameManager>
     {
         // Game control
         _isGameOver = false;
-
-        // Spawn player
         _player.Spawn(CheckPointController.LastPosition);
+
+        // Compare the total coins with the ones collected on the last check point reached
+        for (int i = coins.Count - 1; i >= 0; i--)
+        {
+            if (!CheckPointController.Coins.Contains(coins[i]))
+            {
+                coins[i].SetActive(true);
+                coins.RemoveAt(i);
+            }
+        }
 
         // Update UI
         _guiManager.HideGameOverScreen();
-        _guiManager.DisplayLivesImages();
+        _guiManager.DisplayAllLivesImages();
+        _guiManager.DisplayCoins(coins.Count);
+
+        // Play music
+        _audioManager.PlayBackgroundMusic();
     }
 
     /// <summary>

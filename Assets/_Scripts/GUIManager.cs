@@ -22,23 +22,11 @@ public class GUIManager : MonoBehaviour
     public CanvasGroup gameOverCanvasGroup;
     public GameObject panelGameOverButtons;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-
-    }
-
     /// <summary>
     /// Display text with the current number of coins collected by the player
     /// </summary>
     /// <param name="coinCount"> Number of coins collected by the player </param>
-    public void DisplayCoinsText(int coinCount)
+    public void DisplayCoins(int coinCount)
     {
         coinsText.text = coinCount.ToString();
     }
@@ -46,7 +34,7 @@ public class GUIManager : MonoBehaviour
     /// <summary>
     /// Display all the lives' images
     /// </summary>
-    public void DisplayLivesImages()
+    public void DisplayAllLivesImages()
     {
         for (int i = 0; i < livesImages.Count; i++)
         {
