@@ -6,7 +6,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     // Control
-    public bool gameOverMusicPlayed;
+    private bool _gameOverMusicPlayed;
 
     // Audio
     [Header("Audio")]
@@ -23,14 +23,22 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// Play music on background
     /// </summary>
-    public void PlayBackgroundMusic()
+    public IEnumerator PlayBackgroundMusic()
     {
-        gameOverMusicPlayed = false;
+        _gameOverMusicPlayed = false;
 
-        for (int i = 0; i < audioClipsBackground.Length; i++)
+        while (!GameManager.Instance.isGameOver)
         {
-            _audioSource.clip = audioClipsBackground[i];
-            _audioSource.Play();
+            for (int i = 0; i < audioClipsBackground.Length; i++)
+            {
+                _audioSource.clip = audioClipsBackground[i];
+                _audioSource.Play();
+
+                while (_audioSource.isPlaying)
+                {
+                    yield return null;
+                }
+            }
         }
     }
 
@@ -40,7 +48,7 @@ public class AudioManager : MonoBehaviour
     public void PlayGameOverMusic()
     {
         // Play music only once
-        if (!gameOverMusicPlayed)
+        if (!_gameOverMusicPlayed)
         {
             // Stop background music
             if (_audioSource.isPlaying)
@@ -49,8 +57,9 @@ public class AudioManager : MonoBehaviour
 
                 // Play game over music
                 _audioSource.clip = audioClipGameOver;
+                _audioSource.loop = false;
                 _audioSource.Play();
-                gameOverMusicPlayed = true;
+                _gameOverMusicPlayed = true;
             }
         }
     }

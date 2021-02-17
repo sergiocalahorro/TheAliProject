@@ -48,7 +48,7 @@ public class GUIManager : MonoBehaviour
     /// <summary>
     /// Display the number of lives the player currently has
     /// </summary>
-    /// <param name="numberOfLives"> </param>
+    /// <param name="numberOfLives"> Number of lives the player has </param>
     public void UpdateLivesImages(int numberOfLives)
     {
         if (numberOfLives >= 0)

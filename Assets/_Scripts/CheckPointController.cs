@@ -5,12 +5,24 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class CheckPointController : MonoBehaviour
 {
-    // Position
-    public static Vector3 LastPosition;
-
     // Control
     private bool _checkPointReached;
-    public static List<GameObject> Coins;
+    private Vector3 _position;
+    public Vector3 position
+    {
+        get
+        {
+            return _position;
+        }
+    }
+    private List<GameObject> _coins;
+    public List<GameObject> coins
+    {
+        get
+        {
+            return _coins;
+        }
+    }
 
     // Lights
     [Header("Lights")]
@@ -34,14 +46,8 @@ public class CheckPointController : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
 
         // Last check point's position and collected coins
-        LastPosition = Vector3.zero;
-        Coins = new List<GameObject>();
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-
+        _position = Vector3.zero;
+        _coins = new List<GameObject>();
     }
 
     // FixedUpdate is called every fixed framerate
@@ -63,14 +69,17 @@ public class CheckPointController : MonoBehaviour
             if (!_checkPointReached)
             {
                 _checkPointReached = true;
-                LastPosition = transform.position;
+                _position = transform.position;
 
-                // Update the collected coins
-                List<GameObject> totalCoins = GameManager.Instance.coins;
+                // Set the collected coins when this check point was reached
+                List<GameObject> totalCoins = GameManager.Instance.totalCoins;
                 for (int i = 0; i < totalCoins.Count; i++)
                 {
-                    Coins.Add(totalCoins[i]);
+                    _coins.Add(totalCoins[i]);
                 }
+
+                // Send this check point to the game manager
+                GameManager.Instance.checkPoint = this;
 
                 // Play sound
                 _audioSource.Play();

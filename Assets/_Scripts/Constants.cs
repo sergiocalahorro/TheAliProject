@@ -7,4 +7,6 @@
     public const string ISJUMPING_B = "IsJumping";
     public const string ISDOUBLEJUMPING_B = "IsDoubleJumping";
     public const string ISWALLSLIDING_B = "IsWallSliding";
+    public const string ISHURT_B = "IsHurt";
+    public const string ISDEAD_B = "IsDead";
 }

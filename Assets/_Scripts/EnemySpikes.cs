@@ -12,7 +12,7 @@ public class EnemySpikes : Enemy
 
     public override void Attack()
     {
-        _playerController.TakeDamage();
+        StartCoroutine(_playerController.TakeDamage());
     }
 
     public override void Die()
@@ -20,8 +20,17 @@ public class EnemySpikes : Enemy
         throw new System.NotImplementedException();
     }
 
-    // OnTriggerEnter2D is called when the Collider2D other enters this collider
+    // OnColliderEnter2D is called when the Collider2D other enters this collider
     private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Attack();
+        }
+    }
+
+    // OnCollisionStay2D is called when the Collider2D other stays in this collider
+    private void OnCollisionStay2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {

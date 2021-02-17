@@ -173,7 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baea02045c9186b418c92b510621a8a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numberOfLives: 3
+  _hurtDuration: 1
+  _invulnerabilityDuration: 2
   _movementSpeed: 6
   _jumpForce: 18
   _jumpHeightFactor: 0.25
@@ -187,6 +188,8 @@ MonoBehaviour:
   wallCheckTransform: {fileID: 1893547212}
   _wallCheckDistance: 0.5
   _wallSlideSpeed: 3
+  _wallHopDirection: {x: 1, y: 0.5}
+  _wallJumpDirection: {x: 1, y: 2}
   _wallHopForce: 10
   _wallJumpForce: 20
   _zeroFriction: {fileID: 6200000, guid: 2991aae751abf6d438ae1cda547bf009, type: 2}

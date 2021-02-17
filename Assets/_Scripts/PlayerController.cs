@@ -7,6 +7,22 @@ public class PlayerController : MonoBehaviour
 {
     // Attributes
     private int _numberOfLives;
+    public int numberOfLives
+    {
+        set
+        {
+            _numberOfLives = value;
+        }
+    }
+
+    // Damage
+    [Header("Damage")]
+    private bool _canTakeDamage;
+    private bool _isHurt;
+    [SerializeField]
+    private float _hurtDuration;
+    [SerializeField]
+    private float _invulnerabilityDuration;
 
     // Movement
     [Header("Movement")]
@@ -73,7 +89,9 @@ public class PlayerController : MonoBehaviour
 
     // Wall jump
     [Header("Wall jump")]
+    [SerializeField]
     private Vector2 _wallHopDirection;
+    [SerializeField]
     private Vector2 _wallJumpDirection;
     [SerializeField]
     private float _wallHopForce;
@@ -106,8 +124,8 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private AudioSource _audioSource;
 
-    // Start is called before the first frame update
-    private void Start()
+    // Awake is called when the script instance is being loaded
+    private void Awake()
     {
         // Components
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -117,18 +135,27 @@ public class PlayerController : MonoBehaviour
 
         // Ground layer
         _groundLayerMask = LayerMask.GetMask("Ground");
+    }
 
-        // Get initial position
-        Vector3 startPosition = new Vector3(-14f, -5.2f, 0f);
-
-        // Spawn player at a given position
-        Spawn(startPosition);
-
+    // Start is called before the first frame update
+    private void Start()
+    {
         // Wall jump
-        _wallHopDirection = new Vector2(1f, 0.5f);
         _wallHopDirection.Normalize();
-        _wallJumpDirection = new Vector2(1f, 2f);
         _wallJumpDirection.Normalize();
+    }
+
+    // OnEnable is called when the object becomes enabled and active
+    private void OnEnable()
+    {
+        // Player is alive and can take damage
+        _canTakeDamage = true;
+        _animator.SetBool(Constants.ISDEAD_B, false);
+
+        // Player is facing right
+        _facingRight = true;
+        _facingDirection = 1f;
+        _spriteRenderer.flipX = _facingRight;
     }
 
     // Update is called once per frame
@@ -163,23 +190,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawn player at a given position
-    /// </summary>
-    public void Spawn(Vector3 respawnPosition)
-    {
-        // Player spawns at given position
-        transform.position = respawnPosition;
-
-        // Player has 3 lives
-        _numberOfLives = 3;
-
-        // Player is facing right
-        _facingRight = true;
-        _facingDirection = 1f;
-        _spriteRenderer.flipX = _facingRight;
-    }
-
-    /// <summary>
     /// Check keyboard input
     /// </summary>
     private void CheckInput()
@@ -188,7 +198,7 @@ public class PlayerController : MonoBehaviour
         _horizontalInput = Input.GetAxis("Horizontal");
 
         // Jump
-        if ((_isGrounded || _isTouchingWall) && Input.GetButtonDown("Jump"))
+        if ((_isGrounded || _isTouchingWall) && !_isHurt && Input.GetButtonDown("Jump"))
         {
             Jump();
         }
@@ -215,6 +225,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(Constants.ISJUMPING_B, _isJumping);
         _animator.SetBool(Constants.ISDOUBLEJUMPING_B, _isDoubleJumping);
         _animator.SetBool(Constants.ISWALLSLIDING_B, _isWallSliding);
+        _animator.SetBool(Constants.ISHURT_B, _isHurt);
     }
 
     /// <summary>
@@ -265,7 +276,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Play sound and particles when player is moving
-        if (_isGrounded && _horizontalInput != 0f)
+        if (_isGrounded && _horizontalInput != 0f && !_isHurt)
         {
             if (!_audioSource.isPlaying)
             {
@@ -400,18 +411,51 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Player takes damage
     /// </summary>
-    public void TakeDamage()
+    public IEnumerator TakeDamage()
     {
-        // Decrease number of lives
-        _numberOfLives--;
+        if (_canTakeDamage)
+        {
+            // Decrease number of lives
+            _numberOfLives--;
+            GameManager.Instance.CheckNumberOfLives(_numberOfLives);
 
-        // Send number of lives to the GameManager
-        GameManager.Instance.CheckNumberOfLives(_numberOfLives);
+            // Player is dead
+            if (_numberOfLives == 0)
+            {
+                Die();
+            }
+            else
+            {
+                // Player is hurt and becomes invulnerable for some time
+                _isHurt = true;
+                _canTakeDamage = false;
 
-        // Play sound
-        _audioSource.volume = 0.4f;
-        _audioSource.pitch = 1f;
-        _audioSource.PlayOneShot(takeDamageAudioClip);
+                // Play sound
+                _audioSource.volume = 0.4f;
+                _audioSource.pitch = 1f;
+                _audioSource.PlayOneShot(takeDamageAudioClip, 0.4f);
+
+                // Player stops being hurt but is still invulnerable
+                yield return new WaitForSeconds(_hurtDuration);
+                _isHurt = false;
+            }
+        }
+
+        // Player stops being invulnerable
+        yield return new WaitForSeconds(_invulnerabilityDuration);
+        _canTakeDamage = true;
+    }
+
+    /// <summary>
+    /// Player's death
+    /// </summary>
+    private void Die()
+    {
+        _canTakeDamage = false;
+        _isHurt = false;
+        _animator.SetBool(Constants.ISDEAD_B, true);
+
+        GameManager.Instance.isGameOver = true;
     }
 
     /// <summary>
