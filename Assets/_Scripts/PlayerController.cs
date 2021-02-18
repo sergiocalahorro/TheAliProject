@@ -70,8 +70,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 _slopeNormalPerpendicular;
 
     // Special abilities
-    private bool _unlockedDoubleJump;
-    private bool _unlockedWallSliding;
+    private bool _unlockedDoubleJump = true;
+    private bool _unlockedWallSliding = true;
 
     // Double jump
     private bool _canDoubleJump;
@@ -120,7 +120,6 @@ public class PlayerController : MonoBehaviour
 
     // Components
     private Rigidbody2D _rigidbody;
-    private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private AudioSource _audioSource;
 
@@ -129,7 +128,6 @@ public class PlayerController : MonoBehaviour
     {
         // Components
         _rigidbody = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
 
@@ -152,10 +150,13 @@ public class PlayerController : MonoBehaviour
         _canTakeDamage = true;
         _animator.SetBool(Constants.ISDEAD_B, false);
 
-        // Player is facing right
-        _facingRight = true;
-        _facingDirection = 1f;
-        _spriteRenderer.flipX = _facingRight;
+        // Set player facing right
+        if (!_facingRight)
+        {
+            _facingRight = true;
+            _facingDirection = 1f;
+            transform.Rotate(0f, 180f, 0f);
+        }
     }
 
     // Update is called once per frame
@@ -308,7 +309,7 @@ public class PlayerController : MonoBehaviour
         {
             _facingDirection *= -1f;
             _facingRight = !_facingRight;
-            _spriteRenderer.flipX = _facingRight;
+            transform.Rotate(0f, 180f, 0f);
         }
     }
 
@@ -422,7 +423,7 @@ public class PlayerController : MonoBehaviour
             // Player is dead
             if (_numberOfLives == 0)
             {
-                Die();
+                Die(); 
             }
             else
             {
@@ -571,9 +572,18 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void WallCheck()
     {
-        _isTouchingWall = Physics2D.Raycast(wallCheckTransform.position, 
-                                            transform.right * _facingDirection,
-                                            _wallCheckDistance, _groundLayerMask);
+        if (_facingRight)
+        {
+            _isTouchingWall = Physics2D.Raycast(wallCheckTransform.position,
+                                                -transform.right * _facingDirection,
+                                                _wallCheckDistance, _groundLayerMask);
+        }
+        else
+        {
+            _isTouchingWall = Physics2D.Raycast(wallCheckTransform.position,
+                                                transform.right * _facingDirection,
+                                                _wallCheckDistance, _groundLayerMask);
+        }
     }
 
     /// <summary>

@@ -7,14 +7,6 @@ public class CheckPointController : MonoBehaviour
 {
     // Control
     private bool _checkPointReached;
-    private Vector3 _position;
-    public Vector3 position
-    {
-        get
-        {
-            return _position;
-        }
-    }
     private List<GameObject> _coins;
     public List<GameObject> coins
     {
@@ -46,7 +38,6 @@ public class CheckPointController : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
 
         // Last check point's position and collected coins
-        _position = Vector3.zero;
         _coins = new List<GameObject>();
     }
 
@@ -69,7 +60,6 @@ public class CheckPointController : MonoBehaviour
             if (!_checkPointReached)
             {
                 _checkPointReached = true;
-                _position = transform.position;
 
                 // Set the collected coins when this check point was reached
                 List<GameObject> totalCoins = GameManager.Instance.totalCoins;

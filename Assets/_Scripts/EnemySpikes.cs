@@ -28,13 +28,4 @@ public class EnemySpikes : Enemy
             Attack();
         }
     }
-
-    // OnCollisionStay2D is called when the Collider2D other stays in this collider
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Attack();
-        }
-    }
 }

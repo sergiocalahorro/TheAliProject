@@ -115,7 +115,7 @@ public class GameManager : Singleton<GameManager>
         // Game control
         isGameOver = false;
         _player.enabled = true;
-        Spawn(_checkPoint.position);
+        Spawn(_checkPoint.transform.position);
 
         // Compare the total coins with the ones collected on the last check point reached
         for (int i = totalCoins.Count - 1; i >= 0; i--)
