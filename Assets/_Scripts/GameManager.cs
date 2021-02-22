@@ -73,9 +73,10 @@ public class GameManager : Singleton<GameManager>
         // Shake camera when player is hurt
         if (_player.isHurt)
         {
+            UpdateNumberOfLives(_player.numberOfLives);
             _cameraManager.Shake();
         }
-        else 
+        else
         {
             _cameraManager.ResetShake();
         }
@@ -90,6 +91,7 @@ public class GameManager : Singleton<GameManager>
             _cameraManager.ResetZoomIn();
         }
 
+        // Game is over
         if (_player.deadAnimationPlayed)
         {
             GameOver();
@@ -112,7 +114,7 @@ public class GameManager : Singleton<GameManager>
     /// Update the number of lives the player has
     /// </summary>
     /// <param name="numberOfLives"> Number of lives the player has </param>
-    public void UpdateNumberOfLives(int numberOfLives)
+    private void UpdateNumberOfLives(int numberOfLives)
     {
         // Update UI
         _guiManager.UpdateLivesImages(numberOfLives);
@@ -121,7 +123,7 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// Game Over
     /// </summary>
-    public void GameOver()
+    private void GameOver()
     {
         if (!_insideGameOver)
         {
@@ -140,7 +142,7 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// Spawn player at a given position
     /// </summary>
-    public void Spawn(Vector3 respawnPosition)
+    private void Spawn(Vector3 respawnPosition)
     {
         // Player spawns at given position
         _player.transform.position = respawnPosition;
