@@ -163,7 +163,7 @@ Animator:
   m_GameObject: {fileID: 6663998466547306991}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bf000a5f8e356d3458d4e592c4723dd3, type: 2}
+  m_Controller: {fileID: 9100000, guid: b14536bf7ab6e4b4f897031749843cb6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -230,6 +230,7 @@ MonoBehaviour:
   jumpAudioClip: {fileID: 8300000, guid: 898d61426fb6db9468aef9f0839b88c3, type: 3}
   fartAudioClip: {fileID: 8300000, guid: fdac11f7004e62f4f8325f2486b85244, type: 3}
   takeDamageAudioClip: {fileID: 8300000, guid: 64e4760db98853c458c9987cb860db8f, type: 3}
+  deathAudioClip: {fileID: 8300000, guid: 6de1d4169a03f60419387ed3a6d1d500, type: 3}
   dirtParticleSystem: {fileID: 8233323620329590902}
   fartParticleSystem: {fileID: 864275524315313823}
   dust: {fileID: 6306659397799875259, guid: b5132be16851dfc4cbc27a8b5e097eeb, type: 3}
@@ -466,6 +467,14 @@ PrefabInstance:
     - target: {fileID: 6306659397799875237, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
       propertyPath: looping
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6306659397799875237, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.8564266
+      objectReference: {fileID: 0}
+    - target: {fileID: 6306659397799875237, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6306659397799875238, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
       propertyPath: m_RootOrder

@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637488137464105096
-    m_Hash: 3537525080
+      ticks: 637495909209945296
+    m_Hash: 341435142
   m_LockFileStatus:
     m_FilePath: C:/Users/Usuario/Documents/Developer/Unity/Personal/TheAliProject/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637495301501412685
-    m_Hash: 1866197550
+      ticks: 637495909222743540
+    m_Hash: 2710419208
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -619,6 +619,7 @@ m_PackageAssets:
         - 2.6.3-preview.2
         - 2.6.3
         - 2.7.1
+        - 2.7.2
         compatible:
         - 2.5.0
         - 2.6.0-preview.2
@@ -633,6 +634,7 @@ m_PackageAssets:
         - 2.6.3-preview.2
         - 2.6.3
         - 2.7.1
+        - 2.7.2
         verified: 2.6.3
       dependencies: []
       resolvedDependencies: []
@@ -1068,12 +1070,12 @@ m_PackageAssets:
         url: git+https://github.com/Unity-Technologies/com.unity.test-framework.git
         revision: 56c667cbc326a1cbab8dfd7ebc693a1121d0abe1
         path: 
-    - packageId: com.unity.textmeshpro@3.0.3
+    - packageId: com.unity.textmeshpro@3.0.4
       testable: 0
       isDirectDependency: 1
-      version: 3.0.3
+      version: 3.0.4
       source: 1
-      resolvedPath: C:\Users\Usuario\Documents\Developer\Unity\Personal\TheAliProject\Library\PackageCache\com.unity.textmeshpro@3.0.3
+      resolvedPath: C:\Users\Usuario\Documents\Developer\Unity\Personal\TheAliProject\Library\PackageCache\com.unity.textmeshpro@3.0.4
       assetPath: Packages/com.unity.textmeshpro
       name: com.unity.textmeshpro
       displayName: TextMeshPro
@@ -1143,6 +1145,7 @@ m_PackageAssets:
         - 1.5.0
         - 1.5.1
         - 1.5.3
+        - 1.5.4
         - 2.0.0
         - 2.0.1-preview.1
         - 2.0.1
@@ -1161,6 +1164,7 @@ m_PackageAssets:
         - 2.1.0
         - 2.1.1
         - 2.1.3
+        - 2.1.4
         - 3.0.0-preview.1
         - 3.0.0-preview.3
         - 3.0.0-preview.4
@@ -1175,10 +1179,12 @@ m_PackageAssets:
         - 3.0.0
         - 3.0.1
         - 3.0.3
+        - 3.0.4
         compatible:
         - 3.0.1
         - 3.0.3
-        verified: 3.0.3
+        - 3.0.4
+        verified: 3.0.4
       dependencies:
       - name: com.unity.ugui
         version: 1.0.0
@@ -1207,13 +1213,13 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637394911680000000
+      datePublishedTicks: 637492944820000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/com.unity.textmeshpro.git
-        revision: 648406226df6c4f28a0f64eaab42ddc3db70c475
+        revision: e2f8dffb26de9a130d5b2140d83891d9a7825330
         path: 
     - packageId: com.unity.timeline@1.4.6
       testable: 0

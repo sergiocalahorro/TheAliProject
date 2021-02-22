@@ -19,6 +19,21 @@ public class PlayerController : MonoBehaviour
     [Header("Damage")]
     private bool _canTakeDamage;
     private bool _isHurt;
+    public bool isHurt
+    {
+        get
+        {
+            return _isHurt;
+        }
+    }
+    private bool _isDead;
+    public bool isDead
+    {
+        get
+        {
+            return _isDead;
+        }
+    }
     [SerializeField]
     private float _hurtDuration;
     [SerializeField]
@@ -31,6 +46,7 @@ public class PlayerController : MonoBehaviour
     private float _horizontalInput;
     private float _facingDirection;
     private bool _facingRight;
+    private bool _canMove;
 
     // Jump
     [Header("Jump")]
@@ -48,12 +64,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _minTimeInAir;
 
+    // Weapon
+    private Weapon _sock;
+
     // Ground check
     [Header("Ground check")]
     public Transform groundCheckTransform;
     [SerializeField]
     private float _groundCheckRadius;
     private bool _isGrounded;
+    public bool isGrounded
+    {
+        get
+        {
+            return _isGrounded;
+        }
+    }
     private LayerMask _groundLayerMask;
 
     // Slope check
@@ -70,8 +96,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 _slopeNormalPerpendicular;
 
     // Special abilities
-    private bool _unlockedDoubleJump = true;
-    private bool _unlockedWallSliding = true;
+    private bool _unlockedDoubleJump;
+    private bool _unlockedWallSliding;
 
     // Double jump
     private bool _canDoubleJump;
@@ -98,8 +124,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _wallJumpForce;
 
-    // Materials
-    [Header("Materials")]
+    // Physics
+    [Header("Physics")]
+    private Rigidbody2D _rigidbody;
     [SerializeField]
     private PhysicsMaterial2D _zeroFriction;
     [SerializeField]
@@ -107,10 +134,12 @@ public class PlayerController : MonoBehaviour
 
     // Audio
     [Header("Audio")]
+    private AudioSource _audioSource;
     public AudioClip footstepsAudioClip;
     public AudioClip jumpAudioClip;
     public AudioClip fartAudioClip;
     public AudioClip takeDamageAudioClip;
+    public AudioClip deathAudioClip;
 
     // Effects
     [Header("Particle Systems")]
@@ -118,15 +147,23 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem fartParticleSystem;
     public GameObject dust;
 
-    // Components
-    private Rigidbody2D _rigidbody;
+    // Animations
     private Animator _animator;
-    private AudioSource _audioSource;
+    private PlayerAnimationState _currentState;
+    private bool _deadAnimationPlayed;
+    public bool deadAnimationPlayed
+    {
+        get
+        {
+            return _deadAnimationPlayed;
+        }
+    }
 
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
         // Components
+        _sock = GetComponent<Weapon>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
@@ -147,8 +184,10 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         // Player is alive and can take damage
+        _canMove = true;
+        _isDead = false;
         _canTakeDamage = true;
-        _animator.SetBool(Constants.ISDEAD_B, false);
+        _deadAnimationPlayed = false;
 
         // Set player facing right
         if (!_facingRight)
@@ -163,10 +202,13 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         // Listen to player's input
-        CheckInput();
+        if (_canMove)
+        {
+            CheckInput();
+        }
 
-        // Feed animator controller's parameters with updated values
-        UpdateAnimatorParameters();
+        // Update Animator
+        UpdateAnimatorState();
     }
 
     // FixedUpdate is called every fixed framerate frame
@@ -216,17 +258,81 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Update animator's parameters
+    /// Update Animator's state with the next animation to be played
     /// </summary>
-    private void UpdateAnimatorParameters()
+    private void UpdateAnimatorState()
     {
-        _animator.SetFloat(Constants.SPEED_F, Mathf.Abs(_horizontalInput));
-        _animator.SetFloat(Constants.VERTICALSPEED_F, _rigidbody.velocity.y);
-        _animator.SetBool(Constants.ISGROUNDED_B, _isGrounded);
-        _animator.SetBool(Constants.ISJUMPING_B, _isJumping);
-        _animator.SetBool(Constants.ISDOUBLEJUMPING_B, _isDoubleJumping);
-        _animator.SetBool(Constants.ISWALLSLIDING_B, _isWallSliding);
-        _animator.SetBool(Constants.ISHURT_B, _isHurt);
+        if (!_isHurt && _numberOfLives > 0)
+        {
+            if (_isGrounded && _horizontalInput == 0f)
+            {
+                // Player is idle
+                ChangeAnimationState(PlayerAnimationState.Idle);
+            }
+
+            if (_isGrounded && _horizontalInput != 0f)
+            {
+                // Player is walking
+                ChangeAnimationState(PlayerAnimationState.Walk);
+            }
+
+            if (_isJumping && _rigidbody.velocity.y > 0f)
+            {
+                // Player is jumping
+                ChangeAnimationState(PlayerAnimationState.Jump);
+            }
+
+            if (!_isWallSliding && !_isGrounded && _rigidbody.velocity.y < 0f)
+            {
+                // Player is falling
+                ChangeAnimationState(PlayerAnimationState.Fall);
+            }
+
+            if (_isGrounded && _sock.isShooting)
+            {
+                // Player is throwing sock
+                ChangeAnimationState(PlayerAnimationState.Throw);
+            }
+
+            if (_isDoubleJumping && _rigidbody.velocity.y > 0f)
+            {
+                // Player is double jumping
+                ChangeAnimationState(PlayerAnimationState.DoubleJump);
+            }
+
+            if (_isWallSliding)
+            {
+                // Player is wall sliding
+                ChangeAnimationState(PlayerAnimationState.WallSlide);
+            }
+        }
+
+        if (_isHurt)
+        {
+            // Player is hurt
+            ChangeAnimationState(PlayerAnimationState.Hurt);
+        }
+
+        if (_isDead)
+        {
+            // Player is dead
+            ChangeAnimationState(PlayerAnimationState.Dead);
+        }
+    }
+
+    /// <summary>
+    /// Change the animation that is currently playing
+    /// </summary>
+    /// <param name="newState"> New animation state to be played </param>
+    private void ChangeAnimationState(PlayerAnimationState newState)
+    {
+        if (_currentState == newState)
+        {
+            return;
+        }
+
+        _animator.SetInteger(Constants.PLAYER_STATE, (int) newState);
+        _currentState = newState;
     }
 
     /// <summary>
@@ -418,12 +524,29 @@ public class PlayerController : MonoBehaviour
         {
             // Decrease number of lives
             _numberOfLives--;
-            GameManager.Instance.CheckNumberOfLives(_numberOfLives);
+            GameManager.Instance.UpdateNumberOfLives(_numberOfLives);
 
             // Player is dead
             if (_numberOfLives == 0)
             {
-                Die(); 
+                _canMove = false;
+                _isDead = true;
+                _canTakeDamage = false;
+                _isHurt = false;
+
+                // Stop particles
+                dirtParticleSystem.Stop();
+                fartParticleSystem.Stop();
+
+                // Play sound
+                _audioSource.volume = 0.4f;
+                _audioSource.pitch = 1f;
+                _audioSource.clip = deathAudioClip;
+                _audioSource.Play();               
+
+                // Wait until the animation has played
+                yield return new WaitForSeconds(_animator.GetCurrentAnimatorClipInfo(0).Length);
+                _deadAnimationPlayed = true;
             }
             else
             {
@@ -432,9 +555,10 @@ public class PlayerController : MonoBehaviour
                 _canTakeDamage = false;
 
                 // Play sound
-                _audioSource.volume = 0.4f;
+                _audioSource.volume = 0.2f;
                 _audioSource.pitch = 1f;
-                _audioSource.PlayOneShot(takeDamageAudioClip, 0.4f);
+                _audioSource.clip = takeDamageAudioClip;
+                _audioSource.Play();
 
                 // Player stops being hurt but is still invulnerable
                 yield return new WaitForSeconds(_hurtDuration);
@@ -442,21 +566,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Player stops being invulnerable
+        // Player stops being invulnerable after some time
         yield return new WaitForSeconds(_invulnerabilityDuration);
         _canTakeDamage = true;
-    }
-
-    /// <summary>
-    /// Player's death
-    /// </summary>
-    private void Die()
-    {
-        _canTakeDamage = false;
-        _isHurt = false;
-        _animator.SetBool(Constants.ISDEAD_B, true);
-
-        GameManager.Instance.isGameOver = true;
     }
 
     /// <summary>

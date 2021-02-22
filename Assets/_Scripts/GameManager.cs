@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 [RequireComponent(typeof(AudioManager), typeof(GUIManager))]
 public class GameManager : Singleton<GameManager>
 {
     // Control
     private PlayerController _player;
-    public bool isGameOver;
-
     private List<GameObject> _totalCoins;
     public List<GameObject> totalCoins
     {
@@ -26,10 +23,27 @@ public class GameManager : Singleton<GameManager>
             _checkPoint = value;
         }
     }
+    private bool _isGameOver;
+    public bool isGameOver
+    {
+        get
+        {
+            return _isGameOver;
+        }
+    }
+    private bool _insideGameOver;
+    public bool insideGameOver
+    {
+        get
+        {
+            return _insideGameOver;
+        }
+    }
 
     // Components
     private AudioManager _audioManager;
     private GUIManager _guiManager;
+    private CameraManager _cameraManager;
 
     // Start is called before the first frame update
     private void Start()
@@ -37,12 +51,16 @@ public class GameManager : Singleton<GameManager>
         // Components
         _audioManager = GetComponent<AudioManager>();
         _guiManager = GetComponent<GUIManager>();
+        _cameraManager = GetComponent<CameraManager>();
+
+        // Start playing background music
         StartCoroutine(_audioManager.PlayBackgroundMusic());
 
         // Control
-        isGameOver = false;
         _player = FindObjectOfType<PlayerController>();
         _totalCoins = new List<GameObject>();
+        _isGameOver = false;
+        _insideGameOver = false;
 
         // Set player's starting position
         Vector3 startPosition = new Vector3(-14f, -5.2f, 0f);
@@ -52,7 +70,27 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     private void Update()
     {
-        if (isGameOver)
+        // Shake camera when player is hurt
+        if (_player.isHurt)
+        {
+            _cameraManager.Shake();
+        }
+        else 
+        {
+            _cameraManager.ResetShake();
+        }
+
+        // Zoom in on player when he's dead
+        if (_player.isDead)
+        {
+            _cameraManager.ZoomIn();
+        }
+        else
+        {
+            _cameraManager.ResetZoomIn();
+        }
+
+        if (_player.deadAnimationPlayed)
         {
             GameOver();
         }
@@ -74,7 +112,7 @@ public class GameManager : Singleton<GameManager>
     /// Update the number of lives the player has
     /// </summary>
     /// <param name="numberOfLives"> Number of lives the player has </param>
-    public void CheckNumberOfLives(int numberOfLives)
+    public void UpdateNumberOfLives(int numberOfLives)
     {
         // Update UI
         _guiManager.UpdateLivesImages(numberOfLives);
@@ -85,14 +123,18 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void GameOver()
     {
-        // Disable player
-        _player.enabled = false;
+        if (!_insideGameOver)
+        {
+            // Player is dead
+            _isGameOver = true;
+            _player.enabled = false;
 
-        // Update UI
-        _guiManager.DisplayGameOverScreen();
+            // Play music
+            _audioManager.PlayGameOverMusic();
 
-        // Play music
-        _audioManager.PlayGameOverMusic();
+            // Game state is in game over
+            _insideGameOver = true;
+        }
     }
 
     /// <summary>
@@ -113,7 +155,8 @@ public class GameManager : Singleton<GameManager>
     public void RestartFromCheckPoint()
     {
         // Game control
-        isGameOver = false;
+        _isGameOver = false;
+        _insideGameOver = false;
         _player.enabled = true;
         Spawn(_checkPoint.transform.position);
 

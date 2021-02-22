@@ -22,6 +22,15 @@ public class GUIManager : MonoBehaviour
     public CanvasGroup gameOverCanvasGroup;
     public GameObject panelGameOverButtons;
 
+    // Update is called once per frame
+    private void Update()
+    {
+        if (GameManager.Instance.insideGameOver)
+        {
+            DisplayGameOverScreen();
+        }
+    }
+
     /// <summary>
     /// Display text with the current number of coins collected by the player
     /// </summary>

@@ -6,6 +6,15 @@ public class Weapon : MonoBehaviour
 {
     private PlayerController _player;
 
+    private bool _isShooting;
+    public bool isShooting
+    {
+        get
+        {
+            return _isShooting;
+        }
+    }
+
     public Transform firePoint;
     public GameObject bulletPrefab;
 
@@ -21,9 +30,14 @@ public class Weapon : MonoBehaviour
         if (_player != null)
         {
             // Player is shooting
-            if (Input.GetButtonDown("Fire1"))
+            if (_player.isGrounded && Input.GetButtonDown("Fire1"))
             {
                 Shoot();
+                _isShooting = true;
+            }
+            else if (Input.GetButtonUp("Fire1"))
+            {
+                _isShooting = false;
             }
         }
         else

@@ -5,9 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    // Control
-    private bool _gameOverMusicPlayed;
-
     // Audio
     [Header("Audio")]
     private AudioSource _audioSource;
@@ -25,8 +22,6 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public IEnumerator PlayBackgroundMusic()
     {
-        _gameOverMusicPlayed = false;
-
         while (!GameManager.Instance.isGameOver)
         {
             for (int i = 0; i < audioClipsBackground.Length; i++)
@@ -47,20 +42,15 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlayGameOverMusic()
     {
-        // Play music only once
-        if (!_gameOverMusicPlayed)
+        // Stop background music
+        if (_audioSource.isPlaying)
         {
-            // Stop background music
-            if (_audioSource.isPlaying)
-            {
-                _audioSource.Stop();
+            _audioSource.Stop();
 
-                // Play game over music
-                _audioSource.clip = audioClipGameOver;
-                _audioSource.loop = false;
-                _audioSource.Play();
-                _gameOverMusicPlayed = true;
-            }
+            // Play game over music
+            _audioSource.clip = audioClipGameOver;
+            _audioSource.loop = false;
+            _audioSource.Play();
         }
     }
 }
