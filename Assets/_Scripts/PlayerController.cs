@@ -572,8 +572,8 @@ public class PlayerController : MonoBehaviour
                 _audioSource.pitch = 1f;
                 _audioSource.Play();
 
-                // Wait until the animation has played
-                yield return new WaitForSeconds(_animator.GetCurrentAnimatorClipInfo(0).Length);
+                // Wait until the sound finished playing
+                yield return new WaitForSeconds(_audioSource.clip.length);
                 _deadAnimationPlayed = true;
             }
         }

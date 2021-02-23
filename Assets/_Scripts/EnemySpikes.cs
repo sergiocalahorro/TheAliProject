@@ -7,12 +7,15 @@ public class EnemySpikes : Enemy
     // Start is called before the first frame update
     private void Start()
     {
-        playerController = FindObjectOfType<PlayerController>();
+        player = FindObjectOfType<PlayerController>();
     }
 
     public override void Attack()
     {
-        StartCoroutine(playerController.TakeDamage(attackDamage));
+        if (!player.isDead)
+        {
+            StartCoroutine(player.TakeDamage(attackDamage));
+        }
     }
 
     public override void Die()

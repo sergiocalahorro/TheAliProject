@@ -1779,7 +1779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ded71a6ff968e4d81af79fefdb4cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shakeIntensity: 10
+  _shakeIntensity: 8
   _shakeDuration: 0.5
   _startZoomAmount: 8
   _zoomAmount: 3.5

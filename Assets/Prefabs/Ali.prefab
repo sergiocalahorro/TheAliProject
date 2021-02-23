@@ -72,9 +72,9 @@ GameObject:
   - component: {fileID: 6663998466547306989}
   - component: {fileID: 6663998466547306990}
   - component: {fileID: 6663998466547306986}
+  - component: {fileID: 936534928}
   - component: {fileID: 6663998466547306985}
   - component: {fileID: 2921870521274118809}
-  - component: {fileID: 936534928}
   - component: {fileID: 968334353}
   m_Layer: 0
   m_Name: Ali
@@ -193,6 +193,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!70 &936534928
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6663998466547306991}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.045796394, y: 0.049999952}
+  m_Size: {x: 0.81467056, y: 2.1}
+  m_Direction: 0
 --- !u!114 &6663998466547306985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,22 +272,6 @@ MonoBehaviour:
   _cooldownTime: 0.5
   firePoint: {fileID: 1733621682}
   bulletPrefab: {fileID: 41686455629092769, guid: f7429759ff65b464db913dcca8c21a0b, type: 3}
---- !u!70 &936534928
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6663998466547306991}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.045796394, y: 0.049999952}
-  m_Size: {x: 0.81467056, y: 2.1}
-  m_Direction: 0
 --- !u!82 &968334353
 AudioSource:
   m_ObjectHideFlags: 0
@@ -494,7 +494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6306659397799875238, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.6
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 6306659397799875238, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
       propertyPath: m_LocalPosition.z

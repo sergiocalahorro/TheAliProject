@@ -6,7 +6,7 @@ public abstract class Enemy : MonoBehaviour
     protected int numberOfLives;
     [SerializeField]
     protected int attackDamage;
-    protected PlayerController playerController;
+    protected PlayerController player;
 
     /// <summary>
     /// Enemy's attack behaviour
