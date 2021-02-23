@@ -73,6 +73,12 @@ public class GameManager : Singleton<GameManager>
         // Shake camera when player is hurt
         if (_player.isHurt)
         {
+            // Avoid negative number
+            if (_player.numberOfLives < 0)
+            {
+                _player.numberOfLives = 0;
+            }
+
             UpdateNumberOfLives(_player.numberOfLives);
             _cameraManager.Shake();
         }

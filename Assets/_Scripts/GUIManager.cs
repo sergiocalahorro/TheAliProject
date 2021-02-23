@@ -62,10 +62,13 @@ public class GUIManager : MonoBehaviour
     {
         if (numberOfLives >= 0)
         {
-            Image lifeImage = livesImages[numberOfLives].GetComponent<Image>();
-            Color lifeImageColor = lifeImage.color;
-            lifeImageColor.a = 0.3f;
-            lifeImage.color = lifeImageColor;
+            for (int i = livesImages.Count - 1; i >= numberOfLives; i--)
+            {
+                Image lifeImage = livesImages[i].GetComponent<Image>();
+                Color lifeImageColor = lifeImage.color;
+                lifeImageColor.a = 0.3f;
+                lifeImage.color = lifeImageColor;
+            }
         }
     }
 

@@ -89,8 +89,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 _slopeNormalPerpendicular;
 
     // Special abilities
-    private bool _unlockedDoubleJump;
-    private bool _unlockedWallSliding;
+    private bool _unlockedDoubleJump = true;
+    private bool _unlockedWallSliding = true;
 
     // Double jump
     private bool _canDoubleJump;
@@ -197,21 +197,25 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // Listen to player's input
-        if (_canMove)
+        if (!_isDead)
         {
-            CheckInput();
-        }
+            // Listen to player's input only if he can move
+            if (_canMove)
+            {
+                CheckInput();
+            }
 
-        if (_sock.isShooting)
-        {
-            _horizontalInput = 0f;
-            dirtParticleSystem.Stop();
-            _canMove = false;
-        }
-        else
-        {
-            _canMove = true;
+            // Prevent player from moving when shooting
+            if (_sock.isShooting)
+            {
+                _horizontalInput = 0f;
+                dirtParticleSystem.Stop();
+                _canMove = false;
+            }
+            else
+            {
+                _canMove = true;
+            }
         }
 
         // Update Animator
@@ -266,7 +270,7 @@ public class PlayerController : MonoBehaviour
         // Throw sock
         if (_isGrounded && Input.GetButtonDown("Fire1"))
         {
-            _sock.Shoot();
+            StartCoroutine(_sock.Shoot());
         }
     }
 
@@ -537,16 +541,12 @@ public class PlayerController : MonoBehaviour
         {
             // Decrease number of lives
             numberOfLives -= damageAmount;
-            if (numberOfLives < 0)
-            {
-                numberOfLives = 0;
-            }
 
             // Player is hurt and becomes invulnerable for some time
             _isHurt = true;
             _canTakeDamage = false;
 
-            if (numberOfLives != 0)
+            if (numberOfLives > 0)
             {
                 // Play random sound
                 int randomIndex = Random.Range(0, takeDamageAudioClips.Length);
