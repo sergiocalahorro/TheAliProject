@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1733621682}
   m_Layer: 0
-  m_Name: Fire Point
+  m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -24,11 +24,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1733621681}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0.15, z: 0}
+  m_LocalPosition: {x: -0.4, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6663998466547306988}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1893547211
 GameObject:
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1893547212}
   m_Layer: 0
-  m_Name: Wall Check
+  m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -96,9 +96,9 @@ Transform:
   m_Children:
   - {fileID: 6663998467440649546}
   - {fileID: 1893547212}
+  - {fileID: 1733621682}
   - {fileID: 8233323620329590905}
   - {fileID: 864275524315313820}
-  - {fileID: 1733621682}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -205,8 +205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baea02045c9186b418c92b510621a8a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hurtDuration: 1
-  _invulnerabilityDuration: 2
+  numberOfLives: 3
+  _hurtDuration: 0.5
+  _invulnerabilityDuration: 1.5
   _movementSpeed: 6
   _jumpForce: 18
   _jumpHeightFactor: 0.25
@@ -229,8 +230,14 @@ MonoBehaviour:
   footstepsAudioClip: {fileID: 8300000, guid: bf2cd170121d44f4db5d94b94ef8025b, type: 3}
   jumpAudioClip: {fileID: 8300000, guid: 898d61426fb6db9468aef9f0839b88c3, type: 3}
   fartAudioClip: {fileID: 8300000, guid: fdac11f7004e62f4f8325f2486b85244, type: 3}
-  takeDamageAudioClip: {fileID: 8300000, guid: 64e4760db98853c458c9987cb860db8f, type: 3}
-  deathAudioClip: {fileID: 8300000, guid: 6de1d4169a03f60419387ed3a6d1d500, type: 3}
+  takeDamageAudioClips:
+  - {fileID: 8300000, guid: 64e4760db98853c458c9987cb860db8f, type: 3}
+  - {fileID: 8300000, guid: 01303eac1c6092243b21d5969a37b227, type: 3}
+  - {fileID: 8300000, guid: acb5c917509835846a9912d7acf64c2c, type: 3}
+  deathAudioClips:
+  - {fileID: 8300000, guid: 6de1d4169a03f60419387ed3a6d1d500, type: 3}
+  - {fileID: 8300000, guid: 18a10cc5b10b9c540a7ef28acfe2249b, type: 3}
+  - {fileID: 8300000, guid: a2aad1c49e5c19343ab0436494e5b613, type: 3}
   dirtParticleSystem: {fileID: 8233323620329590902}
   fartParticleSystem: {fileID: 864275524315313823}
   dust: {fileID: 6306659397799875259, guid: b5132be16851dfc4cbc27a8b5e097eeb, type: 3}
@@ -246,6 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df37148dd8c02f64dae33676e0521437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cooldownTime: 0.5
   firePoint: {fileID: 1733621682}
   bulletPrefab: {fileID: 41686455629092769, guid: f7429759ff65b464db913dcca8c21a0b, type: 3}
 --- !u!70 &936534928
@@ -370,7 +378,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6663998467440649546}
   m_Layer: 0
-  m_Name: Ground Check
+  m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -385,7 +393,7 @@ Transform:
   m_GameObject: {fileID: 6663998467440649547}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.9, z: 0}
-  m_LocalScale: {x: 0, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6663998466547306988}
   m_RootOrder: 0
@@ -399,7 +407,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3330943512316169380, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3330943512316169380, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -443,7 +451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3330943512316169385, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
       propertyPath: m_Name
-      value: Dirt Particle System
+      value: DirtParticleSystem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
@@ -478,7 +486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6306659397799875238, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6306659397799875238, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
       propertyPath: m_LocalPosition.x
@@ -522,7 +530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6306659397799875259, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
       propertyPath: m_Name
-      value: Fart Particle System
+      value: FartParticleSystem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}

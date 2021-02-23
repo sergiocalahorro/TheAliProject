@@ -7,17 +7,17 @@ public class EnemySpikes : Enemy
     // Start is called before the first frame update
     private void Start()
     {
-        _playerController = FindObjectOfType<PlayerController>();
+        playerController = FindObjectOfType<PlayerController>();
     }
 
     public override void Attack()
     {
-        StartCoroutine(_playerController.TakeDamage());
+        StartCoroutine(playerController.TakeDamage(attackDamage));
     }
 
     public override void Die()
     {
-        throw new System.NotImplementedException();
+        numberOfLives = 0;
     }
 
     // OnColliderEnter2D is called when the Collider2D other enters this collider

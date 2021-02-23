@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5621417798045672235}
   m_Layer: 8
   m_Name: Base Stones Platform
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 237313568112171022}
   - component: {fileID: 237313568112171009}
   - component: {fileID: 237313568112171008}
-  - component: {fileID: 1649199506768962025}
   - component: {fileID: 318324163}
+  - component: {fileID: 1649199506768962025}
   m_Layer: 8
   m_Name: RottenAnkols
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,18 +111,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.53516, y: 0.54837465}
   m_EdgeRadius: 0
---- !u!114 &1649199506768962025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237313568112171011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2e87941add0164fa23d1547a31a5d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!68 &318324163
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -218,3 +206,17 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &1649199506768962025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237313568112171011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2e87941add0164fa23d1547a31a5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfLives: 0
+  attackDamage: 1

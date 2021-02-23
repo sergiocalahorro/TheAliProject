@@ -5,7 +5,9 @@ using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
+    // Cinemachine camera
     private CinemachineVirtualCamera _virtualCamera;
+    private CinemachineBasicMultiChannelPerlin _perlin;
 
     // Shake
     [Header("Shake")]
@@ -35,6 +37,8 @@ public class CameraManager : MonoBehaviour
     private void Awake()
     {
         _virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        _perlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
         _isShakeAvailable = true;
         _isZoomAvailable = true;
     }
@@ -44,12 +48,10 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     public void Shake()
     {
-        var perlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-
         if (!_isShaking)
         {
             // Set shake intensity
-            perlin.m_AmplitudeGain = _shakeIntensity;
+            _perlin.m_AmplitudeGain = _shakeIntensity;
 
             // Set duration of the shake
             _shakeTimerTotal = _shakeDuration;
@@ -65,7 +67,7 @@ public class CameraManager : MonoBehaviour
             if (_shakeTimer > 0f)
             {
                 _shakeTimer -= Time.deltaTime;
-                perlin.m_AmplitudeGain = Mathf.Lerp(_shakeIntensity, 0f,
+                _perlin.m_AmplitudeGain = Mathf.Lerp(_shakeIntensity, 0f,
                                                     1f - (_shakeTimer / _shakeTimerTotal));
             }
         }

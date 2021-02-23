@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    private PlayerController _player;
-
+    [SerializeField]
+    private float _cooldownTime;
+    private float _counter;
     private bool _isShooting;
     public bool isShooting
     {
@@ -18,39 +19,35 @@ public class Weapon : MonoBehaviour
     public Transform firePoint;
     public GameObject bulletPrefab;
 
-    // Awake is called when the script instance is being loaded
-    private void Awake()
+    // Start is called before the first frame update
+    private void Start()
     {
-        _player = GetComponent<PlayerController>();
+        _counter = 0f;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (_player != null)
+        if (_isShooting)
         {
-            // Player is shooting
-            if (_player.isGrounded && Input.GetButtonDown("Fire1"))
-            {
-                Shoot();
-                _isShooting = true;
-            }
-            else if (Input.GetButtonUp("Fire1"))
+            _counter += Time.deltaTime;
+            if (_counter >= _cooldownTime)
             {
                 _isShooting = false;
+                _counter = 0f;
             }
-        }
-        else
-        {
-            // Enemy is shooting
         }
     }
 
     /// <summary>
     /// Shooting logic
     /// </summary>
-    private void Shoot()
+    public void Shoot()
     {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        if (!_isShooting)
+        {
+            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            _isShooting = true;
+        }
     }
 }

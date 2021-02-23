@@ -74,6 +74,7 @@
     <Compile Include="Assets\_Scripts\Enemy.cs" />
     <Compile Include="Assets\_Scripts\Enums.cs" />
     <Compile Include="Assets\_Scripts\ParallaxCamera.cs" />
+    <Compile Include="Assets\_Scripts\Bullet.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

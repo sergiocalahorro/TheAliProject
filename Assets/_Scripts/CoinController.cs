@@ -38,7 +38,6 @@ public class CoinController : MonoBehaviour
     private IEnumerator DisableAfterTime()
     {
         yield return new WaitForSeconds(_audioSource.clip.length);
-
         gameObject.SetActive(false);
     }
 }

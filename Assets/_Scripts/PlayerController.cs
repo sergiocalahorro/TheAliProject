@@ -131,8 +131,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip footstepsAudioClip;
     public AudioClip jumpAudioClip;
     public AudioClip fartAudioClip;
-    public AudioClip takeDamageAudioClip;
-    public AudioClip deathAudioClip;
+    public AudioClip[] takeDamageAudioClips;
+    public AudioClip[] deathAudioClips;
 
     // Effects
     [Header("Particle Systems")]
@@ -163,14 +163,10 @@ public class PlayerController : MonoBehaviour
 
         // Ground layer
         _groundLayerMask = LayerMask.GetMask("Ground");
-    }
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        // Wall jump
-        _wallHopDirection.Normalize();
-        _wallJumpDirection.Normalize();
+        // Player is facing right
+        _facingRight = true;
+        _facingDirection = 1f;
     }
 
     // OnEnable is called when the object becomes enabled and active
@@ -186,10 +182,16 @@ public class PlayerController : MonoBehaviour
         // Set player facing right
         if (!_facingRight)
         {
-            _facingRight = true;
-            _facingDirection = 1f;
-            transform.Rotate(0f, 180f, 0f);
+            Flip();
         }
+    }
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        // Wall jump
+        _wallHopDirection.Normalize();
+        _wallJumpDirection.Normalize();
     }
 
     // Update is called once per frame
@@ -199,6 +201,17 @@ public class PlayerController : MonoBehaviour
         if (_canMove)
         {
             CheckInput();
+        }
+
+        if (_sock.isShooting)
+        {
+            _horizontalInput = 0f;
+            dirtParticleSystem.Stop();
+            _canMove = false;
+        }
+        else
+        {
+            _canMove = true;
         }
 
         // Update Animator
@@ -249,6 +262,27 @@ public class PlayerController : MonoBehaviour
         {
             VariableJump();
         }
+
+        // Throw sock
+        if (_isGrounded && Input.GetButtonDown("Fire1"))
+        {
+            _sock.Shoot();
+        }
+    }
+
+    /// <summary>
+    /// Change the animation that is currently playing
+    /// </summary>
+    /// <param name="newState"> New animation state to be played </param>
+    private void ChangeAnimationState(PlayerAnimationState newState)
+    {
+        if (_currentState == newState)
+        {
+            return;
+        }
+
+        _animator.SetInteger(Constants.PLAYER_STATE, (int)newState);
+        _currentState = newState;
     }
 
     /// <summary>
@@ -315,21 +349,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Change the animation that is currently playing
-    /// </summary>
-    /// <param name="newState"> New animation state to be played </param>
-    private void ChangeAnimationState(PlayerAnimationState newState)
-    {
-        if (_currentState == newState)
-        {
-            return;
-        }
-
-        _animator.SetInteger(Constants.PLAYER_STATE, (int) newState);
-        _currentState = newState;
-    }
-
-    /// <summary>
     /// Apply player's movement
     /// </summary>
     private void Move()
@@ -347,7 +366,7 @@ public class PlayerController : MonoBehaviour
         if (_isGrounded && !_isOnSlope && !_isJumping)
         {
             // Normal movement
-            _rigidbody.velocity = new Vector2(_movementSpeed * _horizontalInput, 
+            _rigidbody.velocity = new Vector2(_movementSpeed * _horizontalInput,
                                               _rigidbody.velocity.y);
         }
         else if (_isGrounded && _isOnSlope && _canWalkOnSlope && !_isJumping)
@@ -462,6 +481,19 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// Player's jump with variable height
+    /// </summary>
+    private void VariableJump()
+    {
+        // The factor is applied only when the player is jumping
+        if ((_isJumping || _isDoubleJumping) && _rigidbody.velocity.y >= 0f)
+        {
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x,
+                                              _rigidbody.velocity.y * _jumpHeightFactor);
+        }
+    }
+
+    /// <summary>
     /// Player's double jump
     /// </summary>
     private void DoubleJump()
@@ -497,27 +529,18 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Player's jump with variable height
-    /// </summary>
-    private void VariableJump()
-    {
-        // The factor is applied only when the player is jumping
-        if ((_isJumping || _isDoubleJumping) && _rigidbody.velocity.y >= 0f)
-        {
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x,
-                                              _rigidbody.velocity.y * _jumpHeightFactor);
-        }
-    }
-
-    /// <summary>
     /// Player takes damage
     /// </summary>
-    public IEnumerator TakeDamage()
+    public IEnumerator TakeDamage(int damageAmount)
     {
         if (_canTakeDamage)
         {
             // Decrease number of lives
-            numberOfLives--;
+            numberOfLives -= damageAmount;
+            if (numberOfLives < 0)
+            {
+                numberOfLives = 0;
+            }
 
             // Player is hurt and becomes invulnerable for some time
             _isHurt = true;
@@ -525,10 +548,11 @@ public class PlayerController : MonoBehaviour
 
             if (numberOfLives != 0)
             {
-                // Play sound
-                _audioSource.volume = 0.2f;
+                // Play random sound
+                int randomIndex = Random.Range(0, takeDamageAudioClips.Length);
+                _audioSource.clip = takeDamageAudioClips[randomIndex];
+                _audioSource.volume = 0.4f;
                 _audioSource.pitch = 1f;
-                _audioSource.clip = takeDamageAudioClip;
                 _audioSource.Play();
 
                 // Player stops being hurt but is still invulnerable
@@ -542,9 +566,10 @@ public class PlayerController : MonoBehaviour
                 _isDead = true;
 
                 // Play sound
+                int randomIndex = Random.Range(0, deathAudioClips.Length);
+                _audioSource.clip = deathAudioClips[randomIndex];
                 _audioSource.volume = 0.4f;
                 _audioSource.pitch = 1f;
-                _audioSource.clip = deathAudioClip;
                 _audioSource.Play();
 
                 // Wait until the animation has played
