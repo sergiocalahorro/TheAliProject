@@ -22,6 +22,9 @@ public class GUIManager : MonoBehaviour
     public CanvasGroup gameOverCanvasGroup;
     public GameObject panelGameOverButtons;
 
+    // Pause
+    public GameObject panelPause;
+
     // Update is called once per frame
     private void Update()
     {
@@ -58,7 +61,7 @@ public class GUIManager : MonoBehaviour
     /// Display the number of lives the player currently has
     /// </summary>
     /// <param name="numberOfLives"> Number of lives the player has </param>
-    public void UpdateLivesImages(int numberOfLives)
+    public void DisplayCurrentLivesImages(int numberOfLives)
     {
         if (numberOfLives >= 0)
         {
@@ -85,6 +88,7 @@ public class GUIManager : MonoBehaviour
         if (_timer > _fadeDuration)
         {
             panelGameOverButtons.SetActive(true);
+            Cursor.visible = true;
         }
     }
 
@@ -96,5 +100,21 @@ public class GUIManager : MonoBehaviour
         _timer = 0f;
         gameOverCanvasGroup.alpha = 0f;
         panelGameOverButtons.SetActive(false);
+    }
+
+    /// <summary>
+    /// Display screen when game is paused
+    /// </summary>
+    public void DisplayPauseScreen()
+    {
+        panelPause.SetActive(true);
+    }
+
+    /// <summary>
+    /// Hide screen when game is resumed
+    /// </summary>
+    public void HidePauseScreen()
+    {
+        panelPause.SetActive(false);
     }
 }

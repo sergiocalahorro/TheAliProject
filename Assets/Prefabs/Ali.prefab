@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1733621682}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1893547212}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -74,9 +74,11 @@ GameObject:
   - component: {fileID: 6663998466547306986}
   - component: {fileID: 936534928}
   - component: {fileID: 6663998466547306985}
+  - component: {fileID: 88787295}
+  - component: {fileID: 8750160692795519543}
   - component: {fileID: 2921870521274118809}
   - component: {fileID: 968334353}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ali
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -224,39 +226,81 @@ MonoBehaviour:
   numberOfLives: 3
   _hurtDuration: 0.5
   _invulnerabilityDuration: 1.5
+  canMove: 0
   _movementSpeed: 6
   _jumpForce: 18
   _jumpHeightFactor: 0.25
   _movementForceInAir: 400
   _airDragMultiplier: 0.95
   _minTimeInAir: 0.1
-  groundCheckTransform: {fileID: 6663998467440649546}
-  _groundCheckRadius: 0.2
-  _slopeCheckDistance: 0.5
-  _maxSlopeAngle: 90
-  wallCheckTransform: {fileID: 1893547212}
-  _wallCheckDistance: 0.5
-  _wallSlideSpeed: 3
-  _wallHopDirection: {x: 1, y: 0.5}
-  _wallJumpDirection: {x: 1, y: 2}
-  _wallHopForce: 10
-  _wallJumpForce: 20
-  _zeroFriction: {fileID: 6200000, guid: 2991aae751abf6d438ae1cda547bf009, type: 2}
-  _fullFriction: {fileID: 6200000, guid: 2d386c8ce7fa1f74a94ab71528f3ef99, type: 2}
-  footstepsAudioClip: {fileID: 8300000, guid: bf2cd170121d44f4db5d94b94ef8025b, type: 3}
-  jumpAudioClip: {fileID: 8300000, guid: 898d61426fb6db9468aef9f0839b88c3, type: 3}
-  fartAudioClip: {fileID: 8300000, guid: fdac11f7004e62f4f8325f2486b85244, type: 3}
-  takeDamageAudioClips:
+  canJump: 0
+  isJumping: 0
+  _shotDelay: 0.5
+  isGrounded: 0
+  isOnSlope: 0
+  canWalkOnSlope: 0
+  unlockedDoubleJump: 0
+  canDoubleJump: 0
+  isDoubleJumping: 0
+  unlockedWallSliding: 0
+  isTouchingWall: 0
+  isWallSliding: 0
+  _footstepsAudioClip: {fileID: 8300000, guid: bf2cd170121d44f4db5d94b94ef8025b, type: 3}
+  _jumpAudioClip: {fileID: 8300000, guid: 898d61426fb6db9468aef9f0839b88c3, type: 3}
+  _fartAudioClip: {fileID: 8300000, guid: fdac11f7004e62f4f8325f2486b85244, type: 3}
+  _takeDamageAudioClips:
   - {fileID: 8300000, guid: 64e4760db98853c458c9987cb860db8f, type: 3}
   - {fileID: 8300000, guid: 01303eac1c6092243b21d5969a37b227, type: 3}
   - {fileID: 8300000, guid: acb5c917509835846a9912d7acf64c2c, type: 3}
-  deathAudioClips:
+  _deathAudioClips:
   - {fileID: 8300000, guid: 6de1d4169a03f60419387ed3a6d1d500, type: 3}
   - {fileID: 8300000, guid: 18a10cc5b10b9c540a7ef28acfe2249b, type: 3}
   - {fileID: 8300000, guid: a2aad1c49e5c19343ab0436494e5b613, type: 3}
   dirtParticleSystem: {fileID: 8233323620329590902}
   fartParticleSystem: {fileID: 864275524315313823}
   dust: {fileID: 6306659397799875259, guid: b5132be16851dfc4cbc27a8b5e097eeb, type: 3}
+  currentState: 0
+  rigidbodyPlayer: {fileID: 0}
+--- !u!114 &88787295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6663998466547306991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1d9d0d62034e3478b4e8fcfe0ec8da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheckRadius: 0.2
+  groundTransform: {fileID: 6663998467440649546}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  _slopeCheckDistance: 0.5
+  _maxSlopeAngle: 90
+  zeroFriction: {fileID: 6200000, guid: 2991aae751abf6d438ae1cda547bf009, type: 2}
+  fullFriction: {fileID: 6200000, guid: 2d386c8ce7fa1f74a94ab71528f3ef99, type: 2}
+--- !u!114 &8750160692795519543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6663998466547306991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c30b2065df76004fa0f5c6e498c7f57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallCheckTransform: {fileID: 1893547212}
+  wallCheckDistance: 0.5
+  wallSlideSpeed: 4
+  wallHopDirection: {x: 1, y: 0.5}
+  wallJumpDirection: {x: 1, y: 2}
+  wallHopForce: 10
+  wallJumpForce: 20
 --- !u!114 &2921870521274118809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df37148dd8c02f64dae33676e0521437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldownTime: 0.5
   firePoint: {fileID: 1733621682}
   bulletPrefab: {fileID: 41686455629092769, guid: f7429759ff65b464db913dcca8c21a0b, type: 3}
 --- !u!82 &968334353
@@ -377,7 +420,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6663998467440649546}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
@@ -452,6 +495,10 @@ PrefabInstance:
     - target: {fileID: 3330943512316169385, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
       propertyPath: m_Name
       value: DirtParticleSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3330943512316169385, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8670bd9df0196e04888d9dfcec24137f, type: 3}
@@ -531,6 +578,10 @@ PrefabInstance:
     - target: {fileID: 6306659397799875259, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
       propertyPath: m_Name
       value: FartParticleSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 6306659397799875259, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9547aadd73398b41ba77096ac8ae620, type: 3}

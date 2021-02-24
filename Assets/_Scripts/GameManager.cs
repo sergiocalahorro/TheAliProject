@@ -39,6 +39,14 @@ public class GameManager : Singleton<GameManager>
             return _insideGameOver;
         }
     }
+    private bool _paused;
+    public bool paused
+    {
+        get
+        {
+            return _paused;
+        }
+    }
 
     // Components
     private AudioManager _audioManager;
@@ -123,7 +131,7 @@ public class GameManager : Singleton<GameManager>
     private void UpdateNumberOfLives(int numberOfLives)
     {
         // Update UI
-        _guiManager.UpdateLivesImages(numberOfLives);
+        _guiManager.DisplayCurrentLivesImages(numberOfLives);
     }
 
     /// <summary>
@@ -150,6 +158,9 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void Spawn(Vector3 respawnPosition)
     {
+        // Hide mouse cursor
+        Cursor.visible = false;
+
         // Player spawns at given position
         _player.transform.position = respawnPosition;
 
@@ -185,6 +196,32 @@ public class GameManager : Singleton<GameManager>
 
         // Play music
         StartCoroutine(_audioManager.PlayBackgroundMusic());
+    }
+
+    /// <summary>
+    /// Pause game
+    /// </summary>
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        _paused = true;
+
+        // Update UI
+        _guiManager.DisplayPauseScreen();
+        Cursor.visible = true;
+    }
+
+    /// <summary>
+    /// Resume game
+    /// </summary>
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+        _paused = false;
+
+        // Update UI
+        _guiManager.HidePauseScreen();
+        Cursor.visible = false;
     }
 
     /// <summary>

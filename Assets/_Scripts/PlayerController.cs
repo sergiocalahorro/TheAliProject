@@ -6,10 +6,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Attributes
+    [Header("Attributes")]
     public int numberOfLives;
-
-    // Damage
-    [Header("Damage")]
+    [SerializeField]
+    private float _hurtDuration;
+    [SerializeField]
+    private float _invulnerabilityDuration;
     private bool _canTakeDamage;
     private bool _isHurt;
     public bool isHurt
@@ -27,122 +29,118 @@ public class PlayerController : MonoBehaviour
             return _isDead;
         }
     }
-    [SerializeField]
-    private float _hurtDuration;
-    [SerializeField]
-    private float _invulnerabilityDuration;
 
     // Movement
     [Header("Movement")]
+    public bool canMove;
+
     [SerializeField]
     private float _movementSpeed;
-    private float _horizontalInput;
+    private float _movementAmount;
+    public float movementAmount
+    {
+        set
+        {
+            _movementAmount = value;
+        }
+    }
     private float _facingDirection;
+    public float facingDirection
+    {
+        get
+        {
+            return _facingDirection;
+        }
+    }
     private bool _facingRight;
-    private bool _canMove;
+    public bool facingRight
+    {
+        get
+        {
+            return _facingRight;
+        }
+    }
 
     // Jump
     [Header("Jump")]
     [SerializeField]
     private float _jumpForce;
-    private bool _isJumping;
-    private bool _canJump;
     [SerializeField]
     private float _jumpHeightFactor;
     [SerializeField]
     private float _movementForceInAir;
     [SerializeField]
     private float _airDragMultiplier;
-    private float _timeInAir;
     [SerializeField]
     private float _minTimeInAir;
+    private float _timeInAir;
+    public bool canJump;
+    public bool isJumping;
 
     // Weapon
-    private Weapon _sock;
-
-    // Ground check
-    [Header("Ground check")]
-    public Transform groundCheckTransform;
+    [Header("Weapon")]
     [SerializeField]
-    private float _groundCheckRadius;
-    private bool _isGrounded;
-    public bool isGrounded
+    private float _shotDelay;
+    private Weapon _sock;
+    private bool _isShooting;
+    public bool isShooting
     {
         get
         {
-            return _isGrounded;
+            return _isShooting;
         }
     }
-    private LayerMask _groundLayerMask;
 
-    // Slope check
-    [Header("Slope check")]
-    [SerializeField]
-    private float _slopeCheckDistance;
-    private float _slopeDownAngle;
-    private float _slopeSideAngle;
-    private float _lastSlopeDownAngle;
-    [SerializeField]
-    private float _maxSlopeAngle;
-    private bool _isOnSlope;
-    private bool _canWalkOnSlope;
-    private Vector2 _slopeNormalPerpendicular;
-
-    // Special abilities
-    private bool _unlockedDoubleJump = true;
-    private bool _unlockedWallSliding = true;
+    // Ground check
+    [Header ("Ground check")]
+    public bool isGrounded;
+    public bool isOnSlope;
+    public bool canWalkOnSlope;
+    private GroundCheck _groundCheck;
+    public GroundCheck groundCheck
+    {
+        get
+        {
+            return _groundCheck;
+        }
+    }
 
     // Double jump
-    private bool _canDoubleJump;
-    private bool _isDoubleJumping;
+    [Header("Double jump")]
+    public bool unlockedDoubleJump;
+    public bool canDoubleJump;
+    public bool isDoubleJumping;
 
     // Wall sliding
     [Header("Wall sliding")]
-    public Transform wallCheckTransform;
-    [SerializeField]
-    private float _wallCheckDistance;
-    [SerializeField]
-    private float _wallSlideSpeed;
-    private bool _isTouchingWall;
-    private bool _isWallSliding;
-
-    // Wall jump
-    [Header("Wall jump")]
-    [SerializeField]
-    private Vector2 _wallHopDirection;
-    [SerializeField]
-    private Vector2 _wallJumpDirection;
-    [SerializeField]
-    private float _wallHopForce;
-    [SerializeField]
-    private float _wallJumpForce;
-
-    // Physics
-    [Header("Physics")]
-    private Rigidbody2D _rigidbody;
-    [SerializeField]
-    private PhysicsMaterial2D _zeroFriction;
-    [SerializeField]
-    private PhysicsMaterial2D _fullFriction;
+    public bool unlockedWallSliding;
+    public bool isTouchingWall;
+    public bool isWallSliding;
+    private WallCheck _wallCheck;
 
     // Audio
     [Header("Audio")]
+    [SerializeField]
+    private AudioClip _footstepsAudioClip;
+    [SerializeField]
+    private AudioClip _jumpAudioClip;
+    [SerializeField]
+    private AudioClip _fartAudioClip;
+    [SerializeField]
+    private AudioClip[] _takeDamageAudioClips;
+    [SerializeField]
+    private AudioClip[] _deathAudioClips;
     private AudioSource _audioSource;
-    public AudioClip footstepsAudioClip;
-    public AudioClip jumpAudioClip;
-    public AudioClip fartAudioClip;
-    public AudioClip[] takeDamageAudioClips;
-    public AudioClip[] deathAudioClips;
 
-    // Effects
-    [Header("Particle Systems")]
+    // Particle Systems
+    [Header("Particle systems")]
     public ParticleSystem dirtParticleSystem;
     public ParticleSystem fartParticleSystem;
     public GameObject dust;
 
     // Animations
     private Animator _animator;
-    private PlayerAnimationState _currentState;
+    public PlayerAnimationState currentState;
     private bool _deadAnimationPlayed;
     public bool deadAnimationPlayed
     {
@@ -152,17 +150,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Physics
+    [Header("Physics")]
+    public Rigidbody2D rigidbodyPlayer;
+
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
         // Components
         _sock = GetComponent<Weapon>();
-        _rigidbody = GetComponent<Rigidbody2D>();
+        rigidbodyPlayer = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
-
-        // Ground layer
-        _groundLayerMask = LayerMask.GetMask("Ground");
 
         // Player is facing right
         _facingRight = true;
@@ -173,7 +172,7 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         // Player is alive and can take damage
-        _canMove = true;
+        canMove = true;
         _isDead = false;
         _isHurt = false;
         _canTakeDamage = true;
@@ -189,35 +188,13 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        // Wall jump
-        _wallHopDirection.Normalize();
-        _wallJumpDirection.Normalize();
+        _groundCheck = GetComponent<GroundCheck>();
+        _wallCheck = GetComponent<WallCheck>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (!_isDead)
-        {
-            // Listen to player's input only if he can move
-            if (_canMove)
-            {
-                CheckInput();
-            }
-
-            // Prevent player from moving when shooting
-            if (_sock.isShooting)
-            {
-                _horizontalInput = 0f;
-                dirtParticleSystem.Stop();
-                _canMove = false;
-            }
-            else
-            {
-                _canMove = true;
-            }
-        }
-
         // Update Animator
         UpdateAnimatorState();
     }
@@ -225,53 +202,12 @@ public class PlayerController : MonoBehaviour
     // FixedUpdate is called every fixed framerate frame
     private void FixedUpdate()
     {
-        // Check if player is on ground, on a slope or touching a wall for wall sliding/jumping
-        GroundCheck();
-        SlopeCheck();
-
-        if (_unlockedWallSliding)
-        {
-            WallCheck();
-            WallSlidingCheck();
-        }
+        // Player's movement
+        Move();
 
         // Check when player has landed after a jump and the time spent on air
         CheckLanding();
         CheckTimeInAir();
-
-        // Move player
-        Move();
-    }
-
-    /// <summary>
-    /// Check keyboard input
-    /// </summary>
-    private void CheckInput()
-    {
-        // Movement
-        _horizontalInput = Input.GetAxis("Horizontal");
-
-        // Jump
-        if ((_isGrounded || _isTouchingWall) && !_isHurt && Input.GetButtonDown("Jump"))
-        {
-            Jump();
-        }
-        else if (_unlockedDoubleJump && Input.GetButtonDown("Jump"))
-        {
-            DoubleJump();
-        }
-
-        // Stop jump at a variable height
-        if (Input.GetButtonUp("Jump"))
-        {
-            VariableJump();
-        }
-
-        // Throw sock
-        if (_isGrounded && Input.GetButtonDown("Fire1"))
-        {
-            StartCoroutine(_sock.Shoot());
-        }
     }
 
     /// <summary>
@@ -280,13 +216,13 @@ public class PlayerController : MonoBehaviour
     /// <param name="newState"> New animation state to be played </param>
     private void ChangeAnimationState(PlayerAnimationState newState)
     {
-        if (_currentState == newState)
+        if (currentState == newState)
         {
             return;
         }
 
         _animator.SetInteger(Constants.PLAYER_STATE, (int)newState);
-        _currentState = newState;
+        currentState = newState;
     }
 
     /// <summary>
@@ -296,43 +232,43 @@ public class PlayerController : MonoBehaviour
     {
         if (!_isHurt && !_isDead)
         {
-            if (_isGrounded && _horizontalInput == 0f)
+            if (isGrounded && _movementAmount == 0f)
             {
                 // Player is idle
                 ChangeAnimationState(PlayerAnimationState.Idle);
             }
 
-            if (_isGrounded && _horizontalInput != 0f)
+            if (isGrounded && _movementAmount != 0f)
             {
                 // Player is walking
                 ChangeAnimationState(PlayerAnimationState.Walk);
             }
 
-            if (_isJumping && _rigidbody.velocity.y > 0f)
+            if (isJumping && rigidbodyPlayer.velocity.y > 0f)
             {
                 // Player is jumping
                 ChangeAnimationState(PlayerAnimationState.Jump);
             }
 
-            if (!_isWallSliding && !_isGrounded && _rigidbody.velocity.y < 0f)
+            if (!isWallSliding && !isGrounded && rigidbodyPlayer.velocity.y < 0f)
             {
                 // Player is falling
                 ChangeAnimationState(PlayerAnimationState.Fall);
             }
 
-            if (_isGrounded && _sock.isShooting)
+            if (isGrounded && _isShooting)
             {
                 // Player is throwing sock
                 ChangeAnimationState(PlayerAnimationState.Throw);
             }
 
-            if (_isDoubleJumping && _rigidbody.velocity.y > 0f)
+            if (isDoubleJumping && rigidbodyPlayer.velocity.y > 0f)
             {
                 // Player is double jumping
                 ChangeAnimationState(PlayerAnimationState.DoubleJump);
             }
 
-            if (_isWallSliding)
+            if (isWallSliding)
             {
                 // Player is wall sliding
                 ChangeAnimationState(PlayerAnimationState.WallSlide);
@@ -358,53 +294,56 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         // Flip character depending on his movement direction
-        if (_horizontalInput > 0f && !_facingRight)
+        if (_movementAmount > 0f && !_facingRight)
         {
             Flip();
         }
-        else if (_horizontalInput < 0f && _facingRight)
+        else if (_movementAmount < 0f && _facingRight)
         {
             Flip();
         }
 
-        if (_isGrounded && !_isOnSlope && !_isJumping)
+        if (isGrounded && !isOnSlope && !isJumping)
         {
             // Normal movement
-            _rigidbody.velocity = new Vector2(_movementSpeed * _horizontalInput,
-                                              _rigidbody.velocity.y);
+            rigidbodyPlayer.velocity = new Vector2(_movementSpeed * _movementAmount,
+                                                   rigidbodyPlayer.velocity.y);
         }
-        else if (_isGrounded && _isOnSlope && _canWalkOnSlope && !_isJumping)
+        else if (isGrounded && isOnSlope && canWalkOnSlope && !isJumping)
         {
             // Movement if on a slope
-            _rigidbody.velocity = new Vector2(_movementSpeed * _slopeNormalPerpendicular.x *
-                                              -_horizontalInput,
-                                              _movementSpeed * _slopeNormalPerpendicular.y *
-                                              -_horizontalInput);
+            rigidbodyPlayer.velocity = new Vector2(_movementSpeed * 
+                                                   _groundCheck.slopeNormalPerpendicular.x *
+                                                   -_movementAmount,
+                                                   _movementSpeed * 
+                                                   _groundCheck.slopeNormalPerpendicular.y *
+                                                   -_movementAmount);
         }
-        else if (!_isGrounded && !_isWallSliding && _horizontalInput != 0f)
+        else if (!isGrounded && !isWallSliding && _movementAmount != 0f)
         {
             // Add a force when moving in mid-air
-            _rigidbody.AddForce(new Vector2(_movementForceInAir * _horizontalInput, 0f));
+            rigidbodyPlayer.AddForce(new Vector2(_movementForceInAir * _movementAmount, 0f));
 
-            if (Mathf.Abs(_rigidbody.velocity.x) > _movementSpeed)
+            if (Mathf.Abs(rigidbodyPlayer.velocity.x) > _movementSpeed)
             {
-                _rigidbody.velocity = new Vector2(_movementSpeed * _horizontalInput,
-                                                  _rigidbody.velocity.y);
+                rigidbodyPlayer.velocity = new Vector2(_movementSpeed * _movementAmount,
+                                                       rigidbodyPlayer.velocity.y);
             }
         }
-        else if (!_isGrounded && !_isWallSliding && _horizontalInput == 0f)
+        else if (!isGrounded && !isWallSliding && _movementAmount == 0f)
         {
             // Add a drag when not moving in mid-air
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x * _airDragMultiplier,
-                                              _rigidbody.velocity.y);
+            rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x *
+                                                   _airDragMultiplier,
+                                                   rigidbodyPlayer.velocity.y);
         }
 
         // Play sound and particles when player is moving
-        if (_isGrounded && _horizontalInput != 0f && !_isHurt)
+        if (isGrounded && _movementAmount != 0f && !_isHurt)
         {
             if (!_audioSource.isPlaying)
             {
-                _audioSource.clip = footstepsAudioClip;
+                _audioSource.clip = _footstepsAudioClip;
                 _audioSource.volume = 0.1f;
                 _audioSource.pitch = 1.4f;
                 _audioSource.Play();
@@ -414,11 +353,12 @@ public class PlayerController : MonoBehaviour
         }
 
         // Wall sliding
-        if (_isWallSliding)
+        if (isWallSliding)
         {
-            if (_rigidbody.velocity.y < -_wallSlideSpeed)
+            if (rigidbodyPlayer.velocity.y < -_wallCheck.wallSlideSpeed)
             {
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, -_wallSlideSpeed);
+                rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x,
+                                                       -_wallCheck.wallSlideSpeed);
             }
         }
     }
@@ -428,7 +368,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Flip()
     {
-        if (!_isWallSliding)
+        if (!isWallSliding)
         {
             _facingDirection *= -1f;
             _facingRight = !_facingRight;
@@ -437,84 +377,101 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// Player throws sock
+    /// </summary>
+    /// <returns> Time until next shot is availabe </returns>
+    public IEnumerator ThrowSock()
+    {
+        _sock.Shoot();
+        _isShooting = true;
+        yield return new WaitForSeconds(_shotDelay);
+        _isShooting = false;
+    }
+
+    /// <summary>
     /// Player's jump
     /// </summary>
-    private void Jump()
+    public void Jump()
     {
-        if (_canJump)
+        if (canJump)
         {
             // Normal jump
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
-            _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+            rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x, 0f);
+            rigidbodyPlayer.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
-            _canJump = false;
-            _isJumping = true;
-            _canDoubleJump = true;
+            canJump = false;
+            isJumping = true;
+            canDoubleJump = true;
 
             // Play sound
             _audioSource.volume = 0.3f;
             _audioSource.pitch = 1f;
-            _audioSource.PlayOneShot(jumpAudioClip);
+            _audioSource.PlayOneShot(_jumpAudioClip);
         }
-        else if (_canJump && _isWallSliding && _horizontalInput == 0)
+        else if (canJump && isWallSliding && _movementAmount == 0)
         {
             // Wall hop
-            Vector2 forceToAdd = new Vector2(_wallHopForce * _wallHopDirection.x *
+            Vector2 forceToAdd = new Vector2(_wallCheck.wallHopForce * 
+                                             _wallCheck.wallHopDirection.x *
                                              -_facingDirection,
-                                             _wallHopForce * _wallHopDirection.y);
-            _rigidbody.AddForce(forceToAdd, ForceMode2D.Impulse);
+                                             _wallCheck.wallHopForce * 
+                                             _wallCheck.wallHopDirection.y);
+            rigidbodyPlayer.AddForce(forceToAdd, ForceMode2D.Impulse);
 
-            _isWallSliding = false;
-            _canJump = false;
-            _isJumping = true;
-            _canDoubleJump = true;
+            isWallSliding = false;
+            canJump = false;
+            isJumping = true;
+            canDoubleJump = true;
         }
-        else if (_canJump && (_isWallSliding || _isTouchingWall) && _horizontalInput != 0)
+        else if (canJump && (isWallSliding || isTouchingWall) && _movementAmount != 0)
         {
             // Wall jump
-            Vector2 forceToAdd = new Vector2(_wallJumpForce * _wallJumpDirection.x *
-                                             _horizontalInput,
-                                             _wallJumpForce * _wallJumpDirection.y);
-            _rigidbody.AddForce(forceToAdd, ForceMode2D.Impulse);
+            Vector2 forceToAdd = new Vector2(_wallCheck.wallJumpForce * 
+                                             _wallCheck.wallJumpDirection.x *
+                                             _movementAmount,
+                                             _wallCheck.wallJumpForce * 
+                                             _wallCheck.wallJumpDirection.y);
+            rigidbodyPlayer.AddForce(forceToAdd, ForceMode2D.Impulse);
 
-            _isWallSliding = false;
-            _canJump = false;
-            _isJumping = true;
-            _canDoubleJump = true;
+            isWallSliding = false;
+            canJump = false;
+            isJumping = true;
+            canDoubleJump = true;
         }
     }
 
     /// <summary>
     /// Player's jump with variable height
     /// </summary>
-    private void VariableJump()
+    public void VariableJump()
     {
         // The factor is applied only when the player is jumping
-        if ((_isJumping || _isDoubleJumping) && _rigidbody.velocity.y >= 0f)
+        if ((isJumping || isDoubleJumping) && rigidbodyPlayer.velocity.y >= 0f)
         {
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x,
-                                              _rigidbody.velocity.y * _jumpHeightFactor);
+            rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x,
+                                                   rigidbodyPlayer.velocity.y * 
+                                                   _jumpHeightFactor);
         }
     }
 
     /// <summary>
     /// Player's double jump
     /// </summary>
-    private void DoubleJump()
+    public void DoubleJump()
     {
-        if (_isJumping && _canDoubleJump)
+        if (isJumping && canDoubleJump)
         {
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
-            _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+            rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x, 0f);
+            rigidbodyPlayer.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
-            _isJumping = false;
-            _isDoubleJumping = true;
-            _canDoubleJump = false;
+            isJumping = false;
+            isDoubleJumping = true;
+            canDoubleJump = false;
 
             // Play sound
             _audioSource.volume = 0.3f;
             _audioSource.pitch = 1.7f;
-            _audioSource.PlayOneShot(fartAudioClip);
+            _audioSource.PlayOneShot(_fartAudioClip);
 
             // Play particles
             ParticleSystem.MainModule main = fartParticleSystem.main;
@@ -529,6 +486,35 @@ public class PlayerController : MonoBehaviour
             }
 
             fartParticleSystem.Play();
+        }
+    }
+
+    /// <summary>
+    /// Calculate the time the player spent in air
+    /// </summary>
+    private void CheckTimeInAir()
+    {
+        if (isGrounded)
+        {
+            _timeInAir = 0f;
+        }
+        else
+        {
+            _timeInAir += Time.deltaTime;
+        }
+    }
+
+    /// <summary>
+    /// Check if the player is grounded after being in air
+    /// </summary>
+    private void CheckLanding()
+    {
+        if (_timeInAir > _minTimeInAir)
+        {
+            if (isGrounded)
+            {
+                Instantiate(dust, _groundCheck.groundTransform.position, dust.transform.rotation);
+            }
         }
     }
 
@@ -549,8 +535,8 @@ public class PlayerController : MonoBehaviour
             if (numberOfLives > 0)
             {
                 // Play random sound
-                int randomIndex = Random.Range(0, takeDamageAudioClips.Length);
-                _audioSource.clip = takeDamageAudioClips[randomIndex];
+                int randomIndex = Random.Range(0, _takeDamageAudioClips.Length);
+                _audioSource.clip = _takeDamageAudioClips[randomIndex];
                 _audioSource.volume = 0.4f;
                 _audioSource.pitch = 1f;
                 _audioSource.Play();
@@ -562,12 +548,12 @@ public class PlayerController : MonoBehaviour
             else
             {
                 // Player is dead
-                _canMove = false;
+                canMove = false;
                 _isDead = true;
 
                 // Play sound
-                int randomIndex = Random.Range(0, deathAudioClips.Length);
-                _audioSource.clip = deathAudioClips[randomIndex];
+                int randomIndex = Random.Range(0, _deathAudioClips.Length);
+                _audioSource.clip = _deathAudioClips[randomIndex];
                 _audioSource.volume = 0.4f;
                 _audioSource.pitch = 1f;
                 _audioSource.Play();
@@ -581,180 +567,5 @@ public class PlayerController : MonoBehaviour
         // Player stops being invulnerable after some time
         yield return new WaitForSeconds(_invulnerabilityDuration);
         _canTakeDamage = true;
-    }
-
-    /// <summary>
-    /// Check if player is grounded
-    /// </summary>
-    private void GroundCheck()
-    {
-        _isGrounded = Physics2D.OverlapCircle(groundCheckTransform.position, _groundCheckRadius,
-                                              _groundLayerMask);
-
-        // Player is on ground
-        if (_isGrounded && _rigidbody.velocity.y <= 0f)
-        {
-            _isJumping = false;
-            _isDoubleJumping = false;
-        }
-        {
-            dirtParticleSystem.Stop();
-        }
-
-        // Player can jump
-        if (_isGrounded && !_isJumping && _slopeDownAngle <= _maxSlopeAngle)
-        {
-            _canJump = true;
-        }
-    }
-
-    /// <summary>
-    /// Check if player is on a slope
-    /// </summary>
-    private void SlopeCheck()
-    {
-        Vector2 checkPosition = groundCheckTransform.position;
-
-        SlopeCheckVertical(checkPosition);
-        SlopeCheckHorizontal(checkPosition);
-
-        // Determine if it's possible to walk on a slope depending on its angle
-        if (_slopeDownAngle > _maxSlopeAngle || _slopeSideAngle > _maxSlopeAngle)
-        {
-            _canWalkOnSlope = false;
-        }
-        else
-        {
-            _canWalkOnSlope = true;
-        }
-
-        // Prevent the player from moving when idling on a slope by changing friction behaviour
-        if (_isOnSlope && _canWalkOnSlope && _horizontalInput == 0f)
-        {
-            _rigidbody.sharedMaterial = _fullFriction;
-        }
-        else
-        {
-            _rigidbody.sharedMaterial = _zeroFriction;
-        }
-    }
-
-    /// <summary>
-    /// Look for slopes horizontally
-    /// </summary>
-    /// <param name="checkPosition"> Origin position to check slopes from </param>
-    private void SlopeCheckHorizontal(Vector2 checkPosition)
-    {
-        RaycastHit2D hitFront = Physics2D.Raycast(checkPosition, transform.right,
-                                                  _slopeCheckDistance, _groundLayerMask);
-
-        RaycastHit2D hitBack = Physics2D.Raycast(checkPosition, -transform.right,
-                                                 _slopeCheckDistance, _groundLayerMask);
-
-        if (hitFront)
-        {
-            _isOnSlope = true;
-            _slopeSideAngle = Vector2.Angle(hitFront.normal, Vector2.up);
-        }
-        else if (hitBack)
-        {
-            _isOnSlope = true;
-            _slopeSideAngle = Vector2.Angle(hitBack.normal, Vector2.up);
-        }
-        else
-        {
-            _isOnSlope = false;
-            _slopeSideAngle = 0f;
-        }
-    }
-
-    /// <summary>
-    /// Look for slopes vertically
-    /// </summary>
-    /// <param name="checkPosition"> Origin position to check slopes from </param>
-    private void SlopeCheckVertical(Vector2 checkPosition)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(checkPosition, Vector2.down,
-                                             _slopeCheckDistance, _groundLayerMask);
-
-        if (hit)
-        {
-            _slopeNormalPerpendicular = Vector2.Perpendicular(hit.normal).normalized;
-            _slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
-
-            if (_slopeDownAngle != _lastSlopeDownAngle)
-            {
-                _isOnSlope = true;
-            }
-
-            _lastSlopeDownAngle = _slopeDownAngle;
-        }
-    }
-
-    /// <summary>
-    /// Check if player is touching a wall
-    /// </summary>
-    private void WallCheck()
-    {
-        if (_facingRight)
-        {
-            _isTouchingWall = Physics2D.Raycast(wallCheckTransform.position,
-                                                -transform.right * _facingDirection,
-                                                _wallCheckDistance, _groundLayerMask);
-        }
-        else
-        {
-            _isTouchingWall = Physics2D.Raycast(wallCheckTransform.position,
-                                                transform.right * _facingDirection,
-                                                _wallCheckDistance, _groundLayerMask);
-        }
-    }
-
-    /// <summary>
-    /// Check if player is wall sliding
-    /// </summary>
-    private void WallSlidingCheck()
-    {
-        if (_isTouchingWall && !_isGrounded && _rigidbody.velocity.y < 0f)
-        {
-            _isWallSliding = true;
-            _isJumping = false;
-            _isDoubleJumping = false;
-            _canJump = true;
-            _canDoubleJump = false;
-        }
-        else
-        {
-            _isWallSliding = false;
-        }
-    }
-
-    /// <summary>
-    /// Calculate the time the player spent in air
-    /// </summary>
-    private void CheckTimeInAir()
-    {
-        if (_isGrounded)
-        {
-            _timeInAir = 0f;
-        }
-        else
-        {
-            _timeInAir += Time.deltaTime;
-        }
-    }
-
-    /// <summary>
-    /// Check if the player is grounded after being in air
-    /// </summary>
-    private void CheckLanding()
-    {
-        if (_timeInAir > _minTimeInAir)
-        {
-            if (_isGrounded)
-            {
-                Instantiate(dust, groundCheckTransform.position, dust.transform.rotation);
-            }
-        }
     }
 }
