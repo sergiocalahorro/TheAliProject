@@ -1,16 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpikes : Enemy
 {
-    // Start is called before the first frame update
-    private void Start()
+    // Awake is called when the script instance is being loaded
+    private void Awake()
     {
-        player = FindObjectOfType<PlayerController>();
+        numberOfLives = 0;
+        isImmortal = true;
     }
 
-    public override void Attack()
+    public override void Attack(PlayerController player)
     {
         if (!player.isDead)
         {
@@ -18,17 +17,13 @@ public class EnemySpikes : Enemy
         }
     }
 
-    public override void Die()
-    {
-        numberOfLives = 0;
-    }
-
     // OnColliderEnter2D is called when the Collider2D other enters this collider
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Attack();
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            Attack(player);
         }
     }
 }

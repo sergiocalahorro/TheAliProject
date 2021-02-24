@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    // Player reference
     private PlayerController _player;
 
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         _player = FindObjectOfType<PlayerController>();
     }
@@ -44,7 +45,7 @@ public class PlayerInput : MonoBehaviour
         _player.movementAmount = Input.GetAxis("Horizontal");
 
         // Jump
-        if ((_player.isGrounded || _player.isTouchingWall) && !_player.isHurt && 
+        if ((_player.isGrounded || _player.isTouchingWall) && !_player.isHurt &&
             Input.GetButtonDown("Jump"))
         {
             _player.Jump();
@@ -66,20 +67,17 @@ public class PlayerInput : MonoBehaviour
             StartCoroutine(_player.ThrowSock());
         }
 
-        // Pause game
-        if (!GameManager.Instance.paused)
+        // Pause/resume game
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (!GameManager.Instance.paused)
             {
                 GameManager.Instance.Pause();
             }
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            else
             {
                 GameManager.Instance.Resume();
-            }
+            } 
         }
     }
 }

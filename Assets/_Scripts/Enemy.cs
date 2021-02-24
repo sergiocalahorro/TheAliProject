@@ -6,17 +6,13 @@ public abstract class Enemy : MonoBehaviour
     protected int numberOfLives;
     [SerializeField]
     protected int attackDamage;
-    protected PlayerController player;
+    protected bool isImmortal;
 
     /// <summary>
     /// Enemy's attack behaviour
     /// </summary>
-    public abstract void Attack();
-
-    /// <summary>
-    /// Enemy's death behaviour
-    /// </summary>
-    public abstract void Die();
+    /// <param name="player"> Player that is attacked </param>
+    public abstract void Attack(PlayerController player);
 
     /// <summary>
     /// Enemy takes a certain amount of damage
@@ -24,10 +20,21 @@ public abstract class Enemy : MonoBehaviour
     /// <param name="damageAmount"> Amount of damage the enemy takes </param>
     public void TakeDamage(int damageAmount)
     {
-        numberOfLives -= damageAmount;
-        if (numberOfLives <= 0)
+        if (!isImmortal)
         {
-            Die();
+            numberOfLives -= damageAmount;
+            if (numberOfLives <= 0)
+            {
+                Die();
+            }
         }
+    }
+
+    /// <summary>
+    /// Enemy's death behaviour
+    /// </summary>
+    private void Die()
+    {
+        gameObject.SetActive(false);
     }
 }
