@@ -32,18 +32,8 @@ public class PlayerController : MonoBehaviour
 
     // Movement
     [Header("Movement")]
-    public bool canMove;
-
     [SerializeField]
     private float _movementSpeed;
-    private float _movementAmount;
-    public float movementAmount
-    {
-        set
-        {
-            _movementAmount = value;
-        }
-    }
     private float _facingDirection;
     public float facingDirection
     {
@@ -60,6 +50,10 @@ public class PlayerController : MonoBehaviour
             return _facingRight;
         }
     }
+    [System.NonSerialized]
+    public float movementAmount;
+    [System.NonSerialized]
+    public bool canMove;
 
     // Jump
     [Header("Jump")]
@@ -74,7 +68,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _minTimeInAir;
     private float _timeInAir;
+    [System.NonSerialized]
     public bool canJump;
+    [System.NonSerialized]
     public bool isJumping;
 
     // Weapon
@@ -92,9 +88,11 @@ public class PlayerController : MonoBehaviour
     }
 
     // Ground check
-    [Header ("Ground check")]
+    [System.NonSerialized]
     public bool isGrounded;
+    [System.NonSerialized]
     public bool isOnSlope;
+    [System.NonSerialized]
     public bool canWalkOnSlope;
     private GroundCheck _groundCheck;
     public GroundCheck groundCheck
@@ -108,13 +106,17 @@ public class PlayerController : MonoBehaviour
     // Double jump
     [Header("Double jump")]
     public bool unlockedDoubleJump;
+    [System.NonSerialized]
     public bool canDoubleJump;
+    [System.NonSerialized]
     public bool isDoubleJumping;
 
     // Wall sliding
     [Header("Wall sliding")]
     public bool unlockedWallSliding;
+    [System.NonSerialized]
     public bool isTouchingWall;
+    [System.NonSerialized]
     public bool isWallSliding;
     private WallCheck _wallCheck;
 
@@ -140,7 +142,6 @@ public class PlayerController : MonoBehaviour
 
     // Animations
     private Animator _animator;
-    public PlayerAnimationState currentState;
     private bool _deadAnimationPlayed;
     public bool deadAnimationPlayed
     {
@@ -149,9 +150,11 @@ public class PlayerController : MonoBehaviour
             return _deadAnimationPlayed;
         }
     }
+    [System.NonSerialized]
+    public PlayerAnimationState currentState;
 
     // Physics
-    [Header("Physics")]
+    [System.NonSerialized]
     public Rigidbody2D rigidbodyPlayer;
 
     // Awake is called when the script instance is being loaded
@@ -232,13 +235,13 @@ public class PlayerController : MonoBehaviour
     {
         if (!_isHurt && !_isDead)
         {
-            if (isGrounded && _movementAmount == 0f)
+            if (isGrounded && movementAmount == 0f)
             {
                 // Player is idle
                 ChangeAnimationState(PlayerAnimationState.Idle);
             }
 
-            if (isGrounded && _movementAmount != 0f)
+            if (isGrounded && movementAmount != 0f)
             {
                 // Player is walking
                 ChangeAnimationState(PlayerAnimationState.Walk);
@@ -294,11 +297,11 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         // Flip character depending on his movement direction
-        if (_movementAmount > 0f && !_facingRight)
+        if (movementAmount > 0f && !_facingRight)
         {
             Flip();
         }
-        else if (_movementAmount < 0f && _facingRight)
+        else if (movementAmount < 0f && _facingRight)
         {
             Flip();
         }
@@ -306,7 +309,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !isOnSlope && !isJumping)
         {
             // Normal movement
-            rigidbodyPlayer.velocity = new Vector2(_movementSpeed * _movementAmount,
+            rigidbodyPlayer.velocity = new Vector2(_movementSpeed * movementAmount,
                                                    rigidbodyPlayer.velocity.y);
         }
         else if (isGrounded && isOnSlope && canWalkOnSlope && !isJumping)
@@ -314,23 +317,23 @@ public class PlayerController : MonoBehaviour
             // Movement if on a slope
             rigidbodyPlayer.velocity = new Vector2(_movementSpeed * 
                                                    _groundCheck.slopeNormalPerpendicular.x *
-                                                   -_movementAmount,
+                                                   -movementAmount,
                                                    _movementSpeed * 
                                                    _groundCheck.slopeNormalPerpendicular.y *
-                                                   -_movementAmount);
+                                                   -movementAmount);
         }
-        else if (!isGrounded && !isWallSliding && _movementAmount != 0f)
+        else if (!isGrounded && !isWallSliding && movementAmount != 0f)
         {
             // Add a force when moving in mid-air
-            rigidbodyPlayer.AddForce(new Vector2(_movementForceInAir * _movementAmount, 0f));
+            rigidbodyPlayer.AddForce(new Vector2(_movementForceInAir * movementAmount, 0f));
 
             if (Mathf.Abs(rigidbodyPlayer.velocity.x) > _movementSpeed)
             {
-                rigidbodyPlayer.velocity = new Vector2(_movementSpeed * _movementAmount,
+                rigidbodyPlayer.velocity = new Vector2(_movementSpeed * movementAmount,
                                                        rigidbodyPlayer.velocity.y);
             }
         }
-        else if (!isGrounded && !isWallSliding && _movementAmount == 0f)
+        else if (!isGrounded && !isWallSliding && movementAmount == 0f)
         {
             // Add a drag when not moving in mid-air
             rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x *
@@ -339,7 +342,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Play sound and particles when player is moving
-        if (isGrounded && _movementAmount != 0f && !_isHurt)
+        if (isGrounded && movementAmount != 0f && !_isHurt)
         {
             if (!_audioSource.isPlaying)
             {
@@ -408,7 +411,7 @@ public class PlayerController : MonoBehaviour
             _audioSource.pitch = 1f;
             _audioSource.PlayOneShot(_jumpAudioClip);
         }
-        else if (canJump && isWallSliding && _movementAmount == 0)
+        else if (canJump && isWallSliding && movementAmount == 0)
         {
             // Wall hop
             Vector2 forceToAdd = new Vector2(_wallCheck.wallHopForce * 
@@ -423,12 +426,12 @@ public class PlayerController : MonoBehaviour
             isJumping = true;
             canDoubleJump = true;
         }
-        else if (canJump && (isWallSliding || isTouchingWall) && _movementAmount != 0)
+        else if (canJump && (isWallSliding || isTouchingWall) && movementAmount != 0)
         {
             // Wall jump
             Vector2 forceToAdd = new Vector2(_wallCheck.wallJumpForce * 
                                              _wallCheck.wallJumpDirection.x *
-                                             _movementAmount,
+                                             movementAmount,
                                              _wallCheck.wallJumpForce * 
                                              _wallCheck.wallJumpDirection.y);
             rigidbodyPlayer.AddForce(forceToAdd, ForceMode2D.Impulse);

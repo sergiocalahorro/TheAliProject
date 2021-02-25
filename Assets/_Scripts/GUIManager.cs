@@ -88,7 +88,6 @@ public class GUIManager : MonoBehaviour
         if (_timer > _fadeDuration)
         {
             panelGameOverButtons.SetActive(true);
-            Cursor.visible = true;
         }
     }
 

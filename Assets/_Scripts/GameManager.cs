@@ -150,6 +150,9 @@ public class GameManager : Singleton<GameManager>
 
             // Game state is in game over
             _insideGameOver = true;
+
+            // Show cursor
+            Cursor.visible = true;
         }
     }
 

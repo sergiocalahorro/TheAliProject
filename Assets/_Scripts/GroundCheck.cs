@@ -96,9 +96,8 @@ public class GroundCheck : MonoBehaviour
             _player.canWalkOnSlope = true;
         }
 
-        // Prevent the player from moving when idling on a slope by changing friction behaviour
-        if (_player.isOnSlope && _player.canWalkOnSlope && 
-            _player.currentState == PlayerAnimationState.Idle)
+        // Stop player movement when not movingon a slope by changing friction behaviour
+        if (_player.isOnSlope && _player.canWalkOnSlope && _player.movementAmount == 0f)
         {
             _player.rigidbodyPlayer.sharedMaterial = fullFriction;
         }

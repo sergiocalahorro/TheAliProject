@@ -20,13 +20,15 @@ public abstract class Enemy : MonoBehaviour
     /// <param name="damageAmount"> Amount of damage the enemy takes </param>
     public void TakeDamage(int damageAmount)
     {
-        if (!isImmortal)
+        if (isImmortal)
         {
-            numberOfLives -= damageAmount;
-            if (numberOfLives <= 0)
-            {
-                Die();
-            }
+            return;  
+        }
+
+        numberOfLives -= damageAmount;
+        if (numberOfLives <= 0)
+        {
+            Die();
         }
     }
 
