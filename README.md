@@ -1,6 +1,4 @@
-# TheAliProject
-
-*(Work in progress)*
+# TheAliProject (Title TBD) *(Work in progress)*
 
 2D Platformer game in which you will be joining Ali in his journey to get his lover back.
 
