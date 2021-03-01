@@ -7,12 +7,12 @@ public class GameManager : Singleton<GameManager>
 {
     // Control
     private PlayerController _player;
-    private List<GameObject> _totalCoins;
-    public List<GameObject> totalCoins
+    private List<GameObject> _pickedUpCoins;
+    public List<GameObject> pickedUpCoins
     {
         get
         {
-            return _totalCoins;
+            return _pickedUpCoins;
         }
     }
     private CheckPointController _checkPoint;
@@ -66,7 +66,7 @@ public class GameManager : Singleton<GameManager>
 
         // Control
         _player = FindObjectOfType<PlayerController>();
-        _totalCoins = new List<GameObject>();
+        _pickedUpCoins = new List<GameObject>();
         _isGameOver = false;
         _insideGameOver = false;
 
@@ -82,12 +82,12 @@ public class GameManager : Singleton<GameManager>
         if (_player.isHurt)
         {
             // Avoid negative number
-            if (_player.numberOfLives < 0)
+            if (_player.healthPoints < 0)
             {
-                _player.numberOfLives = 0;
+                _player.healthPoints = 0;
             }
 
-            UpdateNumberOfLives(_player.numberOfLives);
+            UpdateNumberOfLives(_player.healthPoints);
             _cameraManager.Shake();
         }
         else
@@ -118,10 +118,11 @@ public class GameManager : Singleton<GameManager>
     public void CoinPickUp(GameObject coin)
     {
         // Add coin
-        totalCoins.Add(coin);
+        pickedUpCoins.Add(coin);
+        _player.numberOfCoins++;
 
         // Update UI
-        _guiManager.DisplayCoins(totalCoins.Count);
+        _guiManager.DisplayCoins(_player.numberOfCoins);
     }
 
     /// <summary>
@@ -168,7 +169,17 @@ public class GameManager : Singleton<GameManager>
         _player.transform.position = respawnPosition;
 
         // Player has 3 lives
-        _player.numberOfLives = 3;
+        _player.healthPoints = 3;
+
+        // Set player's number of coins
+        if (_checkPoint != null)
+        {
+            _player.numberOfCoins = _checkPoint.playerNumberOfCoins;
+        }
+        else
+        {
+            _player.numberOfCoins = 0;
+        }
     }
 
     /// <summary>
@@ -182,20 +193,20 @@ public class GameManager : Singleton<GameManager>
         _player.enabled = true;
         Spawn(_checkPoint.transform.position);
 
-        // Compare the total coins with the ones collected on the last check point reached
-        for (int i = totalCoins.Count - 1; i >= 0; i--)
+        // Re-enable coins that were picked up after reaching the last check point
+        for (int i = pickedUpCoins.Count - 1; i >= 0; i--)
         {
-            if (!_checkPoint.coins.Contains(totalCoins[i]))
+            if (!_checkPoint.IsCoinInCheckPoint(pickedUpCoins[i]))
             {
-                _totalCoins[i].SetActive(true);
-                _totalCoins.RemoveAt(i);
+                _pickedUpCoins[i].SetActive(true);
+                _pickedUpCoins.RemoveAt(i);
             }
         }
 
         // Update UI
         _guiManager.HideGameOverScreen();
         _guiManager.DisplayAllLivesImages();
-        _guiManager.DisplayCoins(_totalCoins.Count);
+        _guiManager.DisplayCoins(_player.numberOfCoins);
 
         // Play music
         StartCoroutine(_audioManager.PlayBackgroundMusic());

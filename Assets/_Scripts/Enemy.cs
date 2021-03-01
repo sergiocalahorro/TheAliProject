@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     [SerializeField]
-    protected int numberOfLives;
+    protected int healthPoints;
     [SerializeField]
     protected int attackDamage;
     protected bool isImmortal;
@@ -25,8 +25,8 @@ public abstract class Enemy : MonoBehaviour
             return;  
         }
 
-        numberOfLives -= damageAmount;
-        if (numberOfLives <= 0)
+        healthPoints -= damageAmount;
+        if (healthPoints <= 0)
         {
             Die();
         }

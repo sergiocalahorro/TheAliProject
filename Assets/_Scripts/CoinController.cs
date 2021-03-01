@@ -17,20 +17,6 @@ public class CoinController : MonoBehaviour
         _particleSystem = GetComponent<ParticleSystem>();
     }
 
-    // OnTriggerEnter2D is called when the Collider2D other enters the trigger
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // Player picks up coin
-        if (other.gameObject.CompareTag("Player"))
-        {
-            _audioSource.Play();
-            _particleSystem.Play();
-
-            GameManager.Instance.CoinPickUp(gameObject);
-            StartCoroutine(DisableAfterTime());
-        }
-    }
-
     /// <summary>
     /// Coroutine to disable this GameObject
     /// </summary>
@@ -39,5 +25,20 @@ public class CoinController : MonoBehaviour
     {
         yield return new WaitForSeconds(_audioSource.clip.length);
         gameObject.SetActive(false);
+    }
+
+
+    // OnTriggerEnter2D is called when the Collider2D other enters the trigger
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Player picks up coin
+        if (other.gameObject.CompareTag("Player"))
+        {
+            GameManager.Instance.CoinPickUp(gameObject);
+            StartCoroutine(DisableAfterTime());
+
+            _audioSource.Play();
+            _particleSystem.Play();
+        }
     }
 }

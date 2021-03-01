@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     // Attributes
     [Header("Attributes")]
-    public int numberOfLives;
+    public int healthPoints;
+    public int numberOfCoins;
     [SerializeField]
     private float _hurtDuration;
     [SerializeField]
@@ -200,6 +201,18 @@ public class PlayerController : MonoBehaviour
     {
         // Update Animator
         UpdateAnimatorState();
+
+        // Prevent player from moving when shooting
+        if (_isShooting)
+        {
+            movementAmount = 0f;
+            dirtParticleSystem.Stop();
+            canMove = false;
+        }
+        else
+        {
+            canMove = true;
+        }
     }
 
     // FixedUpdate is called every fixed framerate frame
@@ -529,13 +542,13 @@ public class PlayerController : MonoBehaviour
         if (_canTakeDamage)
         {
             // Decrease number of lives
-            numberOfLives -= damageAmount;
+            healthPoints -= damageAmount;
 
             // Player is hurt and becomes invulnerable for some time
             _isHurt = true;
             _canTakeDamage = false;
 
-            if (numberOfLives > 0)
+            if (healthPoints > 0)
             {
                 // Play random sound
                 int randomIndex = Random.Range(0, _takeDamageAudioClips.Length);
@@ -568,7 +581,26 @@ public class PlayerController : MonoBehaviour
         }
 
         // Player stops being invulnerable after some time
-        yield return new WaitForSeconds(_invulnerabilityDuration);
-        _canTakeDamage = true;
+        yield return new WaitForSeconds(_hurtDuration + _invulnerabilityDuration);
+        if (!_isDead)
+        {
+            _canTakeDamage = true;
+        }
+    }
+
+    /// <summary>
+    /// Add knock back force
+    /// </summary>
+    public void KnockBack()
+    {
+        if (_canTakeDamage && !_isDead)
+        {
+            float powerX = Random.Range(20, 30) * 100f;
+            float powerY = Random.Range(4, 6) * 100f;
+
+            rigidbodyPlayer.AddForce(new Vector3(transform.right.x * powerX,
+                                                 transform.up.y * powerY,
+                                                 transform.position.z), ForceMode2D.Force);
+        }
     }
 }

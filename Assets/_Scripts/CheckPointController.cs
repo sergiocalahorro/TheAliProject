@@ -7,14 +7,15 @@ public class CheckPointController : MonoBehaviour
 {
     // Control
     private bool _checkPointReached;
-    private List<GameObject> _coins;
-    public List<GameObject> coins
+    public bool checkPointReached
     {
         get
         {
-            return _coins;
+            return _checkPointReached;
         }
     }
+    private List<GameObject> _coins;
+    public int playerNumberOfCoins;
 
     // Lights
     [Header("Lights")]
@@ -51,32 +52,6 @@ public class CheckPointController : MonoBehaviour
         }
     }
 
-    // OnTriggerEnter2D is called when the Collider2D other enters the trigger
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            // Turn on the lights and store position when player enters the trigger
-            if (!_checkPointReached)
-            {
-                _checkPointReached = true;
-
-                // Set the collected coins when this check point was reached
-                List<GameObject> totalCoins = GameManager.Instance.totalCoins;
-                for (int i = 0; i < totalCoins.Count; i++)
-                {
-                    _coins.Add(totalCoins[i]);
-                }
-
-                // Send this check point to the game manager
-                GameManager.Instance.checkPoint = this;
-
-                // Play sound
-                _audioSource.Play();
-            }
-        }
-    }
-
     /// <summary>
     /// Smoothly change lights' intensity
     /// </summary>
@@ -95,6 +70,46 @@ public class CheckPointController : MonoBehaviour
         if (Mathf.Abs(mainLight.intensity - _mainLightMaxIntensity) <= Utilities.EPSILON)
         {
             _lightsTurnedOn = true;
+        }
+    }
+
+    /// <summary>
+    /// Check if a coin is in the list of picked up coins until this check point
+    /// </summary>
+    /// <param name="coin"> Coin to be checked </param>
+    /// <returns> If coin is or not in the list </returns>
+    public bool IsCoinInCheckPoint(GameObject coin)
+    {
+        return _coins.Contains(coin);
+    }
+
+    // OnTriggerEnter2D is called when the Collider2D other enters the trigger
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            // Turn on the lights and store position when player enters the trigger
+            if (!_checkPointReached)
+            {
+                _checkPointReached = true;
+
+                // Save player's number of coins
+                PlayerController player = other.gameObject.GetComponent<PlayerController>();
+                playerNumberOfCoins = player.numberOfCoins;
+                
+                // Set the picked up coins when this check point was reached
+                List<GameObject> pickedUpCoins = GameManager.Instance.pickedUpCoins;
+                for (int i = 0; i < pickedUpCoins.Count; i++)
+                {
+                    _coins.Add(pickedUpCoins[i]);
+                }
+
+                // Send this check point to the game manager
+                GameManager.Instance.checkPoint = this;
+
+                // Play sound
+                _audioSource.Play();
+            }
         }
     }
 }

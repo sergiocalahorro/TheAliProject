@@ -21,18 +21,6 @@ public class PlayerInput : MonoBehaviour
             {
                 CheckInput();
             }
-
-            // Prevent player from moving when shooting
-            if (_player.isShooting)
-            {
-                _player.movementAmount = 0f;
-                _player.dirtParticleSystem.Stop();
-                _player.canMove = false;
-            }
-            else
-            {
-                _player.canMove = true;
-            }
         }
     }
 

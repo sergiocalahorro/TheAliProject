@@ -5,7 +5,7 @@ public class EnemySpikes : Enemy
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
-        numberOfLives = 0;
+        healthPoints = 0;
         isImmortal = true;
     }
 
@@ -23,6 +23,9 @@ public class EnemySpikes : Enemy
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
+
+            // Attack player
+            player.KnockBack();
             Attack(player);
         }
     }
