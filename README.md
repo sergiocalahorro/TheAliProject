@@ -1,6 +1,7 @@
 # TheAliProject (Title TBD) *(Work in progress)*
 
 2D Platformer game in which you will be joining Ali in his journey to get his lover back.
+Developed using Unity (C#).
 
 - 2D Artist: Irina Arsagova.
 - Game Developer: Sergio Calahorro.
