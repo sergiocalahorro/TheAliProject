@@ -29,7 +29,7 @@ public class EnemySpikes : Enemy
                                                  player.transform.position.y);
             Vector2 direction = contact.point - playerPosition;
             direction = -direction.normalized;
-            player.KnockBack(direction, 5000f, 20f);
+            player.KnockBack(direction, 5000f, 10f);
             Attack(player);
         }
     }

@@ -8553,6 +8553,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spikes
       objectReference: {fileID: 0}
+    - target: {fileID: 8366945722421711654, guid: 94ea849167f4e224da24c5e5c44e2396, type: 3}
+      propertyPath: attackDamage
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94ea849167f4e224da24c5e5c44e2396, type: 3}
 --- !u!4 &6326059886205839643 stripped

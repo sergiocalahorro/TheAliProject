@@ -581,7 +581,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Player stops being invulnerable after some time
-        yield return new WaitForSeconds(_hurtDuration + _invulnerabilityDuration);
+        yield return new WaitForSeconds(_invulnerabilityDuration);
         if (!_isDead)
         {
             _canTakeDamage = true;
@@ -597,7 +597,9 @@ public class PlayerController : MonoBehaviour
         {
             rb2D.velocity = Vector2.zero;
             rb2D.inertia = 0;
-            rb2D.AddForce(new Vector2(direction.x * powerX, direction.y * powerY), 
+            rb2D.AddForce(new Vector2(direction.x * powerX, 0f), 
+                          ForceMode2D.Force);
+            rb2D.AddForce(new Vector2(0f, direction.y * powerY),
                           ForceMode2D.Impulse);
         }
     }
