@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 0
-  attackDamage: 1
+  attackDamage: 10
 --- !u!68 &9084476386271762434
 EdgeCollider2D:
   m_ObjectHideFlags: 0

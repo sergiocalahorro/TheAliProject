@@ -67,7 +67,7 @@ public class WallCheck : MonoBehaviour
     {
         // Player is wall sliding if is touching a wall while in air and losing vertical velocity
         if (_player.isTouchingWall && !_player.isGrounded && 
-            _player.rigidbodyPlayer.velocity.y < 0f)
+            _player.rb2D.velocity.y < 0f)
         {
             _player.isWallSliding = true;
             _player.isJumping = false;

@@ -5,7 +5,6 @@ public class EnemySpikes : Enemy
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
-        healthPoints = 0;
         isImmortal = true;
     }
 
@@ -25,7 +24,12 @@ public class EnemySpikes : Enemy
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
             // Attack player
-            player.KnockBack();
+            ContactPoint2D contact = other.GetContact(0);
+            Vector2 playerPosition = new Vector2(player.transform.position.x, 
+                                                 player.transform.position.y);
+            Vector2 direction = contact.point - playerPosition;
+            direction = -direction.normalized;
+            player.KnockBack(direction, 5000f, 20f);
             Attack(player);
         }
     }

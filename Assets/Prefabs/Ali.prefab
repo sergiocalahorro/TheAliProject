@@ -223,28 +223,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baea02045c9186b418c92b510621a8a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfLives: 3
+  healthPoints: 0
+  numberOfCoins: 0
   _hurtDuration: 0.5
   _invulnerabilityDuration: 1.5
-  canMove: 0
   _movementSpeed: 6
   _jumpForce: 18
   _jumpHeightFactor: 0.25
   _movementForceInAir: 400
   _airDragMultiplier: 0.95
-  _minTimeInAir: 0.1
-  canJump: 0
-  isJumping: 0
+  _minTimeInAir: 0.3
   _shotDelay: 0.5
-  isGrounded: 0
-  isOnSlope: 0
-  canWalkOnSlope: 0
   unlockedDoubleJump: 0
-  canDoubleJump: 0
-  isDoubleJumping: 0
   unlockedWallSliding: 0
-  isTouchingWall: 0
-  isWallSliding: 0
   _footstepsAudioClip: {fileID: 8300000, guid: bf2cd170121d44f4db5d94b94ef8025b, type: 3}
   _jumpAudioClip: {fileID: 8300000, guid: 898d61426fb6db9468aef9f0839b88c3, type: 3}
   _fartAudioClip: {fileID: 8300000, guid: fdac11f7004e62f4f8325f2486b85244, type: 3}
@@ -259,8 +250,6 @@ MonoBehaviour:
   dirtParticleSystem: {fileID: 8233323620329590902}
   fartParticleSystem: {fileID: 864275524315313823}
   dust: {fileID: 6306659397799875259, guid: b5132be16851dfc4cbc27a8b5e097eeb, type: 3}
-  currentState: 0
-  rigidbodyPlayer: {fileID: 0}
 --- !u!114 &88787295
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -156,14 +156,14 @@ public class PlayerController : MonoBehaviour
 
     // Physics
     [System.NonSerialized]
-    public Rigidbody2D rigidbodyPlayer;
+    public Rigidbody2D rb2D;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
         // Components
         _sock = GetComponent<Weapon>();
-        rigidbodyPlayer = GetComponent<Rigidbody2D>();
+        rb2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
 
@@ -260,13 +260,13 @@ public class PlayerController : MonoBehaviour
                 ChangeAnimationState(PlayerAnimationState.Walk);
             }
 
-            if (isJumping && rigidbodyPlayer.velocity.y > 0f)
+            if (isJumping && rb2D.velocity.y > 0f)
             {
                 // Player is jumping
                 ChangeAnimationState(PlayerAnimationState.Jump);
             }
 
-            if (!isWallSliding && !isGrounded && rigidbodyPlayer.velocity.y < 0f)
+            if (!isWallSliding && !isGrounded && rb2D.velocity.y < 0f)
             {
                 // Player is falling
                 ChangeAnimationState(PlayerAnimationState.Fall);
@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
                 ChangeAnimationState(PlayerAnimationState.Throw);
             }
 
-            if (isDoubleJumping && rigidbodyPlayer.velocity.y > 0f)
+            if (isDoubleJumping && rb2D.velocity.y > 0f)
             {
                 // Player is double jumping
                 ChangeAnimationState(PlayerAnimationState.DoubleJump);
@@ -322,13 +322,13 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !isOnSlope && !isJumping)
         {
             // Normal movement
-            rigidbodyPlayer.velocity = new Vector2(_movementSpeed * movementAmount,
-                                                   rigidbodyPlayer.velocity.y);
+            rb2D.velocity = new Vector2(_movementSpeed * movementAmount,
+                                                   rb2D.velocity.y);
         }
         else if (isGrounded && isOnSlope && canWalkOnSlope && !isJumping)
         {
             // Movement if on a slope
-            rigidbodyPlayer.velocity = new Vector2(_movementSpeed * 
+            rb2D.velocity = new Vector2(_movementSpeed * 
                                                    _groundCheck.slopeNormalPerpendicular.x *
                                                    -movementAmount,
                                                    _movementSpeed * 
@@ -338,20 +338,20 @@ public class PlayerController : MonoBehaviour
         else if (!isGrounded && !isWallSliding && movementAmount != 0f)
         {
             // Add a force when moving in mid-air
-            rigidbodyPlayer.AddForce(new Vector2(_movementForceInAir * movementAmount, 0f));
+            rb2D.AddForce(new Vector2(_movementForceInAir * movementAmount, 0f));
 
-            if (Mathf.Abs(rigidbodyPlayer.velocity.x) > _movementSpeed)
+            if (Mathf.Abs(rb2D.velocity.x) > _movementSpeed)
             {
-                rigidbodyPlayer.velocity = new Vector2(_movementSpeed * movementAmount,
-                                                       rigidbodyPlayer.velocity.y);
+                rb2D.velocity = new Vector2(_movementSpeed * movementAmount,
+                                                       rb2D.velocity.y);
             }
         }
         else if (!isGrounded && !isWallSliding && movementAmount == 0f)
         {
             // Add a drag when not moving in mid-air
-            rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x *
+            rb2D.velocity = new Vector2(rb2D.velocity.x *
                                                    _airDragMultiplier,
-                                                   rigidbodyPlayer.velocity.y);
+                                                   rb2D.velocity.y);
         }
 
         // Play sound and particles when player is moving
@@ -371,9 +371,9 @@ public class PlayerController : MonoBehaviour
         // Wall sliding
         if (isWallSliding)
         {
-            if (rigidbodyPlayer.velocity.y < -_wallCheck.wallSlideSpeed)
+            if (rb2D.velocity.y < -_wallCheck.wallSlideSpeed)
             {
-                rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x,
+                rb2D.velocity = new Vector2(rb2D.velocity.x,
                                                        -_wallCheck.wallSlideSpeed);
             }
         }
@@ -412,8 +412,8 @@ public class PlayerController : MonoBehaviour
         if (canJump)
         {
             // Normal jump
-            rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x, 0f);
-            rigidbodyPlayer.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+            rb2D.velocity = new Vector2(rb2D.velocity.x, 0f);
+            rb2D.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
             canJump = false;
             isJumping = true;
@@ -432,7 +432,7 @@ public class PlayerController : MonoBehaviour
                                              -_facingDirection,
                                              _wallCheck.wallHopForce * 
                                              _wallCheck.wallHopDirection.y);
-            rigidbodyPlayer.AddForce(forceToAdd, ForceMode2D.Impulse);
+            rb2D.AddForce(forceToAdd, ForceMode2D.Impulse);
 
             isWallSliding = false;
             canJump = false;
@@ -447,7 +447,7 @@ public class PlayerController : MonoBehaviour
                                              movementAmount,
                                              _wallCheck.wallJumpForce * 
                                              _wallCheck.wallJumpDirection.y);
-            rigidbodyPlayer.AddForce(forceToAdd, ForceMode2D.Impulse);
+            rb2D.AddForce(forceToAdd, ForceMode2D.Impulse);
 
             isWallSliding = false;
             canJump = false;
@@ -462,10 +462,10 @@ public class PlayerController : MonoBehaviour
     public void VariableJump()
     {
         // The factor is applied only when the player is jumping
-        if ((isJumping || isDoubleJumping) && rigidbodyPlayer.velocity.y >= 0f)
+        if ((isJumping || isDoubleJumping) && rb2D.velocity.y >= 0f)
         {
-            rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x,
-                                                   rigidbodyPlayer.velocity.y * 
+            rb2D.velocity = new Vector2(rb2D.velocity.x,
+                                                   rb2D.velocity.y * 
                                                    _jumpHeightFactor);
         }
     }
@@ -477,8 +477,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isJumping && canDoubleJump)
         {
-            rigidbodyPlayer.velocity = new Vector2(rigidbodyPlayer.velocity.x, 0f);
-            rigidbodyPlayer.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+            rb2D.velocity = new Vector2(rb2D.velocity.x, 0f);
+            rb2D.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
             isJumping = false;
             isDoubleJumping = true;
@@ -591,16 +591,14 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Add knock back force
     /// </summary>
-    public void KnockBack()
+    public void KnockBack(Vector2 direction, float powerX, float powerY)
     {
         if (_canTakeDamage && !_isDead)
         {
-            float powerX = Random.Range(20, 30) * 100f;
-            float powerY = Random.Range(4, 6) * 100f;
-
-            rigidbodyPlayer.AddForce(new Vector3(transform.right.x * powerX,
-                                                 transform.up.y * powerY,
-                                                 transform.position.z), ForceMode2D.Force);
+            rb2D.velocity = Vector2.zero;
+            rb2D.inertia = 0;
+            rb2D.AddForce(new Vector2(direction.x * powerX, direction.y * powerY), 
+                          ForceMode2D.Impulse);
         }
     }
 }

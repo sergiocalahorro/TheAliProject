@@ -60,7 +60,7 @@ public class GroundCheck : MonoBehaviour
                                                      groundLayerMask);
 
         // Player is on ground
-        if (_player.isGrounded && _player.rigidbodyPlayer.velocity.y <= 0f)
+        if (_player.isGrounded && _player.rb2D.velocity.y <= 0f)
         {
             _player.isJumping = false;
             _player.isDoubleJumping = false;
@@ -99,11 +99,11 @@ public class GroundCheck : MonoBehaviour
         // Stop player movement when not movingon a slope by changing friction behaviour
         if (_player.isOnSlope && _player.canWalkOnSlope && _player.movementAmount == 0f)
         {
-            _player.rigidbodyPlayer.sharedMaterial = fullFriction;
+            _player.rb2D.sharedMaterial = fullFriction;
         }
         else
         {
-            _player.rigidbodyPlayer.sharedMaterial = zeroFriction;
+            _player.rb2D.sharedMaterial = zeroFriction;
         }
     }
 
