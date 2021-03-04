@@ -8,45 +8,15 @@ public class GameManager : Singleton<GameManager>
     // Control
     private PlayerController _player;
     private List<GameObject> _pickedUpCoins;
-    public List<GameObject> pickedUpCoins
-    {
-        get
-        {
-            return _pickedUpCoins;
-        }
-    }
+    public List<GameObject> pickedUpCoins { get => _pickedUpCoins; }
     private CheckPointController _checkPoint;
-    public CheckPointController checkPoint
-    {
-        set
-        {
-            _checkPoint = value;
-        }
-    }
+    public CheckPointController checkPoint { set => _checkPoint = value; }
     private bool _isGameOver;
-    public bool isGameOver
-    {
-        get
-        {
-            return _isGameOver;
-        }
-    }
+    public bool isGameOver { get => _isGameOver; }
     private bool _insideGameOver;
-    public bool insideGameOver
-    {
-        get
-        {
-            return _insideGameOver;
-        }
-    }
+    public bool insideGameOver { get => _insideGameOver; }
     private bool _paused;
-    public bool paused
-    {
-        get
-        {
-            return _paused;
-        }
-    }
+    public bool paused { get => _paused; }
 
     // Components
     private AudioManager _audioManager;

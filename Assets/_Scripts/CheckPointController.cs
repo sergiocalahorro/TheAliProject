@@ -7,13 +7,7 @@ public class CheckPointController : MonoBehaviour
 {
     // Control
     private bool _checkPointReached;
-    public bool checkPointReached
-    {
-        get
-        {
-            return _checkPointReached;
-        }
-    }
+    public bool checkPointReached { get => _checkPointReached; }
     private List<GameObject> _coins;
     public int playerNumberOfCoins;
 

@@ -23,13 +23,15 @@ public class EnemySpikes : Enemy
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
-            // Attack player
+            // Knock player back
             ContactPoint2D contact = other.GetContact(0);
             Vector2 playerPosition = new Vector2(player.transform.position.x, 
                                                  player.transform.position.y);
             Vector2 direction = contact.point - playerPosition;
             direction = -direction.normalized;
             player.KnockBack(direction, 5000f, 10f);
+
+            // Attack player
             Attack(player);
         }
     }

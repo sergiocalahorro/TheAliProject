@@ -15,42 +15,18 @@ public class PlayerController : MonoBehaviour
     private float _invulnerabilityDuration;
     private bool _canTakeDamage;
     private bool _isHurt;
-    public bool isHurt
-    {
-        get
-        {
-            return _isHurt;
-        }
-    }
+    public bool isHurt { get => _isHurt; }
     private bool _isDead;
-    public bool isDead
-    {
-        get
-        {
-            return _isDead;
-        }
-    }
+    public bool isDead { get => _isDead; }
 
     // Movement
     [Header("Movement")]
     [SerializeField]
     private float _movementSpeed;
     private float _facingDirection;
-    public float facingDirection
-    {
-        get
-        {
-            return _facingDirection;
-        }
-    }
+    public float facingDirection { get => _facingDirection; }
     private bool _facingRight;
-    public bool facingRight
-    {
-        get
-        {
-            return _facingRight;
-        }
-    }
+    public bool facingRight { get => _facingRight; }
     [System.NonSerialized]
     public float movementAmount;
     [System.NonSerialized]
@@ -80,13 +56,7 @@ public class PlayerController : MonoBehaviour
     private float _shotDelay;
     private Weapon _sock;
     private bool _isShooting;
-    public bool isShooting
-    {
-        get
-        {
-            return _isShooting;
-        }
-    }
+    public bool isShooting { get => _isShooting; }
 
     // Ground check
     [System.NonSerialized]
@@ -96,13 +66,7 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized]
     public bool canWalkOnSlope;
     private GroundCheck _groundCheck;
-    public GroundCheck groundCheck
-    {
-        get
-        {
-            return _groundCheck;
-        }
-    }
+    public GroundCheck groundCheck { get => _groundCheck; }
 
     // Double jump
     [Header("Double jump")]
@@ -144,13 +108,7 @@ public class PlayerController : MonoBehaviour
     // Animations
     private Animator _animator;
     private bool _deadAnimationPlayed;
-    public bool deadAnimationPlayed
-    {
-        get
-        {
-            return _deadAnimationPlayed;
-        }
-    }
+    public bool deadAnimationPlayed { get => _deadAnimationPlayed; }
     [System.NonSerialized]
     public PlayerAnimationState currentState;
 

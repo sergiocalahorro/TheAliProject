@@ -21,13 +21,7 @@ public class GroundCheck : MonoBehaviour
     private float _slopeSideAngle;
     private float _lastSlopeDownAngle;
     private Vector2 _slopeNormalPerpendicular;
-    public Vector2 slopeNormalPerpendicular
-    {
-        get
-        {
-            return _slopeNormalPerpendicular;
-        }
-    }
+    public Vector2 slopeNormalPerpendicular { get => _slopeNormalPerpendicular; }
 
     // Physics
     [Header("Physics materials")]
