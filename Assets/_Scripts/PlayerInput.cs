@@ -49,6 +49,13 @@ public class PlayerInput : MonoBehaviour
             _player.VariableJump();
         }
 
+        // Melee attack
+        if (_player.isGrounded && !_player.isAttacking && Input.GetButtonDown("Fire1"))
+        {
+            Debug.Log("Attack");
+            StartCoroutine(_player.Attack());
+        }
+
         // Throw sock
         if (_player.isGrounded && Input.GetKeyDown(KeyCode.F))
         {

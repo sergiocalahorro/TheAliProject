@@ -50,8 +50,15 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized]
     public bool isJumping;
 
-    // Weapon
-    [Header("Weapon")]
+    // Melee attack
+    [Header("Melee attack")]
+    [SerializeField]
+    private float _attackDelay;
+    private bool _isAttacking;
+    public bool isAttacking { get => _isAttacking; }
+
+    // Ranged weapon
+    [Header("Ranged weapon")]
     [SerializeField]
     private float _shotDelay;
     private Weapon _sock;
@@ -230,6 +237,12 @@ public class PlayerController : MonoBehaviour
                 ChangeAnimationState(PlayerAnimationState.Fall);
             }
 
+            if (isGrounded && _isAttacking)
+            {
+                // Player is attacking
+                ChangeAnimationState(PlayerAnimationState.Attack1);
+            }
+
             if (isGrounded && _isShooting)
             {
                 // Player is throwing sock
@@ -348,6 +361,17 @@ public class PlayerController : MonoBehaviour
             _facingRight = !_facingRight;
             transform.Rotate(0f, 180f, 0f);
         }
+    }
+
+    /// <summary>
+    /// Player's melee attack
+    /// </summary>
+    /// <returns> Time until next attack is available </returns>
+    public IEnumerator Attack()
+    {
+        _isAttacking = true;
+        yield return new WaitForSeconds(_attackDelay);
+        _isAttacking = false;
     }
 
     /// <summary>

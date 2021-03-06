@@ -233,6 +233,7 @@ MonoBehaviour:
   _movementForceInAir: 400
   _airDragMultiplier: 0.95
   _minTimeInAir: 0.3
+  _attackDelay: 0.5
   _shotDelay: 0.5
   unlockedDoubleJump: 0
   unlockedWallSliding: 0
